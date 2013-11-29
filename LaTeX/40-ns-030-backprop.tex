@@ -1,0 +1,264 @@
+\documentclass[24pt,pdf,hyperref={unicode}]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{graphics}
+\usepackage{amssymb}
+\usepackage{xstring}
+\usepackage{multirow}
+\usepackage{tikz}
+\usepackage[all]{xy}
+
+
+\newcommand{\dd}[2]{\frac{\partial #1}{\partial #2}}
+\begin{document}
+\tikzstyle{neu}=[circle,fill=blue!50];
+
+
+
+\section{Обратное распространение ошибки}
+
+
+\begin{frame}\frametitle{Частные производные}
+Функция $n$ переменных:
+$$
+F:\mathbb{R}^n\rightarrow\mathbb{R} 
+$$
+$$
+F(x_1,\ldots,x_n)
+$$
+Частная производная по $i$-й переменной:
+$$
+\dd{F}{x_i}(x_1,\ldots,x_n)=
+$$
+$$
+=\lim_{\varepsilon\rightarrow 0}\frac{F(x_1,x_2,\ldots,x_i+\varepsilon,\ldots,x_n)-F(x_1,x_2,\ldots,x_i,\ldots,x_n)}{\varepsilon}
+$$
+$$
+\dd{F}{x_i}:\mathbb{R}^n\rightarrow\mathbb{R}
+$$
+
+\end{frame}
+
+\begin{frame}\frametitle{Частные производные}
+\uncover<+->{}
+$$
+F(x,y,z,u)=x^3+y^u+\sin z^2u^3
+$$
+$$
+\begin{array}{l l}
+\dd{F}{x} = & \uncover<+->{3x^2} \\
+\dd{F}{y}= & \uncover<+->{uy^u-1} \\
+\dd{F}{z}= & \uncover<+->{(-\cos z^2u^3)(u^32z)}
+\end{array}
+$$
+\end{frame}
+
+\begin{frame}\frametitle{Производная сложной функции}
+$$
+F=F(x_1,\ldots,x_n)
+$$
+$$
+G_i=G_i(y_1,\ldots,y_m)
+$$
+$$
+H(y_1,\ldots,y_n)=F(G_1(y_1,\ldots,y_m),\ldots, G_n(y_1,\ldots,y_n))
+$$
+$$
+\dd{H}{y_i}=\sum_{j=1}^{n}\dd{H}{G_j}\dd{G_j}{y_i}
+$$
+\end{frame}
+
+\begin{frame}\frametitle{Производная сложной функции}
+\uncover<+->{}
+$$
+F(x_1,\ldots,x_n)=\sum_{k=1}{n} a_ix_i
+$$
+$$
+G_i(y_1,\ldots,y_m)=\sum_{k=1}{m}y_k^i
+$$
+$$
+H(y_1,\ldots,y_n)=F(G_1(y_1,\ldots,y_m),\ldots, G_n(y_1,\ldots,y_n))
+$$
+\uncover<+->{
+$$
+\dd{F}{G_i}=a_i,\ \dd{G_i}{y_j}=iy_j^{i-1}
+$$
+}
+$$
+\dd{H}{y_j}=\uncover<+->{\sum_{i=1}^{n}\dd{H}{G_i}\dd{G_i}{y_j}=\sum_{i=1}^{n} a_iiy_j^{i-1}}
+$$
+
+\end{frame}
+
+\begin{frame}\frametitle{Градиент}
+\uncover<+->{}
+$$
+\nabla F = \left(\dd{F}{x_1},\dd{F}{x_2},\ldots,\dd{F}{x_n}\right)
+$$
+$$
+\nabla F : \uncover<+->{\mathbb{R}^n\rightarrow\mathbb{R}^n}
+$$
+\end{frame}
+
+\begin{frame}\frametitle{Обратное распространение ошибки}
+\begin{columns}
+
+\column{0.4\textwidth}
+\begin{tikzpicture}
+
+\node (x-0) at (0,4) {$1$};
+\node (x-1) at (0,2) {$x_1$};
+\node (x-2) at (0,0) {$x_2$};
+
+\node[neu] (n-1) at (3,3) {$n_1$};
+\node[neu] (n-2) at (3,1) {$n_2$};
+
+\node (y-1) at (4,3) {$y_1$};
+\node (y-2) at (4,1) {$y_2$};
+
+\foreach \source in {0,1,2}
+    \path (x-\source) edge[->]  node[above,near start]  {$w_{\source 1}$}  (n-1) ;
+\foreach \source in {0,1,2}
+    \path (x-\source) edge[->]  node[below,near end]  {$w_{\source 2}$}  (n-2) ;
+\foreach \out in {1,2}
+    \path (n-\out) edge[->] (y-\out) ;
+
+\end{tikzpicture}
+
+\column{0.6\textwidth}
+\only<2>
+{
+$$
+E(y_1,y_2)=(y_1-a_1)^2+(y_2-a_2)^2
+$$
+$$
+\dd{E}{y_1}=2(y_1-a_1)
+$$
+$$
+y_1=f\underbrace{(w_{01}+x_1w_{11}+x_2w_{21})}_{S_1}
+$$
+$$
+\dd{y_1}{w_{21}}=f'(S_1)x_2
+$$
+$$
+\dd{E}{w_{21}}=\dd{E}{y_1}\dd{y_1}{w_{21}}
+$$
+$$
+=2(y_1-a_1)f'(S_1)x_2
+$$
+}
+\only<3>
+{
+$$
+E(y_1,...,y_n)=(y_i-a_i)^2+...+(y_n-a_n)^2
+$$
+$$
+\dd{E}{y_i}=2(y_i-a_i)
+$$
+$$
+y_i=f\underbrace{(w_{0i}+x_1w_{1i}+...+x_nw_{ni})}_{S_i}
+$$
+$$
+\dd{y_i}{w_{ji}}=f'(S_i)x_j
+$$
+$$
+\dd{E}{w_{ji}}=\dd{E}{y_i}\dd{y_i}{w_{ji}}
+$$
+$$
+=2(y_i-a_i)f'(S_i)x_j
+$$
+}
+\only<4>
+{
+$$
+E(y_1,y_2)=(y_1-a_1)^2+(y_2-a_2)^2
+$$
+$$
+\dd{E}{y_1}=2(y_1-a_1)
+$$
+$$
+y_1=f\underbrace{(w_{01}+x_1w_{11}+x_2w_{21})}_{S_1}
+$$
+$$
+\dd{y_1}{x_2}=f'(S_1)w_{12}
+$$
+$$
+\dd{y_2}{x_2}=f'(S_2)w_{22}
+$$
+$$
+\dd{E}{x_2}=\dd{E}{y_1}\dd{y_1}{x_2}+\dd{E}{y_1}\dd{y_1}{x_2}=
+$$
+$$
+=2(y_1-a_1)f'(S_1)w_{12}+2(y_2-a_2)f'(S_2)w_{22}
+$$
+}
+\only<5>
+{
+$$
+E(y_1,...,y_n)=(y_i-a_i)^2+...+(y_n-a_n)^2
+$$
+$$
+\dd{E}{y_i}=2(y_i-a_i)
+$$
+$$
+y_i=f\underbrace{(w_{0i}+x_1w_{1i}+...+x_nw_{ni})}_{S_i}
+$$
+$$
+\dd{y_i}{x_j}=f'(S_i)w_{ji}
+$$
+$$
+\dd{E}{x_j}=\sum_{i=1}^{n} \dd{E}{y_i}\dd{y_i}{x_j}=\sum_{i=1}^{n}2(y_i-a_i)f'(S_i)w_{ji}
+$$
+}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{Обратное распространение ошибки}
+\begin{tikzpicture}
+\tikzstyle{neu}=[circle,fill=blue!50];
+
+\node (x-1-0) at (0,4) {$1$};
+\node (x-1-1) at (0,2) {$x_1$};
+\node (x-1-2) at (0,0) {$x_2$};
+
+\node[neu] (n-1-1) at (3,3) {$n_{21}$};
+\node[neu] (n-1-2) at (3,1) {$n_{22}$};
+
+\node (x-2-1) at (4,3) {$y_1$};
+\node (x-2-2) at (4,1) {$y_2$};
+
+\node[neu] (n-0-1) at (-1,2) {$n_{11}$};
+\node[neu] (n-0-2) at (-1,0) {$n_{12}$};
+
+\node (x-0-0) at (-4,3) {$1$};
+\node (x-0-1) at (-4,1)  {$z_1$};
+\node (x-0-2) at (-4,-1) {$z_2$};
+
+
+\foreach \layA/\layB/\Wei in { 0/1/$v$, 1/2/$w$ }
+{
+\foreach \source in {0,1,2}
+    \path (x-\layA-\source) edge[->]  node[above,near start]  {$\Wei_{\source 1}$}  (n-\layA-1) ;
+\foreach \source in {0,1,2}
+    \path (x-\layA-\source) edge[->]  node[below,near end]  {$\Wei_{\source 2}$}  (n-\layA-2) ;
+\foreach \out in {1,2}
+    \path (n-\layA-\out) edge[->] (x-\layB-\out) ;
+}
+\end{tikzpicture}
+\begin{tabular}{p{5cm} p{5cm}}
+$$
+\dd{E}{v_{ij}}=\dd{E}{x_j}\dd{x_j}{v_{ij}}
+$$ 
+& 
+$$
+\dd{E}{z_i}=\sum_{j=1}^{m}\dd{E}{x_j}\dd{x_j}{z_i}
+$$
+\end{tabular}
+
+
+\end{frame}
+
+
+
+\end{document}

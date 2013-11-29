@@ -1,0 +1,224 @@
+\documentclass[24pt,pdf,hyperref={unicode}]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{aiml}
+
+\begin{document}
+
+
+\begin{frame}\frametitle{Дедуктивные рассуждения}
+\uncover<+->{
+\begin{tabular}{l l}
+ & Все страны Южной Америки -- республики \\
+ & Бразилия -- страна Южной Америки\\
+ \hline
+$\therefore$ & Бразилия -- республика \\
+\end{tabular}\\[2cm]
+}
+\uncover<+->{
+{\large
+$$
+\frac{A, B}{?}
+$$
+}
+}
+\end{frame}
+
+\begin{frame}\frametitle{Модель}
+\uncover<+->{
+$$
+\mathfrak{M}=(M,P_1,\ldots,P_n)
+$$
+}
+\uncover<+->{
+$$
+P_i:M^{k_i}\rightarrow\{0,1\}
+$$
+}
+\end{frame}
+
+\usetikzlibrary{trees}
+
+\begin{frame}\frametitle{Модель}
+\begin{columns}
+\column{0.5\textwidth}
+Генеологическое древо
+
+\column{0.5\textwidth}
+
+$P(x,y)$, $C(x,y)$\\[1cm]
+
+\begin{itemize}
+\item<+-> $P(Tywin,Cercei)$
+
+\item<+-> $C(Tommen,Cercei)$
+
+\item<+-> $C(Tyrion,Cercei)$
+
+\item<+-> $\forall x,y\ P(x,y)\rightarrow C(y,x)$
+
+\item<+-> $\exists u,x,y,z\ C(u,x)\wedge C(u,y)\wedge C(x,z)\wedge C(y,z)$
+
+\item<+-> $\forall x \exists y\ P(y,x)$
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{Модель}
+\uncover<+->{
+\begin{center}
+$\mathfrak{N}=(\mathbb{N},P,S)$
+
+$Eq(x,y)\Leftrightarrow x=y$
+
+$S(x,y,z) \Leftrightarrow x+y=z$
+
+$P(x,y,z) \Leftrightarrow xy=z$
+\end{center}
+}
+\uncover<+->{
+\begin{tabular}{p{4cm} p{5cm}}
+Свойство единицы & $\forall x\ P(x,1,x) \wedge P(1,x,x)$ \\
+Коммутативность\newline сложения & $\forall x,y,z\ S(x,y,z)\rightarrow S(y,x,z)$\\
+Отображение & $\forall x,y,z,u\ (P(x,y,u)\wedge P(x,y,v))\rightarrow Eq(u,v)$ \\
+Тотальное отображение & $\forall x,y\ \exists z\ S(x,y,z)$ \\
+Вычитание & $\forall x,y\ \exists z\ S(x,z,y)$ \\
+\end{tabular}
+}
+\end{frame}
+
+\begin{frame}\frametitle{Вывод в логике предикатов}
+
+$$
+\begin{array}{l l}
+& (\forall x\ P(x))\rightarrow(\forall x\ Q(x)) \\
+& (\forall x\ P(x)) \\
+\hline
+& A=(\forall x\ P(x)),\ B=(\forall x\ Q(x)) \\
+\therefore & \forall x\ Q(x)
+\end{array}
+$$\\[1cm]
+$$
+\begin{array}{l l}
+& \forall x\ P(x)\rightarrow Q(x) \\
+& \forall x\ P(x) \\
+\hline
+\therefore & \forall x\ Q(x)
+\end{array}
+$$
+\end{frame}
+
+\begin{frame}\frametitle{Предваренная нормальная форма}
+\begin{enumerate}
+\item<1-> Оставить только $\wedge$, $\vee$, $\neg$
+\item<2-> Протаскивание отрицаний: законы де Моргана и
+
+$$
+\neg(\forall x\ P(x))\Leftrightarrow \exists x\ \neg P(x)
+$$
+$$
+\neg(\exists x\ P(x))\Leftrightarrow \forall x\ \neg P(x)
+$$
+\item<3-> { Вытаскивание кванторов }
+
+\begin{center}
+
+\uncover<4->{$
+(\forall x\ P(x))\wedge(\forall x\ Q(x))\Leftrightarrow \forall x\ (P(x)\wedge Q(x))
+$}
+
+\only<5>{$
+(\exists x\ P(x))\wedge(\exists x\ Q(x))\Leftrightarrow \exists x\ (P(x)\wedge Q(x) )
+$}
+\uncover<6->{$
+(\exists x\ P(x))\wedge(\exists x\ Q(x))\Leftrightarrow \exists x\exists y\ (P(x)\wedge Q(y))
+$}
+
+
+\uncover<7->{$
+(\exists x\ P(x))\vee(\exists x\ Q(x))\Leftrightarrow \exists x\ (P(x)\vee Q(x))
+$}
+
+
+\uncover<8->{$
+(\forall x\ P(x))\vee(\forall x\ Q(x))\Leftrightarrow \forall x\forall y\ (P(x)\vee Q(x))
+$}
+\end{center}
+\item<9-> Результат: предваренная нормальная форма
+
+$$
+\forall x_1 \forall x_2 \exists x_3 \forall x_4\ F
+$$
+\end{enumerate}
+
+\end{frame}
+
+
+\begin{frame}\frametitle{Предваренная нормальная форма}
+
+\begin{itemize}
+\item<+-> $(\forall x\ P(x))\oplus (\exists x\ \neg Q(x))$
+\item<+-> $\left[\overline{(\forall x\ P(x))}\wedge(\exists x\ Q(x))\right] \bigvee \left[(\forall x\ P(x))\wedge\overline{(\exists x\ Q(x)})\right]$
+\item<+-> $\left[(\exists x\ \overline{P(x)})\wedge(\exists x\ Q(x))\right] \bigvee \left[(\forall x\ P(x))\wedge\overline{(\exists x\ Q(x)})\right]$
+\item<+-> $\left[(\exists x\ \overline{P(x)})\wedge(\exists x\ Q(x))\right] \bigvee \left[(\forall x\ P(x))\wedge(\forall x\ \overline{Q(x)})\right]$
+\item<+-> $\left[\exists x \exists y\ \overline{P(x)}\wedge Q(y)\right] \bigvee \left[(\forall x\ P(x))\wedge(\forall x\ \overline{Q(x)})\right]$
+\item<+-> $\left[\exists x \exists y\ \overline{P(x)}\wedge Q(y)\right] \bigvee \left[\forall x\ P(x)\wedge\overline{Q(x)}\right]$
+\item<+-> $\left[\exists x \exists y\ \overline{P(x)}\wedge Q(y)\right] \bigvee \left[\forall z\ P(z)\wedge\overline{Q(z)}\right]$
+\item<+-> $\exists x \exists y \forall z \left[ (\overline{P(x)}\wedge Q(y)) \vee (P(z)\wedge\overline{Q(z)})\right]$
+\end{itemize}
+\end{frame}
+\begin{frame}\frametitle{Предваренная нормальная форма}
+\begin{itemize}
+\item<+-> $\exists x \exists y \forall z \left[ (\overline{P(x)}\wedge Q(y)) \vee (P(z)\wedge\overline{Q(z)})\right]$
+
+\item<+-> $\exists x \exists y \forall z \left[ (\overline{P(x)}\vee P(z))\wedge (\overline{P(x)}\vee \overline{Q(z)}) \wedge \right.$
+
+\hspace{3cm} $ \left. \wedge (Q(y) \vee P(z)) \wedge (Q(y) \vee \overline{Q(z)}) \right] $
+
+\item<+-> $\exists x \exists y \forall z \left[ (\overline{P(x)}\vee \overline{Q(z)}) \wedge (Q(y) \vee P(z))  \right]$
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Сколемовская нормальная форма}
+\begin{itemize}
+\item<+-> $\exists t \forall u \exists v\forall x \forall y \exists z\ P(t,u,v)\vee P(x,y,z)$
+\item<+-> $\forall u \exists v\forall x \forall y \exists z\ P(a,u,v)\vee P(x,y,z)$ 
+\item<+-> $\forall u \forall x \forall y \exists z\ P(a,u,f(u))\vee P(x,y,z)$ 
+\item<+-> $\forall u \forall x \forall y \ P(a,u,f(u))\vee P(x,y,g(u,x,y))$ 
+\item<+-> $P(a,u,f(u))\vee P(x,y,g(u,x,y))$ 
+\end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Правило резолюций в логике предикатов}
+$$
+\begin{array}{l l}
+\uncover<+->{
+ & \neg P(x) \vee Q(x) \\
+ & P(a) \\
+ \hline
+}
+\uncover<+->{
+ & x:=a \\
+ & \neg P(x) \vee Q(x) \\
+ & P(a) \\
+ \hline
+}
+\uncover<+->{
+\therefore & Q(a) \\
+}
+\end{array}
+$$
+\end{frame}
+
+\begin{frame}
+Примеры удачных и неудачных унификаций
+\end{frame}
+
+\begin{frame}\frametitle{Метод резолюций в логике предикатов}
+
+\end{frame}
+
+\begin{frame}\frametitle{Зацикливание метода резолюций}
+\end{frame}
+
+\end{document}

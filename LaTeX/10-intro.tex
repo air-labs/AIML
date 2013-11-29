@@ -1,0 +1,68 @@
+\documentclass[24pt,pdf,hyperref={unicode}]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{graphics}
+\usepackage{amssymb}
+\usepackage{xstring}
+\usepackage{multirow}
+\usepackage{framed}
+
+\newcommand{\bio}[3]
+{
+\begin{center}
+\includegraphics[width=4cm]{#1.jpg}
+
+#2
+
+#3
+\end{center}
+}
+
+\newcommand{\citate}[3]
+{
+\begin{framed}
+{
+\fontfamily{Liberation Serif}\selectfont
+#1
+}
+\end{framed}
+\begin{flushright}
+(#2, {\it #3})
+\end{flushright}
+}
+
+\begin{document}
+
+\begin{frame}
+\bio{Turing}{Алан Тьюринг}{1912--1954}
+\end{frame}
+
+\begin{frame}
+\citate{
+If at each stage the motion of a machine (in the sense of § 1) is completely
+determined by the configuration, we shall call the machine an "automatic machine" (or $a$-machine).
+
+For some purposes we might use machines (choice machines or
+c-manhines) whose motion is onty partially determined by the configuration
+... When such a machine
+reaches one of these ambiguous configurations, it cannot go on until some
+arbitrary choice has been made by an external operator ... In this
+paper I deal only with automatic machines, and will therefore often omit
+the prefix a-.
+}{Alan Turing}{On computable numbers, with an application to the Entscheidungsproblem}
+\end{frame}
+
+ 
+
+\begin{frame}
+\citate
+{
+The behaviour of the \alert<2->{computer} at any moment is determined by the symbols which \alert<3->{he} is observing, and \alert<4>{his "state of mind"} at that moment. We may suppose that there is a bound $B$ to the number of symbols or squares which the computer can observe at one moment. If \alert<4>{he wishes} to observe more, he must use successive observations. We will also suppose that the number of \alert<4>{states of mind} which need be taken into account is finite.
+}{Alan Turing}{On computable numbers, with an application to the Entscheidungsproblem}
+
+\end{frame}
+
+
+
+
+\end{document}

@@ -1,0 +1,149 @@
+\documentclass[24pt,pdf,hyperref={unicode}]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{etex}
+\usepackage{aiml}
+\usepackage{ctable}
+
+
+\newcommand{\da}{\includegraphics[width=1cm]{HOMM5/dark.jpg}}
+\newcommand{\de}{\includegraphics[width=1cm]{HOMM5/destructive.jpg}}
+
+\newcommand{\pe}{\includegraphics[width=1cm]{HOMM5/peasant.jpg}}
+\newcommand{\wt}{\includegraphics[width=1cm]{HOMM5/wraith.jpg}}
+\newcommand{\ga}{\includegraphics[width=1cm]{HOMM5/garg.jpg}}
+\newcommand{\un}{\includegraphics[width=1cm]{HOMM5/unicorn.jpg}}
+
+
+\newcommand{\ar}{\includegraphics[width=1cm]{HOMM5/archer.jpg}}
+\newcommand{\fo}{\includegraphics[width=1cm]{HOMM5/footman.jpg}}
+\newcommand{\mo}{\includegraphics[width=1cm]{HOMM5/monk.jpg}}
+\newcommand{\sk}{\includegraphics[width=1cm]{HOMM5/skeleton.jpg}}
+\newcommand{\gh}{\includegraphics[width=1cm]{HOMM5/ghost.jpg}}
+\newcommand{\lc}{\includegraphics[width=1cm]{HOMM5/lich.jpg}}
+
+
+\newcommand{\aca}{\includegraphics[width=1cm]{HOMM5/academy.jpg}}
+\newcommand{\hel}{\includegraphics[width=1cm]{HOMM5/inferno.jpg}}
+\newcommand{\nec}{\includegraphics[width=1cm]{HOMM5/necropolis.jpg}}
+
+
+\newcommand{\vc}{\centering\arraybackslash}
+
+\begin{document}
+
+\begin{frame}\frametitle{Отношения и отображения}
+\begin{columns}
+\column{0.5\textwidth}
+$
+A=\{a_1,a_2, a_3\}$, 
+
+$B=\{b_1,b_2,b_3\}$, 
+
+$C=\{c_1,c_2\}$
+
+$$
+\rho\subset A \times B=
+\begin{array}{l|l l l}
+    & b_1 & b_2 & b_3 \\
+\hline
+a_1 &  0  &  1 & 0 \\
+a_2 &  1  &  0 & 1 \\
+a_3 &  0  &  0 & 0 \\
+\end{array}
+$$
+
+$$
+\sigma\subset B \times C =
+\begin{array}{l|l l l}
+    & c_1 & c_2 \\
+\hline
+b_1 &  1  &  0 \\
+b_2 &  0  &  1 \\
+b_3 &  0  &  1 \\
+\end{array}
+$$
+
+\column{0.5\textwidth}
+
+\only<1>{
+$\rho(a)=\{ b\ :\ (a,b)\in\rho \}$\\[0.5cm]
+
+$\rho(a_1)=\{ b_2 \}$
+
+$\rho(a_2)=\{ b_1, b_3 \}$
+
+$\rho(a_3)=\emptyset$\\[0.5cm]
+
+$\sigma(b_1)=c_1$
+
+$\sigma(b_2)=c_2$
+
+$\sigma(b_3)=c_2$\\[0.5cm]
+
+$\rho \ne \rho:A\rightarrow B$
+
+$\sigma = \sigma:B\rightarrow C$
+}
+
+\only<2>{
+
+$\sigma^{-1}=\{(c,b)\ :\ (b,c)\in\sigma\}$\\[0.5cm]
+
+$\sigma^{-1}(c_1)=b_1$
+
+$\sigma^{-1}(c_2)=\{b_2,b_3\}$\\[0.5cm]
+
+$\rho^{-1}(b_1)=a_2$
+
+$\rho^{-1}(b_2)=a_1$
+
+$\rho^{-1}(b_3)=a_2$\\[0.5cm]
+
+$\rho^{-1} = \rho^{-1}:A\rightarrow B$
+
+$\sigma^{-1} \ne \sigma^{-1} :B\rightarrow C$
+}
+
+\only<3>{
+
+$$
+\begin{array}{l l}
+\rho\circ\sigma=\{ & (a,c)\ :\ \exists b \\
+& (a,b)\in\rho,\ (b,c)\in\sigma\}
+\end{array}
+$$
+
+$$
+\rho\circ\sigma=
+\begin{array}{l|l l }
+    & c_1 & c_2 \\
+\hline
+a_1 &  0  &  1  \\
+a_2 &  1  &  1  \\
+a_3 &  0  &  0  \\
+\end{array}
+$$
+
+
+}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}
+$$
+\begin{array}{ >\vc m{1cm}| >\vc m{1cm} >\vc m{1cm}}
+    & \de & \da \\
+\hline
+\vskip 1pt
+\pe & 0.8 & 0.8 \\
+\ga & 0.8 & 0.2 \\
+\wt & 0.2 & 0.8 \\
+\un & 0.2 & 0.2 
+\end{array}
+$$
+\end{frame}
+
+
+
+\end{document}
