@@ -74,7 +74,36 @@ $\therefore$ & $x$ является $A$ \\
 \section{Пропозициональная логика}
 
 \begin{frame}\frametitle{Пропозициональные связки }
-Не очень понятно, как здесь сделать нормальную анимацию
+
+$$
+\uncover<10->{\overline{0}=}\neg 0=1,\ \uncover<10->{\overline{1}=}\neg 1=0
+$$
+
+\uncover<3->
+{
+$$
+\begin{array}{c c c c c c c c c c c}
+A & B &  \uncover<4->{A\wedge B} & \uncover<5->{A\vee B}& \uncover<6->{A\rightarrow B}& \uncover<7->{A\oplus B}& \uncover<8->{A\leftrightarrow B}& \uncover<9->{A\uparrow B}& \uncover<11->{A|B} \\
+0 & 0 &  \uncover<4->{0}& \uncover<5->{0}& \uncover<6->{1}& \uncover<7->{0}& \uncover<8->{1}& \uncover<9->{1}& \uncover<11->{1} \\
+0 & 1 &  \uncover<4->{0}& \uncover<5->{1}& \uncover<6->{1}& \uncover<7->{1}& \uncover<8->{0}& \uncover<9->{0}& \uncover<11->{1} \\
+1 & 0 &  \uncover<4->{0}& \uncover<5->{1}& \uncover<6->{0}& \uncover<7->{1}& \uncover<8->{0}& \uncover<9->{0}& \uncover<11->{1} \\
+1 & 1 &  \uncover<4->{1}& \uncover<5->{1}& \uncover<6->{1}& \uncover<7->{0}& \uncover<8->{1}& \uncover<9->{0}& \uncover<11->{0} \\
+\end{array}
+$$
+}
+
+$
+\begin{array}{r c l}
+\uncover<6->{A\rightarrow B & = & \neg A \vee B} \\
+\uncover<7->{A\oplus B & = & (\neg A \wedge B)\vee(\neg B \wedge A)} \\
+\uncover<8->{A\leftrightarrow B & = & (A \rightarrow B)\wedge(B \rightarrow A)} \\
+\uncover<9->{A\uparrow B & = & \overline{A\vee B} }\\
+\uncover<11->{A| B & = & \overline{A\wedge B} }\\
+
+\end{array}
+$
+
+
 \end{frame}
 
 \section{Логический вывод}
@@ -111,7 +140,6 @@ $$
 \uncover<+->{MP & X\rightarrow X}
 \end{array}
 $$
-
 \end{frame}
 
 
