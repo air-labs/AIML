@@ -3,33 +3,64 @@
 \usepackage{etex}
 \usepackage{aiml}
 \usepackage{ctable}
+\usepackage{xifthen}
+\usepackage{xparse}
 
+\newcommand{\fuz}[1]{\frac{\mu(#1)}{#1}}
 
-\newcommand{\da}{\includegraphics[width=1cm]{HOMM5/dark.jpg}}
-\newcommand{\de}{\includegraphics[width=1cm]{HOMM5/destructive.jpg}}
+\newcommand{\fuzzyimage}[2]{
+\ifthenelse{\isempty{#2}}
+{
+\ifmmode{\begin{array}{c}\includegraphics[width=0.6cm]{HOMM5/#1.jpg}\end{array}}
+\else{\includegraphics[width=0.6cm]{HOMM5/#1.jpg}}
+\fi
+}
+{
+\dfrac{#2}{\includegraphics[width=0.5cm]{HOMM5/#1.jpg}}
+}
+}
 
-\newcommand{\pe}{\includegraphics[width=1cm]{HOMM5/peasant.jpg}}
-\newcommand{\wt}{\includegraphics[width=1cm]{HOMM5/wraith.jpg}}
-\newcommand{\ga}{\includegraphics[width=1cm]{HOMM5/garg.jpg}}
-\newcommand{\un}{\includegraphics[width=1cm]{HOMM5/unicorn.jpg}}
+\newcommand{\da}{}
+\DeclareDocumentCommand\da{O{}}{\fuzzyimage{dark}{#1}}
+\newcommand{\de}{}
+\DeclareDocumentCommand\de{O{}}{\fuzzyimage{destructive}{#1}}
 
+\newcommand{\pe}{}
+\DeclareDocumentCommand\pe{O{}}{\fuzzyimage{peasant}{#1}}
+\newcommand{\wt}{}
+\DeclareDocumentCommand\wt{O{}}{\fuzzyimage{wraith}{#1}}
+\newcommand{\ga}{}
+\DeclareDocumentCommand\ga{O{}}{\fuzzyimage{garg}{#1}}
+\newcommand{\un}{}
+\DeclareDocumentCommand\un{O{}}{\fuzzyimage{unicorn}{#1}}
 
-\newcommand{\ar}{\includegraphics[width=1cm]{HOMM5/archer.jpg}}
-\newcommand{\fo}{\includegraphics[width=1cm]{HOMM5/footman.jpg}}
-\newcommand{\mo}{\includegraphics[width=1cm]{HOMM5/monk.jpg}}
-\newcommand{\sk}{\includegraphics[width=1cm]{HOMM5/skeleton.jpg}}
-\newcommand{\gh}{\includegraphics[width=1cm]{HOMM5/ghost.jpg}}
-\newcommand{\lc}{\includegraphics[width=1cm]{HOMM5/lich.jpg}}
+\newcommand{\ar}{}
+\DeclareDocumentCommand\ar{O{}}{\fuzzyimage{archer}{#1}}
+\newcommand{\fo}{}
+\DeclareDocumentCommand\fo{O{}}{\fuzzyimage{footman}{#1}}
+\newcommand{\mo}{}
+\DeclareDocumentCommand\mo{O{}}{\fuzzyimage{monk}{#1}}
+\newcommand{\sk}{}
+\DeclareDocumentCommand\sk{O{}}{\fuzzyimage{skeleton}{#1}}
+\newcommand{\gh}{}
+\DeclareDocumentCommand\gh{O{}}{\fuzzyimage{ghost}{#1}}
+\newcommand{\lc}{}
+\DeclareDocumentCommand\lc{O{}}{\fuzzyimage{lich}{#1}}
 
-
-\newcommand{\aca}{\includegraphics[width=1cm]{HOMM5/academy.jpg}}
-\newcommand{\hel}{\includegraphics[width=1cm]{HOMM5/inferno.jpg}}
-\newcommand{\nec}{\includegraphics[width=1cm]{HOMM5/necropolis.jpg}}
+\newcommand{\aca}{}
+\DeclareDocumentCommand\aca{O{}}{\fuzzyimage{academy}{#1}}
+\newcommand{\hel}{}
+\DeclareDocumentCommand\hel{O{}}{\fuzzyimage{inferno}{#1}}
+\newcommand{\nec}{}
+\DeclareDocumentCommand\nec{O{}}{\fuzzyimage{necropolis}{#1}}
 
 
 \newcommand{\vc}{\centering\arraybackslash}
 
 \begin{document}
+
+
+
 
 \begin{frame}\frametitle{Отношения и отображения}
 \begin{columns}
@@ -130,20 +161,254 @@ $$
 \end{columns}
 \end{frame}
 
-\begin{frame}
+\begin{frame}\frametitle{Нечеткие отношения}
+\begin{columns}[t]
+\column{0.55\textwidth}
+\uncover<2->{$$
+\mathbb{M}=\left\{\da,\de\right\}
 $$
-\begin{array}{ >\vc m{1cm}| >\vc m{1cm} >\vc m{1cm}}
-    & \de & \da \\
+$$
+\mathbb{C}=\left\{\pe,\ga,\wt,\un\right\}
+$$
+$$
+\rho\sqsubset\mathbb{C}\times\mathbb{M}
+$$
+}
+\uncover<3->{
+$$
+\begin{array}{ >\vc m{0.7cm}| >\vc m{0.7cm} >\vc m{0.7cm}}
+$\rho$   & \de & \da \\
 \hline
 \vskip 1pt
 \pe & 0.8 & 0.8 \\
-\ga & 0.8 & 0.2 \\
-\wt & 0.2 & 0.8 \\
+\wt & 0.8 & 0.2 \\
+\ga & 0.2 & 0.8 \\
 \un & 0.2 & 0.2 
 \end{array}
 $$
+}
+\column{0.45\textwidth}
+\uncover<4->{
+$$
+\rho(C)=M
+$$
+$$
+\mu_M(m)=\max_{c\in\mathbb{C}}\left[\mu_C(c) \mu_\rho(c,m)\right]
+$$
+}
+
+\only<5-7>{
+$
+\rho\left(\wt[1]\right)=\left(\de[0.8]+\da[0.2]\right)
+$
+}
+\only<6-7>{
+$
+\rho\left(\pe[1]\right)=\left(\de[0.8]+\da[0.8]\right)
+$
+}
+\only<7>{
+$
+\rho\left(\un[1]\right)=\left(\de[0.2]+\da[0.2]\right)
+$
+}
+\only<8-10>{
+$
+\rho\left(\un[0.7]+\ga[0.3]\right)=
+$
+}
+\only<9-10>{
+$
+\left(\begin{array}{l}
+\de[\max(0.7\cdot0.2,0.3\cdot0.2)]\\
+\\
+\da[\max(0.7\cdot0.2,0.3\cdot 0.8)]
+\end{array}\right)
+$
+}
+\only<10>{
+$
+=\left(\de[0.16]+\da[0.24]\right)
+$
+}
+
+\only<11>{
+$
+\rho\left(\un[0.8]+\ga[0.2]\right)=
+$
+
+
+$
+\left(\begin{array}{l}
+\de[\max(0.8\cdot0.2,0.2\cdot0.2)]\\
+\\
+\da[\max(0.8\cdot0.2,0.2\cdot 0.8)]
+\end{array}\right)
+$
+
+$
+=\left(\de[0.16]+\da[0.16]\right)
+$
+}
+
+\only<12>{
+$
+\rho\left(\un[0.8]+\ga[0.2]\right)=
+$
+
+
+$
+\left(\begin{array}{l}
+\de[\begin{array}{l}0.8\cdot0.2+0.2\cdot0.2-\\-0.8\cdot0.2\cdot0.2\cdot0.2\end{array}]\\
+\\
+\da[\begin{array}{l}0.8\cdot0.2+0.2\cdot 0.8-\\-0.8\cdot0.2\cdot0.8\cdot0.2\end{array}]
+\end{array}\right)
+$
+
+$
+=\left(\de[0.1936]+\da[0.2944]\right)
+$
+}
+
+
+\only<13-15>{
+$
+\rho\left(\ga[0.4]+\wt[0.5]\right)=
+$
+}
+\only<14-15>{
+$
+\left(\begin{array}{l}
+\de[\max(0.4\cdot0.2,0.5\cdot0.8)]\\
+\\
+\da[\max(0.4\cdot0.8,0.5\cdot 0.2)]
+\end{array}\right)
+$
+}
+\only<15>{
+$
+=\left(\de[0.4]+\da[0.32]\right)
+$
+}
+
+
+\end{columns}
 \end{frame}
 
+
+
+\begin{frame}[t]\frametitle{Композиция нечетких отношений}
+{\small
+\begin{columns}[t]
+\column{0.5\textwidth}
+$$
+\mathbb{M}
+=\left\{\da,\de\right\}
+$$
+$$
+\mathbb{C}=\left\{\pe,\ga,\wt,\un\right\}
+$$
+$$
+\mathbb{H}
+=\left\{\aca,\hel,\nec\right\}
+$$
+$$
+\rho\sqsubset\mathbb{C}\times\mathbb{M}
+$$
+$$
+\begin{array}{ >\vc m{0.7cm}| >\vc m{0.7cm} >\vc m{0.7cm}}
+$\rho$   & \de & \da \\
+\hline
+\vskip 1pt
+\pe & 0.8 & 0.8 \\
+\wt & 0.8 & 0.2 \\
+\ga & 0.2 & 0.8 \\
+\un & 0.2 & 0.2 
+\end{array}
+$$
+
+\column{0.6\textwidth}
+$$
+\sigma\sqsubset\mathbb{M}\times\mathbb{H}
+$$
+$$
+\begin{array}{ >\vc m{0.7cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm} }
+$\sigma$   & \aca & \hel & \nec \\
+\hline
+\vskip 1pt
+\de & 0.5 & 0.7 & 0.3 \\
+\da & 0.5 & 0.3 & 0.7 \\
+\end{array}
+$$
+$$
+\tau=\rho\circ\sigma
+,\ \tau\sqsubset\mathbb{M}\times\mathbb{H}
+$$
+$$
+\begin{array}{ >\vc m{0.7cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
+$\tau$   & \aca & \hel & \nec \\
+\hline
+\vskip 1pt
+\pe &  &  &  \\
+\wt &  &  &  \\
+\ga &  &  &  \\
+\un &  &  &  \\ 
+\end{array}
+$$
+\end{columns}
+}
+\end{frame}
+
+\begin{frame}[t]\frametitle{Композиция нечетких отношений}
+\begin{columns}[t]
+\column{0.5\textwidth}
+$$
+\begin{array}{ >\vc m{0.7cm}| >\vc m{0.7cm} >\vc m{0.7cm}}
+$\rho$   & \de & \da \\
+\hline
+\vskip 1pt
+\pe & 0.8 & 0.8 \\
+\wt & 0.8 & 0.2 \\
+\ga & 0.2 & 0.8 \\
+\un & 0.2 & 0.2 
+\end{array}
+$$
+
+$$
+\begin{array}{ >\vc m{0.7cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm} }
+$\sigma$   & \aca & \hel & \nec \\
+\hline
+\vskip 1pt
+\de & 0.5 & 0.7 & 0.3 \\
+\da & 0.5 & 0.3 & 0.7 \\
+\end{array}
+$$
+\column{0.5\textwidth}
+$$
+\tau=\rho\circ\sigma
+$$
+\only<2>{$$
+\begin{array}{l l}
+\tau=\{ & (c,h)\ :\ \exists m \\
+& (c,m)\in\rho,\ (m,h)\in\sigma\}
+\end{array}
+$$}
+\only<3->{$$
+\mu_\tau(c,h)=\max_{m\in\mathbb{M}}\left[\mu_\rho(c,m)\mu_\sigma(m,h)\right]
+$$}
+\only<4-5>{$
+\mu_\tau\left(\wt,\hel\right)=
+$ $
+\max\left[0.8\cdot0.7,0.2\cdot0.3\right]=0.56
+$\\[0.5cm]}
+\only<5>{$
+\mu_\tau\left(\wt,\nec\right)=
+$ $
+\max\left[0.8\cdot0.3,0.2\cdot0.7\right]=0.24
+$}
+\end{columns}
+
+\end{frame}
 
 
 \end{document}
