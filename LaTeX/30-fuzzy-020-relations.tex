@@ -471,11 +471,9 @@ $$}
 \end{frame}
 
 \begin{frame}[t]
-$$
-\left(\sk[0.8]+\gh[0.5]+\lc[0.2]\right)\rightarrow\left(\ar[0.7]+\fo[0.4]+\mo[0.1]\right)
-$$
-\begin{columns}
-\column{0.5\textwidth}
+$$\left(\sk[0.8]+\gh[0.5]+\lc[0.2]\right)\rightarrow\left(\ar[0.7]+\fo[0.4]+\mo[0.1]\right)
+$$\begin{columns}[t]
+\column{0.4\textwidth}
 $$
 \begin{array}{ >\vc m{0.8cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
 $\rightarrow_{KD}$  & \ar   & \fo & \mo \\
@@ -497,7 +495,37 @@ $\rightarrow_{G}$  & \ar   & \fo & \mo \\
 \end{array}
 $$
 
-\column{0.5\textwidth}
+\column{0.6\textwidth}
+\only<2->{$$
+\mu_B(b)=\max_{a\in\mathbb{A}}\left[\mu_A(a) \mu_\rho(a,b)\right]
+$$}
+\only<2-3>{$$
+\rightarrow_{KD}\left(\sk[0.8]+\gh[0.5]+\lc[0.2]\right)=
+$$
+$$
+=\left( \ar[0.56]+\fo[0.32]+\mo[0.25] \right)
+$$}
+\only<3>{$$
+\rightarrow_{G}(\ldots)=\left( \ar[0.7]+\fo[0.4]+\mo[0.1] \right)
+$$}
+\only<4>{$$
+\rightarrow_{KD}\left(\sk[0.9]+\gh[0.4]+\lc[0.2]\right)=
+$$
+$$
+=\left( \ar[0.63]+\fo[0.36]+\mo[0.18] \right)
+$$
+$$
+\rightarrow_{G}(\ldots)=\left( \ar[0.72]+\fo[0.45]+\mo[0.1125] \right)
+$$}
+\only<5>{$$
+\rightarrow_{KD}\left(\sk[0.1]+\gh[0.2]+\lc[0.8]\right)=
+$$
+$$
+=\left( \ar[0.64]+\fo[0.64]+\mo[0.64] \right)
+$$
+$$
+\rightarrow_{G}(\ldots)=\left( \ar[0.8]+\fo[0.8]+\mo[0.4] \right)
+$$}
 \end{columns}
 \end{frame}
 \begin{frame}
