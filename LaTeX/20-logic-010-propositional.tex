@@ -4,74 +4,7 @@
 \begin{document}
 
 
-\section{Дедуктивные и индуктивные рассуждения}
-
-\begin{frame}\frametitle{Индуктивные рассуждения}
-\begin{tabular}{l l}
- & Бразилия -- страна Южной Америки и республика \\
- & Чили -- страна Южной Америки и республика \\
- & Уругвай -- страна Южной Америки и республика \\
-\hline
-$\therefore$ & Все страны Южной Америки -- республики \\
-\end{tabular}
-\end{frame}
-
-\begin{frame}\frametitle{Индуктивные рассуждения}
-\begin{tabular}{l l}
- & Франция -- страна Европы и республика \\
- & Германия -- страна Европы и республика \\
- & Чехия -- страна Европы и республика \\
-\hline
-$\therefore$ & Все страны Европы -- республики \\
-\end{tabular}
-\begin{flushright}
-% \uncover{\includegraphics[width=4cm]{EnglishQueen.jpg}}
-\end{flushright}
-\end{frame}
-
-
-\begin{frame}\frametitle{Индуктивные рассуждения}
-\begin{tabular}{l l}
- & Бразилия -- республика и страна Южной Америки \\
- & Чили -- республика и страна Южной Америки \\
- & Уругвай -- республика и страна Южной Америки \\
-\hline
-$\therefore$ & Все республики -- страны Южной Америки\\
-\end{tabular}
-\begin{flushright}
-% \uncover{\includegraphics[width=4cm]{Merkel.jpg}}
-\end{flushright}
-\end{frame}
-
-
-\begin{frame}\frametitle{Дедуктивные рассуждения}
-\begin{tabular}{l l}
- & Все страны Южной Америки -- республики \\
- & Бразилия -- страна Южной Америки\\
- \hline
-$\therefore$ & Бразилия -- республика \\
-\end{tabular}
-\end{frame}
-
-\begin{frame}\frametitle{Дедуктивные рассуждения}
-\begin{tabular}{l l}
- & Все моря -- соленые \\
- & Черное море -- это море \\
- \hline
-$\therefore$ & Черное море -- соленое \\
-\end{tabular}
-\end{frame}
-
-\begin{frame}\frametitle{Дедуктивные рассуждения}
-\begin{tabular}{l l}
- & Все $A$ есть $B$\\
- & Некоторый $x$ является $B$\\
- \hline
-$\therefore$ & $x$ является $A$ \\
-\end{tabular}
-\end{frame}
-
-\section{Пропозициональная логика}
+\section{Язык логики высказываний}
 
 \begin{frame}\frametitle{Пропозициональные связки }
 
@@ -142,31 +75,138 @@ $$
 $$
 \end{frame}
 
+\begin{frame}\frametitle{Вывод таблиц истинности}
+\begin{itemize}[<+->]
+\item $X\rightarrow X \uncover<+->{\ \Rightarrow\ \neg A\rightarrow \neg A} \uncover<+->{\ \Rightarrow\ \neg(A)\rightarrow(\neg A)}$
+\item $X\rightarrow \neg\neg X \uncover<+->{}\uncover<+->{\ \Rightarrow\ A\rightarrow \neg\neg A}\uncover<+->{\ \Rightarrow\ A\rightarrow \neg(\neg A)}$
+\end{itemize}
 
+\only<5>
+{
+\begin{center}
+\includegraphics[width=9cm]{Mendelson.png}
 
+(Э. Мендельсон, Введение в математическую логику, с. 40-41)
+\end{center}
+}
 
+\uncover<+->{
+$$
+\begin{array}{c|c}
+A & \neg A \\
+\hline
+\uncover<+->{0 & 1} \\
+\uncover<+->{1 & 0} \\
+\end{array}
+$$
+}
 
-\section{Законы логики высказываний}
-\begin{frame}\frametitle{Законы логики высказываний}
-\begin{tabular}{l l p{1cm} l}
-\multirow{2}{*}{Операции с константами} & $A\vee 0 = A$ && $A\wedge 0=0$ \\
-					& $A\vee 1 = 1$ && $A\wedge 1=A$ \\ 		
-Идемпотентность & $A\vee A = A$ && $A \wedge A = A$ \\
-Ассоциативность & $\begin{array}{l l}
-		    A\vee (B\vee C) & = \\
-		    (A\vee B)\vee C & = \\
-		    A\vee B\vee C
-		    \end{array}$
-				     &&
-					$\begin{array}{l l}
-					  A\wedge (B\wedge C) & = \\
-					  (A\wedge B)\wedge C & = \\
-					  A\wedge B\wedge C
-					  \end{array}$ \\
-							 
-\end{tabular}
+\begin{itemize}[<+->]
+\item $A\rightarrow(B\rightarrow A)$
+\item $\neg X\rightarrow (X\rightarrow Y) {\ \Rightarrow\ \neg A\rightarrow(A\rightarrow B)}$
+\item $A\rightarrow(\neg B\rightarrow\neg(A\rightarrow B))$
+\end{itemize}
+\uncover<+->{
+$$
+\begin{array}{c c| c}
+A & B & A\rightarrow B \\
+\hline
+\uncover<+->{0 & 0 & 1} \\
+\uncover<+->{0 & 1 & 1} \\
+\uncover<+->{1 & 0 & 0} \\
+\uncover<+->{1 & 1 & 1} \\
+\end{array}
+$$
+}
 \end{frame}
 
+\begin{frame}\frametitle{Вывод таблиц истинности}
+\begin{itemize}[<+->]
+\item $A\vee B:=\neg A\rightarrow B$
+
+\uncover<+->{
+$$
+\begin{array}{c c|c |c}
+A & B & \neg A & \neg A\rightarrow B=A\vee B \\
+\hline
+0 & 0 & 1 & 0 \\
+0 & 1 & 1 & 1 \\
+1 & 0 & 0 & 1 \\
+1 & 1 & 0 & 1 \\
+\end{array}
+$$
+}
+
+\item $A\wedge B:=\neg(A\rightarrow \neg B)$
+
+\uncover<+->{
+$$
+\begin{array}{c c| c| c| c}
+A & B & \neg B & A\rightarrow \neg B & \neg(A\rightarrow\neg B) =A\wedge B \\
+\hline
+0 & 0 & 1 & 1 & 0 \\
+0 & 1 & 0 & 1 & 0\\
+1 & 0 & 1 & 1 & 0\\
+1 & 1 & 0 & 0 & 1\\
+\end{array}
+$$
+}
+\end{itemize}
+\end{frame}
+
+\section{Законы логики высказываний}
+
+\begin{frame}\frametitle{Эквивалентность высказываний}
+$$
+\overline{A}\wedge\overline{B}=\overline{A\vee B}\only<1-7>{?}\only<8>{!}
+$$
+
+\uncover<2->{
+$$
+\begin{array}{c c|c|c|c|c|c}
+A & B & \overline{A} & \overline{B} & \overline{A}\wedge\overline{B} & A\vee B & \overline{A\vee B} \\
+\hline
+0 & 0 & \uncover<3->{1} & \uncover<4->{1} & \uncover<5->{1} & \uncover<6->{0} & \uncover<7->{1} \\
+0 & 1 & \uncover<3->{1} & \uncover<4->{0} & \uncover<5->{0} & \uncover<6->{1} & \uncover<7->{0} \\
+1 & 0 & \uncover<3->{0} & \uncover<4->{1} & \uncover<5->{0} & \uncover<6->{1} & \uncover<7->{0} \\
+1 & 1 & \uncover<3->{0} & \uncover<4->{0} & \uncover<5->{0} & \uncover<6->{1} & \uncover<7->{0} \\
+\end{array}
+$$
+}
+\end{frame}
+
+\begin{frame}\frametitle{Законы логики высказываний}
+{\small
+$$
+\begin{array}{c p{1cm} c}
+\multicolumn{3}{c}{$Ассоциативность$} \\
+\begin{array}{l}
+\ \ \ A\vee (B\vee C)=\\
+=(A\vee B)\vee C=\\
+=A\vee B\vee C\\
+\end{array} &&
+\begin{array}{l}
+\ \ \ A\wedge (B\wedge C)=\\
+=(A\wedge B)\wedge C=\\
+=A\wedge B\wedge C\\
+\end{array} \\
+\multicolumn{3}{c}{$Коммутативность$} \\
+A\vee B=B\vee A && A\wedge B=B\wedge A\\
+\multicolumn{3}{c}{$Константы и идемпотентность$} \\
+A\vee 1=1 && A\wedge 1=A \\
+A\vee 0=A && A\wedge 0=0 \\
+A\vee A=A && A\wedge A=A \\
+\multicolumn{3}{c}{$Дистрибутивность$} \\
+A\vee (B\wedge C)= && A\wedge (B\vee C)= \\
+=(A\vee C)\wedge (A\vee C) && =(A\wedge B)\vee (A\wedge C) \\
+\multicolumn{3}{c}{$Отрицание отрицания$} \\
+\multicolumn{3}{c}{\neg\neg A=A} \\
+\multicolumn{3}{c}{$Законы де Моргана$} \\
+\overline{A\vee B}=\overline{A}\wedge\overline{B}&& \overline{A\wedge B}=\overline{A}\vee\overline{B} \\
+\end{array}
+$$
+}
+\end{frame}
 \begin{frame}\frametitle{Конъюнктивная нормальная форма}
 
 $$
@@ -184,6 +224,8 @@ $$
 \uncover<+->{ \neg A } \\
 \uncover<+->{ \neg A \vee B } \\
 \uncover<+->{ (A \vee B) \vee C } \uncover<+->{ = A\vee B\vee C }\\
+\uncover<+->{ (A\vee B)\wedge C } \\
+\uncover<+->{ (A\vee B)\wedge (\neg C\vee D) } \\
 \uncover<+->{ (A \wedge B) \vee C } \uncover<+->{ = (A\vee C)\wedge (B\vee C)}\\
 \end{array}
 $$
@@ -285,7 +327,7 @@ $$
 \node (p3) at (2,3) {$\neg X$};
 
 \node (s1) at (0.5,1) {$\begin{array}{l} A=X\\ B=\square \\ C= U \vee V \end{array}$};
-\node (r1) at (0.5,-0.5) {$U\vee V$};
+\node (r1) at (0.5,-0.5) {$U\vee V?$};
 \path (p1) edge[->] (s1);
 \path (p2) edge[->] (s1);
 \path (s1) edge[->] (r1);
@@ -340,17 +382,27 @@ $$
 \end{frame}
 
 \begin{frame}\frametitle{Метод резолюций}
+
+\only<1>
+{
+{\bf Доказать:}
+$$
+\frac{A_1,A_2,\ldots,A_n}{B}
+$$
+}
+
+\uncover<+->{}
 \uncover<+->{
 {\bf Доказать:} 
 $$
-A_1,A_2,\ldots,A_n\models B
+A_1,A_2,\ldots,A_n\vdash B
 $$
 }
 
 \uncover<+->{
 {\bf Эквивалентно:} 
 $$
-A_1,A_2,\ldots,A_n, \neg B\models \square
+A_1,A_2,\ldots,A_n, \neg B\vdash \square
 $$
 }
 
@@ -364,7 +416,69 @@ $$
 \end{frame}
 
 \begin{frame}\frametitle{Метод резолюций}
-Сюда пример
+
+{\bf Доказать:} $A\oplus B,\ A\rightarrow B\vdash \neg A$
+
+\begin{itemize}[<+->]
+\item $A\oplus B$, $A\rightarrow B$, $A$
+\item $(A\vee B)\wedge(\neg A\vee\neg B)$, $\neg A\vee B$, $A$
+\item $A\vee B$, $\neg A\vee \neg B$, $\neg A \vee B$, $A$
+\end{itemize}
+
+$ $\\[1cm]
+
+\uncover<+->{
+\begin{tikzpicture}[x=2cm]
+\node (ab) at (0,10) {$A\vee B$};
+\node (nanb) at (1,10){$\neg A\vee \neg B$};
+\node (nab) at (2,10) {$\neg A \vee B$};
+\node (a) at (3,10) {$A$};
+
+\only<+>{
+\node (1) at (0,9) {$1$};
+\path (ab) edge[->] (1);
+\path (nanb) edge[->] (1);
+}
+
+\uncover<+->{
+\node (b) at (0,9) {$B$};
+\path (ab) edge[->] (b);
+\path (nab) edge[->] (b);
+}
+
+\uncover<+->{
+\node (na) at (1,9) {$\neg A$};
+\path (nanb) edge[->] (na);
+\path (nab) edge[->] (na);
+}
+
+\uncover<+->{
+\node (nb) at (2,9) {$\neg B$};
+\path (nanb) edge[->] (nb);
+\path (a) edge[->] (nb);
+}
+
+\only<+>{
+\node (b1) at (3,9) {$ B$};
+\path (nab) edge[->] (b1);
+\path (a) edge[->] (b1);
+}
+
+\uncover<+->{
+\node (e1) at (1,8) {$\square$};
+\path (b) edge[->] (e1);
+\path (nb) edge[->] (e1);
+}
+
+\uncover<+->{
+\node (e2) at (2,8) {$\square$};
+\path (na) edge[->] (e2);
+\path (a) edge[->] (e2);
+}
+
+
+\end{tikzpicture}
+}
 \end{frame}
 
 \end{document}

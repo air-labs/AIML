@@ -2,6 +2,16 @@
 \usepackage[utf8]{inputenc}
 \usepackage{aiml}
 
+\newcommand{\nothing}
+{
+\begin{minipage}{1cm}
+\begin{tikzpicture}[x=0.5cm,y=0.5cm]
+\draw[thick] (0,0)--(1,1);
+\draw[thick] (0,1)--(1,0);
+\end{tikzpicture}
+\end{minipage}
+}
+
 \begin{document}
 
 
@@ -100,9 +110,9 @@ $$\\[1cm]
 $$
 \begin{array}{l l}
 & \forall x\ P(x)\rightarrow Q(x) \\
-& \forall x\ P(x) \\
+& P(a) \\
 \hline
-\therefore & \forall x\ Q(x)
+\therefore & Q(a)
 \end{array}
 $$
 \end{frame}
@@ -186,6 +196,7 @@ $$
 \item<+-> $\forall u \forall x \forall y \exists z\ P(a,u,f(u))\vee P(x,y,z)$ 
 \item<+-> $\forall u \forall x \forall y \ P(a,u,f(u))\vee P(x,y,g(u,x,y))$ 
 \item<+-> $P(a,u,f(u))\vee P(x,y,g(u,x,y))$ 
+\item<+-> $P(a,u,f(u)),\ P(x,y,g(u,x,y))$ 
 \end{itemize}
 \end{frame}
 
@@ -199,7 +210,7 @@ $$
 }
 \uncover<+->{
  & x:=a \\
- & \neg P(x) \vee Q(x) \\
+ & \neg P(a) \vee Q(a) \\
  & P(a) \\
  \hline
 }
@@ -210,15 +221,77 @@ $$
 $$
 \end{frame}
 
-\begin{frame}
-Примеры удачных и неудачных унификаций
-\end{frame}
+\begin{frame}\frametitle{Удачные и неудачные унификации}
 
-\begin{frame}\frametitle{Метод резолюций в логике предикатов}
+$$
+\uncover<+->{
+\begin{array}{l}
+P(f(x))\vee Q(x) \\
+P(f(a))
+\end{array}
+}
+\uncover<+->{
+\Rightarrow
+\begin{array}{l}
+x:=a\\
+Q(a)
+\end{array}
+}
+$$
 
-\end{frame}
+$$
+\uncover<+->{
+\begin{array}{l}
+P(x,a))\vee Q(x) \\
+\neg P(b,c)
+\end{array}
+}
+\uncover<+->{
+\Rightarrow
+\nothing
+}
+$$
 
-\begin{frame}\frametitle{Зацикливание метода резолюций}
+$$
+\uncover<+->{
+\begin{array}{l}
+P(x,a))\vee Q(x) \\
+\neg P(b,x)
+\end{array}
+}
+\uncover<+->{
+\Rightarrow
+\begin{array}{l}
+P(x,a))\vee Q(x) \\
+\neg P(b,y)
+\end{array}
+}
+\uncover<+->{
+\Rightarrow
+\begin{array}{l}
+x:=b\\
+y:=a\\
+Q(b)\\
+\end{array}
+}
+$$
+
+$$
+\uncover<+->{
+\begin{array}{l}
+P(a,y))\vee Q(g(y)) \\
+\neg P(x,f(x))
+\end{array}
+}
+\uncover<+->{
+\Rightarrow
+\begin{array}{l}
+x:=a\\
+y:=f(a)\\
+Q(g(f(b)))\\
+\end{array}
+}
+$$
 \end{frame}
 
 \end{document}
