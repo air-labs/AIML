@@ -6,6 +6,16 @@
 \usepackage{tikz}
 \usepackage{cancel}
 
+\newcommand{\foperation}[1]{\widetilde{#1}}
+\newcommand{\fcup}{\foperation{\cup}}
+\newcommand{\fcap}{\foperation{\cap}}
+\newcommand{\fwedge}{\foperation{\wedge}}
+\newcommand{\fvee}{\foperation{vee}}
+\newcommand{\fsubset}{\foperation{\subset}}
+\newcommand{\fin}{\foperation{\in}}
+\newcommand{\fa}{\foperation{A}}
+\newcommand{\fb}{\foperation{B}}
+
 
 \tikzstyle{neu}=[circle,fill=blue!50,inner sep=8pt]
 \newcommand{\dd}[2]{\frac{\partial #1}{\partial #2}}

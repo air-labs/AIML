@@ -156,8 +156,43 @@ $$
 
 
 }
-
 \end{columns}
+\end{frame}
+
+\begin{frame}[t]\frametitle{Нечеткие отношения}
+
+$$
+A\subset\mathbb{A},\ \rho\subset\mathbb{A}\times\mathbb{B}
+$$
+\only<2->{$$
+\rho(A)=\{ b\in\mathbb{B}\ :\ \exists a\in A, (a,b)\in\rho\}
+$$}
+\only<3->{$$
+= b\in\bigcup_{a\in\mathbb{A}}\{\underbrace{b,\ a\in A\wedge (a,b)\in\rho}_{\rho(A/a)\ne\rho(a)}\}
+$$}
+\only<4-7>{$$
+b\in\rho(A/a)\Leftrightarrow a\in A\ \wedge\ (a,b)\in\rho
+$$}
+\only<5->{$$
+M \fsubset \mathbb{M},\ \sigma\fsubset\mathbb{M}\times\mathbb{N}
+$$}
+\only<6-7>{$$
+n\fin\sigma(M/m) = m\fin M\ \fwedge\ (m,n)\fin\sigma
+$$}
+\only<7-10>{$$
+\mu_{\sigma(M/m)}(n)= T\left(\mu_{M}(m),\mu_{\sigma}(m,n)\right)
+$$}
+\only<8-10>{$$
+\sigma(M)=\foperation{\bigcup_{m\in\mathbb{M}}}\sigma(M/m)
+$$}
+\only<9->{$$
+\mu_{\sigma(M)}(n)=\underset{m\in\mathbb{M}}{S}\left[T\left(\mu_{M}(m),\mu_{\sigma}(m,n)\right)\right]
+$$
+\only<10->{$$
+\mu_{\sigma(M)}(n)=\max_{m\in\mathbb{M}}\left[\mu_{M}(m)\mu_{\sigma}(m,n)\right]
+$$}
+}
+
 \end{frame}
 
 \begin{frame}\frametitle{Нечеткие отношения}
@@ -170,7 +205,7 @@ $$
 \mathbb{C}=\left\{\pe,\ga,\wt,\un\right\}
 $$
 $$
-\rho\sqsubset\mathbb{C}\times\mathbb{M}
+\rho\fsubset\mathbb{C}\times\mathbb{M}
 $$
 }
 \uncover<3->{
@@ -187,25 +222,16 @@ $\rho$   & \de & \da \\
 $$
 }
 \column{0.45\textwidth}
-\uncover<4->{
-$$
-\rho(C)=M
-$$
-$$
-\mu_M(m)=\max_{c\in\mathbb{C}}\left[\mu_C(c) \mu_\rho(c,m)\right]
-$$
-}
-
-\only<5-7>{
-$
+\only<4->{$$
+\only<4-11,13->{\mu_{\rho(C)}(m)=\max_{c\in\mathbb{C}}\left[\mu_C(c) \mu_\rho(c,m)\right]}
+\only<12>{\mu_{\rho(C)}(m)=\underset{c\in\mathbb{C}}{S}\left[\mu_C(c) \mu_\rho(c,m)\right]}
+$$}
+\only<5-7>{$
 \rho\left(\wt[1]\right)=\left(\de[0.8]+\da[0.2]\right)
-$
-}
-\only<6-7>{
-$
+$}
+\only<6-7>{$
 \rho\left(\pe[1]\right)=\left(\de[0.8]+\da[0.8]\right)
-$
-}
+$}
 \only<7>{
 $
 \rho\left(\un[1]\right)=\left(\de[0.2]+\da[0.2]\right)
@@ -312,7 +338,7 @@ $$
 =\left\{\aca,\hel,\nec\right\}
 $$
 $$
-\rho\sqsubset\mathbb{C}\times\mathbb{M}
+\rho\fsubset\mathbb{C}\times\mathbb{M}
 $$
 $$
 \begin{array}{ >\vc m{0.7cm}| >\vc m{0.7cm} >\vc m{0.7cm}}
@@ -328,7 +354,7 @@ $$
 
 \column{0.6\textwidth}
 $$
-\sigma\sqsubset\mathbb{M}\times\mathbb{H}
+\sigma\fsubset\mathbb{M}\times\mathbb{H}
 $$
 $$
 \begin{array}{ >\vc m{0.7cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm} }
@@ -341,7 +367,7 @@ $\sigma$   & \aca & \hel & \nec \\
 $$
 $$
 \tau=\rho\circ\sigma
-,\ \tau\sqsubset\mathbb{M}\times\mathbb{H}
+,\ \tau\fsubset\mathbb{M}\times\mathbb{H}
 $$
 $$
 \begin{array}{ >\vc m{0.7cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
@@ -386,26 +412,20 @@ $$
 $$
 \tau=\rho\circ\sigma
 $$
-\only<2>{$$
-\begin{array}{l l}
-\tau=\{ & (c,h)\ :\ \exists m \\
-& (c,m)\in\rho,\ (m,h)\in\sigma\}
-\end{array}
-$$}
-\only<3->{$$
+\only<2->{$$
 \mu_\tau(c,h)=\max_{m\in\mathbb{M}}\left[\mu_\rho(c,m)\mu_\sigma(m,h)\right]
 $$}
-\only<4-5>{$
+\only<3-4>{$
 \mu_\tau\left(\wt,\hel\right)=
 $ $
 \max\left[0.8\cdot0.7,0.2\cdot0.3\right]=0.56
 $\\[0.5cm]}
-\only<5>{$
+\only<4>{$
 \mu_\tau\left(\wt,\nec\right)=
 $ $
 \max\left[0.8\cdot0.3,0.2\cdot0.7\right]=0.24
 $}
-\only<6->{$$
+\only<5->{$$
 \begin{array}{ >\vc m{0.7cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
 $\tau$   & \aca & \hel & \nec \\
 \hline
@@ -420,116 +440,4 @@ $$
 \end{columns}
 \end{frame}
 
-\section{Нечеткая логика}
-
-\begin{frame}[t]\frametitle{Нечеткий вывод}
-
-\only<1-3>{$$
-\left(\sk[0.9]+\gh[0.4]+\lc[0.1]\right)
-$$}
-\only<3->{$$
-\left(\sk[0.8]+\gh[0.5]+\lc[0.2]\right)\rightarrow\left(\ar[0.7]+\fo[0.4]+\mo[0.1]\right)
-$$}
-\only<2,3>{$$
-\begin{array}{ >\vc m{0.7cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
-$\rho$  & \ar & \fo  & \mo \\
-\hline
-\vskip 1pt
-\sk & ? & ? & ? \\
-\gh & ? & ? & ? \\
-\lc & ? & ? & ? \\
-\end{array}
-$$}
-\only<4-11>{$$
-\begin{array}{ >\vc m{0.8cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
-$\only<1-6>{\rightarrow}\only<7->{\rightarrow_{KD}}$  & \ar   & \fo & \mo \\
-\hline
-\vskip 1pt
-\sk & \uncover<8->{0.7} & \uncover<9->{0.4} & \uncover<10->{0.2} \\
-\gh & \uncover<11>{0.7 & 0.5 & 0.5} \\
-\lc & \uncover<11>{0.8 & 0.8 & 0.8} \\
-\end{array}
-$$}
-\only<5-6>{$\mu_{\rightarrow}\left(\sk,\ar\right)$}
-\only<6>{$=0.8\rightarrow 0.7=\max(1-0.8,0.7)=0.7$}
-\only<7-11>{$$N\rightarrow H \Rightarrow
-\mu_{\rightarrow_{KD}}(n,h)=\mu_N(n)\rightarrow_{KD}\mu_H(h)=\max\left[1-\mu_N(n),\mu_H(h)\right]
-$$}
-\only<12->{$$
-\begin{array}{ >\vc m{0.8cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
-$\rightarrow_{G}$  & \ar   & \fo & \mo \\
-\hline
-\vskip 1pt
-\sk & \uncover<13>{0.875 & 0.5 & 0.125 } \\
-\gh & \uncover<13>{ 1 & 0.8 & 0.2} \\
-\lc & \uncover<13>{ 1 &  1 & 0.5} \\
-\end{array}
-$$}
-\only<12->{$$N\rightarrow H \Rightarrow
-\mu_{\rightarrow{G}}(n,h)=\mu_N(n)\rightarrow_{G}\mu_H(h)=\min\left[1,y/x\right]
-$$}
-\end{frame}
-
-\begin{frame}[t]
-$$\left(\sk[0.8]+\gh[0.5]+\lc[0.2]\right)\rightarrow\left(\ar[0.7]+\fo[0.4]+\mo[0.1]\right)
-$$\begin{columns}[t]
-\column{0.4\textwidth}
-$$
-\begin{array}{ >\vc m{0.8cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
-$\rightarrow_{KD}$  & \ar   & \fo & \mo \\
-\hline
-\vskip 1pt
-\sk & 0.7 & 0.4 & 0.2 \\
-\gh & 0.7 & 0.5 & 0.5 \\
-\lc & 0.8 & 0.8 & 0.8 \\
-\end{array}
-$$
-$$
-\begin{array}{ >\vc m{0.8cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
-$\rightarrow_{G}$  & \ar   & \fo & \mo \\
-\hline
-\vskip 1pt
-\sk & 0.875 & 0.5 & 0.125 \\
-\gh &  1 & 0.8 & 0.2 \\
-\lc &  1 &  1 & 0.5 \\
-\end{array}
-$$
-
-\column{0.6\textwidth}
-\only<2->{$$
-\mu_B(b)=\max_{a\in\mathbb{A}}\left[\mu_A(a) \mu_\rho(a,b)\right]
-$$}
-\only<2-3>{$$
-\rightarrow_{KD}\left(\sk[0.8]+\gh[0.5]+\lc[0.2]\right)=
-$$
-$$
-=\left( \ar[0.56]+\fo[0.32]+\mo[0.25] \right)
-$$}
-\only<3>{$$
-\rightarrow_{G}(\ldots)=\left( \ar[0.7]+\fo[0.4]+\mo[0.1] \right)
-$$}
-\only<4>{$$
-\rightarrow_{KD}\left(\sk[0.9]+\gh[0.4]+\lc[0.2]\right)=
-$$
-$$
-=\left( \ar[0.63]+\fo[0.36]+\mo[0.18] \right)
-$$
-$$
-\rightarrow_{G}(\ldots)=\left( \ar[0.72]+\fo[0.45]+\mo[0.1125] \right)
-$$}
-\only<5>{$$
-\rightarrow_{KD}\left(\sk[0.1]+\gh[0.2]+\lc[0.8]\right)=
-$$
-$$
-=\left( \ar[0.64]+\fo[0.64]+\mo[0.64] \right)
-$$
-$$
-\rightarrow_{G}(\ldots)=\left( \ar[0.8]+\fo[0.8]+\mo[0.4] \right)
-$$}
-\end{columns}
-\end{frame}
-\begin{frame}
-Goguen,
-Kleene-Dines
-\end{frame}
 \end{document}
