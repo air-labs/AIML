@@ -17,7 +17,7 @@ $$
 \begin{array}{c p{1cm} l}
 \uncover<+->{x,y\in\{0,1\}} 
 &&
-\uncover<+->{u,v\in[0,1]}\\
+\uncover<+->{u,v\in[0,1]}\\[0.5cm]
 \uncover<+->{\begin{array}{c|c}
 x & \neg x=\overline{x}\\
 \hline
@@ -26,7 +26,7 @@ x & \neg x=\overline{x}\\
 \end{array}}
 &&
 \uncover<+->{\neg u=(1-u)}
-\\
+\\[1cm]
 \uncover<+->{\begin{array}{c c|c c}
 x & y & x\wedge y & x\vee y \\
 \hline
@@ -143,7 +143,7 @@ $$
 \item монотонны;
 \item ассоциативны;
 \item коммутативны;
-\item связаны соотношениями де-Моргана $1-T(u,v)=S(1-u,1-v)$ и $1-S(u,y)=T(1-u,1-v0)$;
+\item связаны соотношениями де-Моргана $1-T(u,v)=S(1-u,1-v)$ и $1-S(u,y)=T(1-u,1-v)$;
 \item удовлетворяют граничным условиям $T(0,0)=T(0,1)=T(1,0)=0$, $T(1,1)=1$, $S(1,1)=S(0,1)=T(1,0)=1$, $S(0,0)=0$
 \end{enumerate}
 \end{frame}
@@ -151,12 +151,40 @@ $$
 
 
 \begin{frame}\frametitle{Нечеткие множества}
+$$
+\begin{array}{c p{0.1cm} c}
+\mathbb{A},\ A\subset\mathbb{A},\ a\in A
+&&
+\mathbb{M},\ A\fsubset\mathbb{M},\ m\fin M
+\\[0.3cm]
+(a,A)\overset{\in}{\rightarrow}\{0,1\} 
+&&
+(m,M)\overset{\fin}{\rightarrow}[0,1]\\
+&&
+\mu_M(m),\ \mu_M:\mathbb{M}\rightarrow[0,1]\\[0.3cm]
+A=\{a_1,a_2,\ldots,a_n\}
+&&
+M=\left(\fuz{a_1}+\fuz{a_2}+\ldots+\fuz{a_n}\right)\\[0.3cm]
+B\subset A\Leftrightarrow \forall b\ (b \in B\rightarrow b\in A)
+&&
+N\subset M\Leftrightarrow \forall m\ \mu_N(m)\le\mu_M(m)\\[0.3cm]
+
+c\in A\cap B\Leftrightarrow c\in A\wedge c\in B
+&&
+\mu_{M\fcap N}(m)=\mu_M(m)\fwedge\mu_N(m)=\\
+&& T(\mu_M(m),\mu_N(m)) \\[0.3cm]
 
 
+c\in A\cup B\Leftrightarrow c\in A\vee c\in B
+&&
+\mu_{M\fcup N}(m)=\mu_M(m)\fvee\mu_N(m)=\\
+&& S(\mu_M(m),\mu_N(m)) \\[0.3cm]
+\\
+
+\end{array}
+$$
 \end{frame}
 
-\begin{frame}\frametitle{Объединение и пересечение}
-\end{frame}
 
 \begin{frame}\frametitle{Объединение и пересечение}
 \end{frame}
