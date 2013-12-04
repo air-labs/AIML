@@ -8,60 +8,104 @@ namespace FuzzyArithmetic
 {
     using System.Drawing;
     using System.Windows.Forms.DataVisualization.Charting;
-    using FuzzyNumber = Dictionary<double, double>;
 
 
     static class Program
     {
-        static double Min = 0;
         static double Max = 10;
-        static double Delta = 0.1;
+        static double Delta = 0.01;
+        static int MaxInt = (int)(Max / Delta);
 
-        static FuzzyNumber Number(double near)
+        static Func<double, double, double> T = (x, y) => x*y;
+        static Func<double, double, double> S = (x, y) => Math.Max(x,y);
+
+        
+
+        static double[] Number(double near)
         {
-            return Enumerable.Range(0, (int)((Max - Min) / Delta))
-                 .Select(z => z * Delta)
-                 .Select(z => new KeyValuePair<double, double>(z, Math.Exp(-Math.Pow(z - near,2))))
-                 .ToDictionary(z => z.Key, z => z.Value);
+            return Enumerable.Range(0, MaxInt)
+                 .Select(z => Math.Exp(-Math.Pow(z * Delta - near, 2)))
+                 .ToArray();
         }
 
-        static FuzzyNumber Operation(FuzzyNumber A, FuzzyNumber B, Func<double, double, double> operation)
+        static double[] Operation(double[] A, double[] B, Func<double, double, double> operation)
         {
-            FuzzyNumber result = new FuzzyNumber();
-            foreach(var a in A)
-                foreach (var b in B)
+            var result = Enumerable.Range(0, MaxInt).Select(z => double.NaN).ToArray();
+            
+            for (int i=0;i<A.Length;i++)
+                for (int j = 0; j < B.Length; j++)
                 {
-                    var arg = operation(a.Key, b.Key);
-                    var val= a.Value*b.Value;
-                    if (!result.ContainsKey(arg)) result[arg] = val;
-                    else result[arg] = Math.Max(result[arg], val);
+                    var arg = (int)(operation(i * Delta, j * Delta) / Delta);
+                    if (arg < 0 || arg >= MaxInt) continue;
+                    var val = T(A[i], B[j]);
+                    if (double.IsNaN(result[arg])) result[arg] = val;
+                    else result[arg] = S(result[arg], val);
                 }
+
+            for (int k=0;k<3;k++)
+            for (int i=1;i<result.Length-1;i++)
+                result[i]=(result[i]+result[i-1]+result[i+1])/3;
+
             return result;
         }
 
-       
+        static double[] Operation(double[] A, Func<double,double> operation)
+        {
+            var result = Enumerable.Range(0, MaxInt).Select(z => double.NaN).ToArray();
 
-        static Series Plot(FuzzyNumber number, Color color)
+            for (int i = 0; i < A.Length; i++)
+                 {
+                    var arg = (int)(operation(i * Delta) / Delta);
+                    if (arg < 0 || arg >= MaxInt) continue;
+                    if (double.IsNaN(result[arg])) result[arg] = A[i];
+                    else result[arg] = S(result[arg], A[i]);
+                }
+
+            int nonNan = 0;
+            for (nonNan = 0; nonNan < result.Length; nonNan++)
+                if (!double.IsNaN(result[nonNan])) break;
+            for (int i = nonNan + 1; i < result.Length; i++)
+                if (double.IsNaN(result[i])) result[i] = result[i - 1];
+            for (int i = nonNan - 1; i >=0 ; i--)
+                if (double.IsNaN(result[i])) result[i] = result[i + 1];
+
+
+
+            for (int k = 0; k < 3; k++)
+                for (int i = 1; i < result.Length - 1; i++)
+                    result[i] = (result[i] + result[i - 1] + result[i + 1]) / 3;
+
+            return result;
+        }
+
+        static void Add(this SeriesCollection series, double[] A, Color color)
+        {
+            series.Add(Plot(A, color));
+        }
+
+
+        static Series Plot(double[] number, Color color)
         {
             var series = new Series();
-            foreach (var e in number.OrderBy(z => z.Key))
-                series.Points.Add(new DataPoint(e.Key, e.Value));
+            for (int i=0;i<number.Length;i++)
+                 series.Points.Add(new DataPoint(i*Delta, number[i]));
             series.ChartType = SeriesChartType.FastLine;
+            series.MarkerBorderWidth = 5;
             series.Color = color;
             return series;
         }
 
-        static FuzzyNumber SumTest(double number, int count)
-        {
-            FuzzyNumber result = null;
-            for (int i = 0; i < count; i++)
-            {
-                var argument = Number(number);
-                if (result == null) result = argument;
-                else result = Operation(result, argument, (a,b)=>a+b);
-            }
-            return result;
-        }
+        //static FuzzyNumber SumTest(double number, int count)
+        //{
+        //    FuzzyNumber result = null;
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        var argument = Number(number);
+        //        if (result == null) result = argument;
+        //        else result = Operation(result, argument, (a,b)=>a+b);
+        //    }
+        //    return result;
+        //}
 
 
         [STAThread]
@@ -72,8 +116,19 @@ namespace FuzzyArithmetic
             var chart = new Chart();
             chart.Dock = DockStyle.Fill;
             chart.ChartAreas.Add(new ChartArea());
-            chart.Series.Add(Plot(SumTest(1, 2), Color.Red));
-            
+
+
+         //   chart.Series.Add(Operation(Number(8), Number(2), (a, b) => a / b), Color.Red);
+          //  chart.Series.Add(Operation(Number(2), Number(2), (a, b) => a + b), Color.Green);
+           // chart.Series.Add(Operation(Number(2), Number(2), (a, b) => a * b), Color.Blue);
+            //   chart.Series.Add(Operation(Number(4), a => Math.Sqrt(a)), Color.Orange);
+            chart.Series.Add(Operation(Number(2), a => a * a), Color.Orange);
+            chart.Series.Add(Operation(Number(2), Number(2), (a,b) => a * b), Color.Orange);
+
+            //chart.Series.Add(Operation(Number(4), Number(4), (a, b) => { if (b == 0) return 0; else return a / b; }), Color.Red);
+            //chart.Series.Add(Operation(Number(2), Number(2), (a, b) => a + b), Color.Blue);
+                
+
             var form = new Form();
             form.Controls.Add(chart);
             Application.Run(form);
