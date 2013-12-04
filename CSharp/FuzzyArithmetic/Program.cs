@@ -7,6 +7,7 @@ using System.Windows.Forms;
 namespace FuzzyArithmetic
 {
     using System.Drawing;
+    using System.IO;
     using System.Windows.Forms.DataVisualization.Charting;
 
 
@@ -78,6 +79,14 @@ namespace FuzzyArithmetic
             return result;
         }
 
+        static double[] Rel(double[] A, double[] B, Func<double, double, double> op)
+        {
+            var result = new double[MaxInt];
+            for (int i = 0; i < MaxInt; i++)
+                result[i] = op(A[i], B[i]);
+            return result;
+        }
+
         static void Add(this SeriesCollection series, double[] A, Color color)
         {
             series.Add(Plot(A, color));
@@ -88,11 +97,28 @@ namespace FuzzyArithmetic
         {
             var series = new Series();
             for (int i=0;i<number.Length;i++)
+                if (number[i]>0.01)
                  series.Points.Add(new DataPoint(i*Delta, number[i]));
             series.ChartType = SeriesChartType.FastLine;
             series.MarkerBorderWidth = 5;
             series.Color = color;
             return series;
+        }
+
+        static string DTS(double d)
+        {
+            return d.ToString().Replace(',', '.');
+        }
+
+        static void SavePlot(string Name, double[] plot)
+        {
+            using (var file = new StreamWriter(@"..\..\..\..\LaTeX\Plots\"+Name+".dat"))
+            {
+                file.WriteLine("# N mu");
+                for (int i = 0; i < plot.Length; i += 10)
+                    if (plot[i]>0.01)
+                        file.WriteLine("{0}\t{1}", DTS(i * Delta), DTS(plot[i]));
+            }
         }
 
         //static FuzzyNumber SumTest(double number, int count)
@@ -118,12 +144,23 @@ namespace FuzzyArithmetic
             chart.ChartAreas.Add(new ChartArea());
 
 
+            var A2=Number(2);
+            var A3=Number(3);
+            SavePlot("A",A2);
+            SavePlot("B", A3);
+            SavePlot("A_cup1_B", Rel(A2, A3, (a, b) => Math.Max(a, b)));
+            SavePlot("A_cap1_B", Rel(A2, A3, (a, b) => Math.Min(a, b)));
+            SavePlot("A_cap2_B", Rel(A2, A3, (a, b) => a*b));
+            SavePlot("A_cup2_B", Rel(A2, A3, (a, b) => a+b-a*b));
          //   chart.Series.Add(Operation(Number(8), Number(2), (a, b) => a / b), Color.Red);
           //  chart.Series.Add(Operation(Number(2), Number(2), (a, b) => a + b), Color.Green);
            // chart.Series.Add(Operation(Number(2), Number(2), (a, b) => a * b), Color.Blue);
             //   chart.Series.Add(Operation(Number(4), a => Math.Sqrt(a)), Color.Orange);
-            chart.Series.Add(Operation(Number(2), a => a * a), Color.Orange);
-            chart.Series.Add(Operation(Number(2), Number(2), (a,b) => a * b), Color.Orange);
+          //  chart.Series.Add(Operation(Number(2), a => a * a), Color.Orange);
+          //  chart.Series.Add(Operation(Number(2), Number(2), (a,b) => a * b), Color.Orange);
+            chart.Series.Add(Number(2), Color.Red);
+            chart.Series.Add(Number(3), Color.Green);
+            chart.Series.Add(Rel(Number(2), Number(3), (x, y) => x+y-x*y), Color.Orange);
 
             //chart.Series.Add(Operation(Number(4), Number(4), (a, b) => { if (b == 0) return 0; else return a / b; }), Color.Red);
             //chart.Series.Add(Operation(Number(2), Number(2), (a, b) => a + b), Color.Blue);

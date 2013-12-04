@@ -187,6 +187,54 @@ $$
 
 
 \begin{frame}\frametitle{Объединение и пересечение}
+\begin{tikzpicture}[x=1.8cm,y=3cm]
+\draw[->,thick] (0,0.01) -- (5.5,0.01) node[below] {$x$};
+\draw[->,thick] (0,0) -- (0,1.2) node[left] {$\mu$};
+
+
+\node at(3,1.1) {$B\approx 3$};
+\node at(2,1.1) {$A\approx 2$};
+\draw[red,thick] plot file {Plots/A.dat};
+\draw[blue,thick] plot file {Plots/B.dat};
+
+
+\only<1>
+{
+\draw[dotted] (3,1) -- (0,1) node[left] {$1$};
+\draw[dotted] (2,1) -- (2,0) node[below] {$2$};
+\draw[dotted] (3,1) -- (3,0) node[below] {$3$};
+}
+
+
+\only<2>
+{
+\fill[fill=teal,opacity=0.2] plot file {Plots/A_cap1_B.dat};
+\node at (2.5,0.2) {$A\fcap B,\ \min$};
+}
+
+\only<3>
+{
+\fill[fill=teal,opacity=0.2] plot file {Plots/A_cup1_B.dat};
+\node at (2.5,0.2) {$A\fcup B,\ \max$};
+}
+
+\only<4>
+{
+\fill[fill=teal,opacity=0.2] plot file {Plots/A_cap2_B.dat};
+\node at (2.5,0.2) {$A\fcap B,\ ab$};
+}
+
+\only<5>
+{
+\fill[fill=teal,opacity=0.2] plot file {Plots/A_cup2_B.dat};
+\node at (2.5,0.2) {$\begin{array}{c}A\fcup B\\a+b-ab\end{array}$};
+}
+
+
+%\fill[fill=orange] plot file {Plots/A_cap1_B.dat};
+%\fill[fill=orange] plot file {Plots/A_cap1_B.dat};
+
+\end{tikzpicture}
 \end{frame}
 
 \end{document}
