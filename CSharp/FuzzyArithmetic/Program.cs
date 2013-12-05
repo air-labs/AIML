@@ -19,13 +19,13 @@ namespace FuzzyArithmetic
 
         static Func<double, double, double> T = (x, y) => x*y;
         static Func<double, double, double> S = (x, y) => Math.Max(x,y);
-
+        static double K = 1;
         
 
         static double[] Number(double near)
         {
             return Enumerable.Range(0, MaxInt)
-                 .Select(z => Math.Exp(-Math.Pow(z * Delta - near, 2)))
+                 .Select(z => Math.Exp(-Math.Pow(z * Delta - near, 2) * K))
                  .ToArray();
         }
 
@@ -119,6 +119,12 @@ namespace FuzzyArithmetic
                     if (plot[i]>0.01)
                         file.WriteLine("{0}\t{1}", DTS(i * Delta), DTS(plot[i]));
             }
+            using (var file = new StreamWriter(@"..\..\..\..\LaTeX\Plots\" + Name + ".value.txt"))
+            {
+                var sum = Enumerable.Range(0, MaxInt).Select(z => z * Delta * plot[z]).Sum();
+                var wei = plot.Sum();
+                file.WriteLine("{0:0.000}", Math.Round(sum / wei,3));
+            }
         }
 
         //static FuzzyNumber SumTest(double number, int count)
@@ -133,6 +139,13 @@ namespace FuzzyArithmetic
         //    return result;
         //}
 
+
+        static void MakePlots(string suffix)
+        {
+            SavePlot("4_"+suffix, Number(4));
+            SavePlot("2_mult_2_"+suffix, Operation(Number(2), Number(2), (a, b) => a * b));
+            SavePlot("2_plus_2_"+suffix, Operation(Number(2), Number(2), (a, b) => a + b));
+        }
 
         [STAThread]
         static void Main()
@@ -156,6 +169,16 @@ namespace FuzzyArithmetic
             SavePlot("2_mult_2", Operation(A2, A2, (a, b) => a * b));
             SavePlot("8_div_2", Operation(Number(8), A2, (a, b) => a / b));
             SavePlot("4", Number(4));
+
+            K = 0.3;
+            MakePlots("K03");
+            K = 3;
+            MakePlots("K3");
+
+            K = 1;
+            T = (a, b) => Math.Min(a, b);
+            MakePlots("min");
+
          //   chart.Series.Add(Operation(Number(8), Number(2), (a, b) => a / b), Color.Red);
           //  chart.Series.Add(Operation(Number(2), Number(2), (a, b) => a + b), Color.Green);
            // chart.Series.Add(Operation(Number(2), Number(2), (a, b) => a * b), Color.Blue);

@@ -11,8 +11,18 @@
 \newcommand{\plotandlegend}[4]
 {
 \draw[#1, ultra thick] plot file {Plots/#2.txt};
-\draw[#1, ultra thick] (9,1-0.2*#3)--(9.5,1-0.2*#3);
-\node[#1] at (10,1-0.2*#3) {$#4$};
+\node[#1] at (9,1.5-0.2*#3) {$
+\begin{array}{p{1cm}p{1cm}} 
+$#4$ & \input{Plots/#2.value.txt}\\
+\end{array}
+$};
+}
+
+\newcommand{\batteryplot}[1]
+{
+\plotandlegend{red}{4#1}{0}{4}
+\plotandlegend{blue}{2_plus_2#1}{1}{2+2}
+\plotandlegend{green}{2_mult_2#1}{2}{2\cdot 2}
 }
 
 \begin{document}
@@ -148,7 +158,7 @@ $$
 \draw[->,thick] (0,0.01) -- (4.5,0.01) node[below] {$x$};
 \draw[->,thick] (0,0) -- (0,1.2) node[left] {$\mu$};
 \node at(2,1.1) {$A\approx 2$};
-\draw[red,thick] plot file {Plots/2.dat};
+\draw[red,thick] plot file {Plots/2.txt};
 \only<+>{
 \draw[dotted] (2,1) -- (0,1) node[left] {$1$};
 \draw[dotted] (2,1) -- (2,0) node[below] {$2$};
@@ -196,25 +206,43 @@ $$
 \draw[->,thick] (0,0) -- (0,1.2) node[left] {$\mu$};
 
 \only<1-2>{
-\draw[red,ultra thick] plot file{Plots/2.txt};
+\plotandlegend{orange}{2}{-1}{2}
 \draw[dotted] (2,1)--(2,0) node[below] {2};
 \draw[dotted] (2,1)--(0,1) node[left] {1};
 }
-\only<2->{
-\plotandlegend{orange}{4}{0}{4}
+\only<2-5>{
+\plotandlegend{red}{4}{0}{4}
 \draw[dotted] (4,1)--(4,0) node[below] {4};
 \draw[dotted] (4,1)--(0,1) node[left] {1};
 }
 
-\only<3->{
+\only<3-5>{
 \plotandlegend{blue}{2_plus_2}{1}{2+2}
 }
-\only<4->{
+\only<4-5>{
 \plotandlegend{green}{2_mult_2}{2}{2\cdot 2}
 }
-\only<5->{
+\only<5>{
 \plotandlegend{purple}{8_div_2}{3}{8/2}
 }
+
+\only<6>{
+\batteryplot{}
+}
+
+\only<7>{
+\batteryplot{_K03}
+}
+
+\only<8>{
+\batteryplot{_K3}
+}
+
+\only<9>{
+\batteryplot{_min}
+}
+
+
 \end{tikzpicture}
 \end{frame}
 
