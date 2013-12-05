@@ -6,13 +6,14 @@
 \usepackage{xifthen}
 \usepackage{xparse}
 
+\newcommand{\legendy}{1.6}
 \newcommand{\ceil}[1]{\lceil #1 \rceil}
 
 \newcommand{\plotandlegend}[4]
 {
 \draw[#1, ultra thick] plot file {Plots/#2.txt};
-\node[#1] at (9,1.5-0.2*#3) {$
-\begin{array}{p{1cm}p{1cm}} 
+\node[#1] at (9,\legendy-0.2*#3) {$
+\begin{array}{p{1.5cm}p{1cm}} 
 $#4$ & \input{Plots/#2.value.txt}\\
 \end{array}
 $};
@@ -226,7 +227,18 @@ $$
 \plotandlegend{purple}{8_div_2}{3}{8/2}
 }
 
-\only<6>{
+\only<6-13>{
+\node at (2,1.7) {$
+\begin{array}{l c l}
+\mu_A(x) &=& exp\left[K(x-\ceil{A})^2\right]\\
+K &=& \only<6,8,10->{1} \only<7>{0.3} \only<9>{3} \\
+T(x,y)&=& \only<6-10,12->{xy} \only<11>{\min(x,y)} \\
+S(x,y)&=& \only<6-12>{\max(x,y)} \only<13>{x+y-xy} \\
+\end{array}
+$};
+}
+
+\only<6,8,10,12>{
 \batteryplot{}
 }
 
@@ -234,13 +246,53 @@ $$
 \batteryplot{_K03}
 }
 
-\only<8>{
+\only<9>{
 \batteryplot{_K3}
 }
 
-\only<9>{
+\only<11>{
 \batteryplot{_min}
 }
+
+\only<13>{
+\batteryplot{_nomax}
+}
+\end{tikzpicture}
+\end{frame}
+
+
+\subsection{Нечеткое управление}
+
+
+
+\renewcommand{\legendy}{2}
+
+\begin{frame}\frametitle{Размывание}
+\begin{tikzpicture}[x=0.9cm,y=3cm]
+\draw[->,thick] (0,0.01) -- (12.1,0.01) node[below] {$x$};
+\draw[->,thick] (0,0) -- (0,1.2) node[left] {$\mu$};
+
+
+\plotandlegend{black}{6}{-1}{6}
+
+
+\only<2->{
+\plotandlegend{blue}{3_times_2}{0}{3+3}
+}
+\only<3->{
+\plotandlegend{purple}{2_times_3}{1}{2+2+2}
+}
+\only<4->{
+\plotandlegend{orange}{1_times_6}{2}{1+\ldots+1}
+}
+\only<5->{
+\plotandlegend{teal}{2_mult_3}{3}{2\cdot 3}
+}
+\only<6>{
+\plotandlegend{green}{6_mult_1}{4}{6 \cdot 1}
+}
+
+
 
 
 \end{tikzpicture}
