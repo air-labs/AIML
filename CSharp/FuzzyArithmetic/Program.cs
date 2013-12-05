@@ -112,7 +112,7 @@ namespace FuzzyArithmetic
 
         static void SavePlot(string Name, double[] plot)
         {
-            using (var file = new StreamWriter(@"..\..\..\..\LaTeX\Plots\"+Name+".dat"))
+            using (var file = new StreamWriter(@"..\..\..\..\LaTeX\Plots\"+Name+".txt"))
             {
                 file.WriteLine("# N mu");
                 for (int i = 0; i < plot.Length; i += 10)
@@ -146,12 +146,16 @@ namespace FuzzyArithmetic
 
             var A2=Number(2);
             var A3=Number(3);
-            SavePlot("A",A2);
-            SavePlot("B", A3);
-            SavePlot("A_cup1_B", Rel(A2, A3, (a, b) => Math.Max(a, b)));
-            SavePlot("A_cap1_B", Rel(A2, A3, (a, b) => Math.Min(a, b)));
-            SavePlot("A_cap2_B", Rel(A2, A3, (a, b) => a*b));
-            SavePlot("A_cup2_B", Rel(A2, A3, (a, b) => a+b-a*b));
+            SavePlot("2",A2);
+            SavePlot("3", A3);
+            SavePlot("2_cup1_3", Rel(A2, A3, (a, b) => Math.Max(a, b)));
+            SavePlot("2_cap1_3", Rel(A2, A3, (a, b) => Math.Min(a, b)));
+            SavePlot("2_cap2_3", Rel(A2, A3, (a, b) => a*b));
+            SavePlot("2_cup2_3", Rel(A2, A3, (a, b) => a+b-a*b));
+            SavePlot("2_plus_2", Operation(A2, A2, (a, b) => a + b));
+            SavePlot("2_mult_2", Operation(A2, A2, (a, b) => a * b));
+            SavePlot("8_div_2", Operation(Number(8), A2, (a, b) => a / b));
+            SavePlot("4", Number(4));
          //   chart.Series.Add(Operation(Number(8), Number(2), (a, b) => a / b), Color.Red);
           //  chart.Series.Add(Operation(Number(2), Number(2), (a, b) => a + b), Color.Green);
            // chart.Series.Add(Operation(Number(2), Number(2), (a, b) => a * b), Color.Blue);
