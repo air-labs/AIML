@@ -15,7 +15,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Perceptron", "Perceptron\Pe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelfOrganizingNetworks", "SelfOrganizingNetworks\SelfOrganizingNetworks.csproj", "{A012FAA0-EED1-49A5-A62E-B70CC1F25B9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuzzyArithmetic", "FuzzyArithmetic\FuzzyArithmetic.csproj", "{2DE502D2-458F-4169-B296-A7AE99A29869}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaTeX Presentations", "FuzzyArithmetic\LaTeX Presentations.csproj", "{2DE502D2-458F-4169-B296-A7AE99A29869}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fuzzy", "Fuzzy", "{74F7594E-BFCF-4B77-A5B4-1A5F3DE0820E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuzzyLibrary", "FuzzyLibrary\FuzzyLibrary.csproj", "{288C373A-745B-42D6-83A8-DFD48FC31CAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,8 +59,16 @@ Global
 		{2DE502D2-458F-4169-B296-A7AE99A29869}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DE502D2-458F-4169-B296-A7AE99A29869}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DE502D2-458F-4169-B296-A7AE99A29869}.Release|Any CPU.Build.0 = Release|Any CPU
+		{288C373A-745B-42D6-83A8-DFD48FC31CAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{288C373A-745B-42D6-83A8-DFD48FC31CAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{288C373A-745B-42D6-83A8-DFD48FC31CAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{288C373A-745B-42D6-83A8-DFD48FC31CAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2DE502D2-458F-4169-B296-A7AE99A29869} = {74F7594E-BFCF-4B77-A5B4-1A5F3DE0820E}
+		{288C373A-745B-42D6-83A8-DFD48FC31CAD} = {74F7594E-BFCF-4B77-A5B4-1A5F3DE0820E}
 	EndGlobalSection
 EndGlobal
