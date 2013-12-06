@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fuzzy", "Fuzzy", "{74F7594E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuzzyLibrary", "FuzzyLibrary\FuzzyLibrary.csproj", "{288C373A-745B-42D6-83A8-DFD48FC31CAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuzzyControl", "FuzzyControl\FuzzyControl.csproj", "{B4F8680A-BF83-4848-BE70-B98F7C55C76F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{288C373A-745B-42D6-83A8-DFD48FC31CAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{288C373A-745B-42D6-83A8-DFD48FC31CAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{288C373A-745B-42D6-83A8-DFD48FC31CAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4F8680A-BF83-4848-BE70-B98F7C55C76F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4F8680A-BF83-4848-BE70-B98F7C55C76F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4F8680A-BF83-4848-BE70-B98F7C55C76F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4F8680A-BF83-4848-BE70-B98F7C55C76F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,5 +76,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{2DE502D2-458F-4169-B296-A7AE99A29869} = {74F7594E-BFCF-4B77-A5B4-1A5F3DE0820E}
 		{288C373A-745B-42D6-83A8-DFD48FC31CAD} = {74F7594E-BFCF-4B77-A5B4-1A5F3DE0820E}
+		{B4F8680A-BF83-4848-BE70-B98F7C55C76F} = {74F7594E-BFCF-4B77-A5B4-1A5F3DE0820E}
 	EndGlobalSection
 EndGlobal

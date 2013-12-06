@@ -75,6 +75,19 @@ namespace FuzzyLibrary
             return result;
         }
 
+        public double Average()
+        {
+            var sum = Domain.Arguments.Select(z => z * this[z]).Sum();
+            var wei = Domain.Arguments.Select(z => this[z]).Sum();
+            return sum / wei;
+        }
+
+        public double Ceiling()
+        {
+            var max = Domain.Arguments.Select(z => this[z]).Max();
+            return Domain.Arguments.Where(z => this[z] == max).FirstOrDefault();
+        }
+
         public static FuzzyNumber operator +(FuzzyNumber a, FuzzyNumber b)
         {
             return BinaryOperation(a, b, (x, y) => x + y);
