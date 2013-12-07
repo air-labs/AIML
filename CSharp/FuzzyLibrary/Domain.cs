@@ -12,7 +12,6 @@ namespace FuzzyLibrary
         public readonly double Min;
         public readonly double Precision;
         public readonly int ArrayLength;
-        public double DefaultSpread = 1;
 
         public int ToInt(double x)
         {
@@ -27,6 +26,8 @@ namespace FuzzyLibrary
         public Func<double, double, double> T = TMul;
 
         public Func<double, double, double> S = SMax;
+
+        public Func<double, double, double> NearFunction = NearGauss(1);
 
         public Domain(double min, double max, double precision=0.01)
         {
@@ -43,15 +44,26 @@ namespace FuzzyLibrary
         public static readonly Func<double, double, double> TMin = (x, y) => Math.Min(x, y);
         public static readonly Func<double, double, double> TMul = (x, y) => x * y;
 
-        public FuzzyNumber Near(double near, double sigma = double.NaN)
+        public static Func<double, double, double> NearGauss(double sigma)
         {
-            if (double.IsNaN(sigma)) sigma = DefaultSpread;
-            var result =  new FuzzyNumber(this);
-            var min=Math.Max(Min,near - 3 * sigma);
-            var max=Math.Min(Max,near + 3 * sigma);
+            return (x, near) => Math.Exp(-Math.Pow(x - near, 2) / (sigma * sigma));
+        }
 
-            for (double x = min; x <= max; x += Precision)
-                result[x] = Math.Exp(-Math.Pow(x - near, 2) * sigma);
+        public static Func<double, double, double> NearQuadratic(double sigma)
+        {
+            return (x, near) => Math.Max(0,
+                1 - Math.Pow((x- near)/sigma, 2));
+        }
+
+        public FuzzyNumber Near(double near)
+        {
+            var result =  new FuzzyNumber(this);
+            for (double x = Min; x <= Max; x += Precision)
+            {
+                var measure = NearFunction(x, near);
+                if (measure > 0.001)
+                    result[x] = measure;
+            }
             return result;
         }
 

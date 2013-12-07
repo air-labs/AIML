@@ -89,13 +89,13 @@ namespace FuzzyArithmetic
             SavePlot("8_div_2", domain.Near(8)/A2);
             SavePlot("4", domain.Near(4));
 
-            domain.DefaultSpread = 0.3;
+            domain.NearFunction = Domain.NearGauss(0.3);
             MakePlots("K03");
 
-            domain.DefaultSpread = 3;
+            domain.NearFunction = Domain.NearGauss(3);
             MakePlots("K3");
 
-            domain.DefaultSpread = 1;
+            domain.NearFunction = Domain.NearGauss(1);
            
             domain.T = Domain.TMin;
             MakePlots("min");
@@ -113,25 +113,6 @@ namespace FuzzyArithmetic
 
             SavePlot("6_mult_1", domain.Near(6)*domain.Near(1));
             SavePlot("3_mult_2", domain.Near(3)*domain.Near(2));
-            
-
-            //var chart = new Chart()
-            //{
-            //    Dock = DockStyle.Fill,
-            //    ChartAreas = { new ChartArea() },
-            //    Series = 
-            //    {
-            //        domain.Near(2).ToPlot(Color.Red),
-            //        (domain.Near(2)+domain.Near(2)).ToPlot(Color.Blue),
-            //        (domain.Near(2)*domain.Near(2)).ToPlot(Color.Green),
-            //        (domain.Near(8)/domain.Near(2)).ToPlot(Color.Blue)
-            //    }
-            //};
-            
-
-            //var form = new Form();
-            //form.Controls.Add(chart);
-            //Application.Run(form);
-        }
+      }
     }
 }

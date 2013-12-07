@@ -4,103 +4,132 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using FuzzyLibrary;
 
 namespace FuzzyControl
 {
-    class CannonCommand
-    {
-        public double R;
-        public double Angle;
-    }
-
     static class Program
     {
 
-        static Random rnd = new Random(1);
-        static double deviation = 10;
-        static double noise = 10;
-        static Point Target = new Point(100, 100);
+        static double AMin = 5;
+        static double AMax = 10;
+        static double ADeviation = 2;
 
-        static int Radius = 20;
+        static double BValue = 10;
+        static double BDeviation = 2;
 
-        static double Randomize(double x)
+
+        static Domain domain = new Domain(0, 20,0.1);
+
+        static Dictionary<double, double> MakeComputations(IEnumerable<double> ARange, Func<double, double> algorithm)
         {
-            return x + (rnd.NextDouble() - 0.5) * noise * 2;
-        }
-
-        static int HitIndex(double hit, int target)
-        {
-            var result=(int)(Radius*(hit-target)/(1.5*deviation))+Radius;
-            if (result<0) result=0;
-            if (result>=2*Radius+1) result=2*Radius;
+            var result = new Dictionary<double, double>();
+            foreach(var a in ARange)
+                result[a] = algorithm(a);
             return result;
         }
 
-        static double[,] TestAlgorithm(Func<double,double,CannonCommand> alg)
+        static Series GetTSerie(Dictionary<double,double> result, Color color)
         {
-            var matrix = new double[2 * Radius + 2, 2 * Radius + 2];
-            for (int i = 0; i < 100; i++)
+            var serie = new Series() { Color = color, ChartType = SeriesChartType.FastLine, BorderWidth = 2 };
+            foreach(var e in result)
+            serie.Points.Add(new DataPoint(e.Key, e.Value));
+            return serie; 
+        }
+
+        static Series GetPSerie(IEnumerable<double> AValues, Dictionary<double,double> result, Color color)
+        {
+            var serie = new Series { Color = color, ChartType = SeriesChartType.FastLine, BorderWidth=2 };
+            var BPoints = (2 * BDeviation) / AValues.Count();
+            foreach(var AMeasured in AValues)
             {
-                var x = Randomize(Target.X);
-                var y = Randomize(Target.Y);
-                var result = alg(x, y);
-                var newX = result.R * Math.Cos(result.Angle);
-                var newY = result.R * Math.Sin(result.Angle);
-                matrix[HitIndex(newX, Target.X), HitIndex(newY, Target.Y)]++;
+                double totalProbability=0;
+                double weightedResult=0;
+                double successProbability = 0;
+                foreach (var AReal in AValues)
+                    for (double BReal=BValue-BDeviation;BReal<=BValue+BDeviation;BReal+=BPoints)
+                    {
+                        var probability=
+                            Math.Exp(-Math.Pow(AReal-AMeasured,2)/(2*ADeviation*ADeviation))*
+                            Math.Exp(-Math.Pow(BReal-BValue,2)/(2*BDeviation*BDeviation));
+                        totalProbability+=probability;
+                        double value=0;
+                        if (result!=null)
+                            value = result[AMeasured];
+                        else 
+                            value=RealFunction(AReal,BReal);
+                        weightedResult += value*probability;
+                        successProbability += (Math.Abs(value - RealFunction(AReal, BReal)) < 2)?probability:0;
+                    }
+                serie.Points.Add(new DataPoint(AMeasured, weightedResult / totalProbability));
             }
-            
-            var max = matrix.Cast<double>().Max();
-            for (int i = 0; i < matrix.GetLength(0); i++)
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                    matrix[i, j] /= max;
-            return matrix;
+            return serie;
         }
 
-        static void DrawMatrix(Graphics g, double[,] matrix)
+
+       // [STAThread]
+       // static void Main()
+       // {
+       //     var fuzzyResult = MakeComputations(FuzzyAlgorithm);
+       //     var exactResult = MakeComputations(ExactAlgorithm);
+
+       //     Func<Dictionary<double, double>, Color, Series> graph = GetPSerie;
+
+       //     var chart = new Chart();
+       //     chart.Dock = DockStyle.Fill;
+       //     chart.ChartAreas.Add(new ChartArea());
+       //     chart.Series.Add(graph(exactResult,Color.Red));
+       //     chart.Series.Add(graph(fuzzyResult,Color.Green));
+       //     var form = new Form();
+       //     form.Controls.Add(chart);
+       //     Application.Run(form);
+       //} 
+
+        
+
+        static double RealFunction(double AReal, double BReal)
         {
-            for (int x=0;x<matrix.GetLength(0);x++)
-                for (int y = 0; y < matrix.GetLength(1); y++)
-                {
-                    var val=(int)(matrix[x, y] * 255);
-                    var color = Color.FromArgb(val, Color.Red);
-                    g.FillRectangle(new SolidBrush(color), 5 * x, 5 * y, 5, 5);
-                }
-
+            return AReal / BReal;
         }
 
-        static CannonCommand TrivialAlgorithm(double x, double y)
+        static double FuzzyAlgorithm(double AValue)
         {
-            var cmd = new CannonCommand();
-            cmd.R = Math.Sqrt(x * x + y * y);
-            cmd.Angle = Math.Atan(y/x);
-            return cmd;
+            var fuzzyA = domain.Near(AValue);
+            var fuzzyB = domain.Near(BValue);
+            return FuzzyNumber.BinaryOperation(fuzzyA, fuzzyB, RealFunction).Average();
         }
 
-        static CannonCommand FuzzyAlgorithm(double x, double y)
-        {
-            x /= 100;
-            y /= 100;
-            var domain = new Domain(0, 3, 0.1);
-            var X = domain.Near(x,0.1);
-            var Y = domain.Near(y,0.1);
-            var R = X * X + Y * Y;
-            var Tan = Y / X;
-            return new CannonCommand { R = 100*Math.Sqrt(R.Ceiling()), Angle = Math.Atan(Tan.Ceiling()) };
-        }
-
- 
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            //var matrix = TestAlgorithm(TrivialAlgorithm);
-            var matrix = TestAlgorithm(FuzzyAlgorithm);
+            var chart = new Chart();
+            chart.Dock = DockStyle.Fill;
+            chart.ChartAreas.Add(new ChartArea());
+
+            int pointsCount = 10;
+
+            var AValues = Enumerable.Range(0, pointsCount).Select(z => AMin + (AMax - AMin) * z / pointsCount).ToArray();
+
+            var exact = MakeComputations(AValues, a => RealFunction(a,BValue));
+
+            var fuzzy = new Dictionary<double, double>[10];
+            for (int i = 0; i < fuzzy.Length; i++)
+            {
+                domain.NearFunction = Domain.NearQuadratic(1+i*0.5);
+                fuzzy[i] = MakeComputations(AValues, FuzzyAlgorithm);
+            }
+
+            chart.Series.Add(GetPSerie(AValues, null ,Color.Green));
+            chart.Series.Add(GetPSerie(AValues, exact, Color.Red));
+            for (int i = 0; i < fuzzy.Length; i++)
+                chart.Series.Add(GetPSerie(AValues, fuzzy[i], Color.FromArgb(255 - (i * 255) / (fuzzy.Length + 1), Color.Blue)));
+            
             var form = new Form();
-            form.Paint += (s, a) => { DrawMatrix(a.Graphics, matrix);  };
+            form.Controls.Add(chart);
             Application.Run(form);
+
+
         }
     }
 }
