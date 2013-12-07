@@ -82,6 +82,18 @@ namespace FuzzyLibrary
             return sum / wei;
         }
 
+        public double Median()
+        {
+            var halfSum = Domain.Arguments.Select(z => this[z]).Sum()/2;
+            double partial = 0;
+            foreach (var e in Domain.Arguments)
+            {
+                partial += this[e];
+                if (partial > halfSum) return e;
+            }
+            throw new ArgumentException();
+        }
+
         public double Ceiling()
         {
             var max = Domain.Arguments.Select(z => this[z]).Max();

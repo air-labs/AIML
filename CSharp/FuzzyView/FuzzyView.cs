@@ -9,7 +9,7 @@ using FuzzyLibrary;
 
 namespace FuzzyView
 {
-    static class Program
+    static class FuzzyView
     {
         /// <summary>
         /// The main entry point for the application.

@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fuzzy", "Fuzzy", "{74F7594E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuzzyLibrary", "FuzzyLibrary\FuzzyLibrary.csproj", "{288C373A-745B-42D6-83A8-DFD48FC31CAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuzzyControl", "FuzzyControl\FuzzyControl.csproj", "{B4F8680A-BF83-4848-BE70-B98F7C55C76F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuzzyAndProbability", "FuzzyControl\FuzzyAndProbability.csproj", "{B4F8680A-BF83-4848-BE70-B98F7C55C76F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuzzyView", "FuzzyView\FuzzyView.csproj", "{4605F326-EECF-4A96-86AF-B6D4272BD5DF}"
 EndProject

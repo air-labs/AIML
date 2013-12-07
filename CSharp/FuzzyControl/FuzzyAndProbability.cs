@@ -9,15 +9,15 @@ using FuzzyLibrary;
 
 namespace FuzzyControl
 {
-    static class Program
+    static class FuzzyAndProbability
     {
 
-        static double AMin = 5;
-        static double AMax = 10;
-        static double ADeviation = 2;
+        static double AMin = 2;
+        static double AMax = 4;
+        static double ADeviation = 1;
 
-        static double BValue = 10;
-        static double BDeviation = 2;
+        static double BValue = 3;
+        static double BDeviation = 1;
 
 
         static Domain domain = new Domain(0, 20,0.1);
@@ -28,14 +28,6 @@ namespace FuzzyControl
             foreach(var a in ARange)
                 result[a] = algorithm(a);
             return result;
-        }
-
-        static Series GetTSerie(Dictionary<double,double> result, Color color)
-        {
-            var serie = new Series() { Color = color, ChartType = SeriesChartType.FastLine, BorderWidth = 2 };
-            foreach(var e in result)
-            serie.Points.Add(new DataPoint(e.Key, e.Value));
-            return serie; 
         }
 
         static Series GetPSerie(IEnumerable<double> AValues, Dictionary<double,double> result, Color color)
@@ -68,36 +60,17 @@ namespace FuzzyControl
         }
 
 
-       // [STAThread]
-       // static void Main()
-       // {
-       //     var fuzzyResult = MakeComputations(FuzzyAlgorithm);
-       //     var exactResult = MakeComputations(ExactAlgorithm);
-
-       //     Func<Dictionary<double, double>, Color, Series> graph = GetPSerie;
-
-       //     var chart = new Chart();
-       //     chart.Dock = DockStyle.Fill;
-       //     chart.ChartAreas.Add(new ChartArea());
-       //     chart.Series.Add(graph(exactResult,Color.Red));
-       //     chart.Series.Add(graph(fuzzyResult,Color.Green));
-       //     var form = new Form();
-       //     form.Controls.Add(chart);
-       //     Application.Run(form);
-       //} 
-
-        
 
         static double RealFunction(double AReal, double BReal)
         {
-            return AReal / BReal;
+            return AReal*AReal/BReal*BReal;
         }
 
         static double FuzzyAlgorithm(double AValue)
         {
             var fuzzyA = domain.Near(AValue);
             var fuzzyB = domain.Near(BValue);
-            return FuzzyNumber.BinaryOperation(fuzzyA, fuzzyB, RealFunction).Average();
+            return FuzzyNumber.BinaryOperation(fuzzyA, fuzzyB, RealFunction).Median();
         }
 
         [STAThread]
@@ -116,7 +89,7 @@ namespace FuzzyControl
             var fuzzy = new Dictionary<double, double>[10];
             for (int i = 0; i < fuzzy.Length; i++)
             {
-                domain.NearFunction = Domain.NearQuadratic(1+i*0.5);
+                domain.NearFunction = Domain.NearGauss(1+i*0.5);
                 fuzzy[i] = MakeComputations(AValues, FuzzyAlgorithm);
             }
 
