@@ -17,7 +17,7 @@ namespace FuzzyView
         [STAThread]
         static void Main()
         {
-            var domain = new Domain(0, 10);
+            var domain = new Domain(0, 20);
             domain.NearFunction = Domain.NearQuadratic(2);
             var chart = new Chart()
             {
@@ -25,7 +25,8 @@ namespace FuzzyView
                 ChartAreas = { new ChartArea() },
                 Series = 
                 {
-                    (domain.Near(8)/domain.Near(5)).ToPlot(Color.Blue)
+                    ((domain.Near(2)+domain.Near(3))/domain.Near(2)).ToPlot(Color.Red),
+                    FuzzyNumber.BinaryOperation(domain.Near(2),domain.Near(3),(a,b)=>(a+b)/b).ToPlot(Color.Green)
                 }
             };
 

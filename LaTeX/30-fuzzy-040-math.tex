@@ -227,18 +227,18 @@ $$
 \plotandlegend{purple}{8_div_2}{3}{8/2}
 }
 
-\only<6-13>{
+\only<6->{
 \node at (2,1.7) {$
 \begin{array}{l c l}
-\mu_A(x) &=& exp\left[K(x-\ceil{A})^2\right]\\
+\mu_A(x) &=& \only<6-10,12->{exp\left[\left(\frac{x-\ceil{A}}{K}\right)^2\right]}\only<11>{\max\left[0,1-\left(\frac{x-\ceil{A}}{K}\right)^2\right]}\\
 K &=& \only<6,8,10->{1} \only<7>{0.3} \only<9>{3} \\
-T(x,y)&=& \only<6-10,12->{xy} \only<11>{\min(x,y)} \\
-S(x,y)&=& \only<6-12>{\max(x,y)} \only<13>{x+y-xy} \\
+T(x,y)&=& \only<6-12,14->{xy} \only<13>{\min(x,y)} \\
+S(x,y)&=& \only<6-14>{\max(x,y)} \only<15>{x+y-xy} \\
 \end{array}
 $};
 }
 
-\only<6,8,10,12>{
+\only<6,8,10,12,14>{
 \batteryplot{}
 }
 
@@ -251,10 +251,14 @@ $};
 }
 
 \only<11>{
-\batteryplot{_min}
+\batteryplot{_Q}
 }
 
 \only<13>{
+\batteryplot{_min}
+}
+
+\only<15>{
 \batteryplot{_nomax}
 }
 \end{tikzpicture}
@@ -292,10 +296,28 @@ $};
 \plotandlegend{green}{6_mult_1}{4}{6 \cdot 1}
 }
 
-
-
-
 \end{tikzpicture}
+\end{frame}
+
+\begin{frame}\frametitle{Размывание}
+
+$$
+C=\frac{A+B}{B}
+$$
+$$
+f(a,b)=\frac{a+b}{b}
+$$
+$$
+\mu_C(c)=\max_{a,b\ f(a,b)=c}\mu_A(a)\mu_B(b)
+$$
+
+\begin{tikzpicture}[x=0.9cm,y=3cm]
+\draw[->,thick] (0,0.01) -- (12.1,0.01) node[below] {$x$};
+\draw[->,thick] (0,0) -- (0,1.2) node[left] {$\mu$};
+\draw[red, ultra thick] plot file {Plots/F_direct.txt};
+\draw[green, ultra thick] plot file {Plots/F_ext.txt};
+\end{tikzpicture}
+
 \end{frame}
 
 \end{document}

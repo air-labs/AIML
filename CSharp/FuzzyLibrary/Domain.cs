@@ -55,6 +55,8 @@ namespace FuzzyLibrary
                 1 - Math.Pow((x- near)/sigma, 2));
         }
 
+
+
         public FuzzyNumber Near(double near)
         {
             var result =  new FuzzyNumber(this);
