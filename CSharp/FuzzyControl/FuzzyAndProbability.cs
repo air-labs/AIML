@@ -13,14 +13,14 @@ namespace FuzzyControl
     {
 
         static double AMin = 2;
-        static double AMax = 4;
+        static double AMax = 5;
         static double ADeviation = 1;
 
-        static double BValue = 3;
+        static double BValue = 2;
         static double BDeviation = 1;
 
 
-        static Domain domain = new Domain(0, 20,0.1);
+        static Domain domain = new Domain(0, 30,0.1);
 
         static Dictionary<double, double> MakeComputations(IEnumerable<double> ARange, Func<double, double> algorithm)
         {
@@ -30,32 +30,35 @@ namespace FuzzyControl
             return result;
         }
 
-        static Series GetPSerie(IEnumerable<double> AValues, Dictionary<double,double> result, Color color)
+        static Series MostProbableResult(IEnumerable<double> AValues, Color color)
         {
-            var serie = new Series { Color = color, ChartType = SeriesChartType.FastLine, BorderWidth=2 };
-            var BPoints = (2 * BDeviation) / AValues.Count();
-            foreach(var AMeasured in AValues)
+            var serie = new Series { Color = color, ChartType = SeriesChartType.FastLine, BorderWidth = 2 };
+            var BPoints = (6 * BDeviation) / AValues.Count();
+            foreach (var AMeasured in AValues)
             {
-                double totalProbability=0;
-                double weightedResult=0;
-                double successProbability = 0;
+                double totalProbability = 0;
+                double weightedResult = 0;
                 foreach (var AReal in AValues)
-                    for (double BReal=BValue-BDeviation;BReal<=BValue+BDeviation;BReal+=BPoints)
+                    for (double BReal = BValue - 3*BDeviation; BReal <= BValue + 3*BDeviation; BReal += BPoints)
                     {
-                        var probability=
-                            Math.Exp(-Math.Pow(AReal-AMeasured,2)/(2*ADeviation*ADeviation))*
-                            Math.Exp(-Math.Pow(BReal-BValue,2)/(2*BDeviation*BDeviation));
-                        totalProbability+=probability;
-                        double value=0;
-                        if (result!=null)
-                            value = result[AMeasured];
-                        else 
-                            value=RealFunction(AReal,BReal);
-                        weightedResult += value*probability;
-                        successProbability += (Math.Abs(value - RealFunction(AReal, BReal)) < 2)?probability:0;
+                        var probability =
+                            Math.Exp(-Math.Pow(AReal - AMeasured, 2) / (2 * ADeviation * ADeviation)) *
+                            Math.Exp(-Math.Pow(BReal - BValue, 2) / (2 * BDeviation * BDeviation));
+                        totalProbability += probability;
+                        weightedResult += RealFunction(AReal, BReal) * probability;
                     }
-                serie.Points.Add(new DataPoint(AMeasured, weightedResult / totalProbability));
+                var value=weightedResult / totalProbability;
+                serie.Points.Add(new DataPoint(AMeasured,value ));
             }
+            return serie;
+        }
+
+
+        static Series GetPSerie(Dictionary<double,double> result, Color color)
+        {
+            var serie = new Series { Color = color, ChartType = SeriesChartType.FastLine, BorderWidth = 2 };
+            foreach(var AMeasured in result.Keys)
+                serie.Points.Add(new DataPoint(AMeasured,result[AMeasured]));
             return serie;
         }
 
@@ -63,14 +66,14 @@ namespace FuzzyControl
 
         static double RealFunction(double AReal, double BReal)
         {
-            return AReal*AReal/BReal*BReal;
+            return AReal*BReal;
         }
 
         static double FuzzyAlgorithm(double AValue)
         {
             var fuzzyA = domain.Near(AValue);
             var fuzzyB = domain.Near(BValue);
-            return FuzzyNumber.BinaryOperation(fuzzyA, fuzzyB, RealFunction).Median();
+            return FuzzyNumber.BinaryOperation(fuzzyA, fuzzyB, RealFunction).Average();
         }
 
         [STAThread]
@@ -87,16 +90,19 @@ namespace FuzzyControl
             var exact = MakeComputations(AValues, a => RealFunction(a,BValue));
 
             var fuzzy = new Dictionary<double, double>[10];
+            var fuzMin=0.5;
+            var fuzMax=1.5;
             for (int i = 0; i < fuzzy.Length; i++)
             {
-                domain.NearFunction = Domain.NearGauss(1+i*0.5);
+                var sigma = fuzMin + i*(fuzMax - fuzMin)/fuzzy.Length;
+                domain.NearFunction = Domain.NearGauss(sigma);
                 fuzzy[i] = MakeComputations(AValues, FuzzyAlgorithm);
             }
 
-            chart.Series.Add(GetPSerie(AValues, null ,Color.Green));
-            chart.Series.Add(GetPSerie(AValues, exact, Color.Red));
+            chart.Series.Add(MostProbableResult(AValues, Color.Green));
+            chart.Series.Add(GetPSerie(exact, Color.Red));
             for (int i = 0; i < fuzzy.Length; i++)
-                chart.Series.Add(GetPSerie(AValues, fuzzy[i], Color.FromArgb(255 - (i * 255) / (fuzzy.Length + 1), Color.Blue)));
+                chart.Series.Add(GetPSerie(fuzzy[i], Color.FromArgb(255 - (i * 255) / (fuzzy.Length + 1), Color.Blue)));
             
             var form = new Form();
             form.Controls.Add(chart);
