@@ -117,7 +117,7 @@ namespace FuzzyArithmetic
             SavePlot("6_mult_1", domain.Near(6)*domain.Near(1));
             SavePlot("3_mult_2", domain.Near(3)*domain.Near(2));
 
-            SavePlot("F_direct", ((domain.Near(2)+domain.Near(3))/domain.Near(2)));
+            SavePlot("F_direct", ((domain.Near(2)+domain.Near(3))/domain.Near(3)));
             SavePlot("F_ext", FuzzyNumber.BinaryOperation(domain.Near(2), domain.Near(3), (a, b) => (a + b) / b));
       }
     }
