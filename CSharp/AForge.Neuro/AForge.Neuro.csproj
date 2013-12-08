@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -18,7 +18,6 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
-    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -55,19 +54,16 @@
     <DocumentationFile>AForge.Neuro.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AForge, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="System" />
+    <Reference Include="AForge">
       <HintPath>..\..\Release\AForge.dll</HintPath>
     </Reference>
-    <Reference Include="AForge.Genetic, Version=2.0.0.0, Culture=neutral, PublicKeyToken=4336634eeb41b69b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="AForge.Genetic">
       <HintPath>..\..\Release\AForge.Genetic.dll</HintPath>
     </Reference>
-    <Reference Include="AForge.Math, Version=2.0.0.0, Culture=neutral, PublicKeyToken=abba2e25397ee8c9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="AForge.Math">
       <HintPath>..\..\Release\AForge.Math.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activation Functions\BipolarSigmoidFunction.cs" />

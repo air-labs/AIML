@@ -26,8 +26,8 @@ namespace FuzzyControl
             var rnd = new Random(1);
             var result = new[]
                 {
-                    new Series() { Color = color, ChartType = SeriesChartType.FastLine },
-                    new Series() { Color = color, ChartType = SeriesChartType.FastLine },
+                    new Series() { /*Color = color, /*ChartType = SeriesChartType.FastLine*/ },
+                    new Series() { /*Color = color, /*ChartType = SeriesChartType.FastLine*/ },
                 };
             for (int i=0;i<StepCount;i++)
             {
