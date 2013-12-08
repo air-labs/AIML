@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -11,8 +11,6 @@
     <AssemblyName>Perceptron</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ProductVersion>10.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,6 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\AForge\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Math, Version=2.2.5.0, Culture=neutral, PublicKeyToken=abba2e25397ee8c9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\AForge\AForge.Math.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,12 +50,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="AForge">
-      <HintPath>..\AForge\AForge.dll</HintPath>
-    </Reference>
-    <Reference Include="AForge.Math">
-      <HintPath>..\AForge\AForge.Math.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Perceptron.cs" />
@@ -78,11 +78,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AForge.Neuro\AForge.Neuro.csproj">
-      <Project>{02B5E453-2085-4E41-86D9-C8E8A03FB1B9}</Project>
+      <Project>{02b5e453-2085-4e41-86d9-c8e8a03fb1b9}</Project>
       <Name>AForge.Neuro</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{3270F983-CC3B-4194-A0C9-3C4A644A1FAD}</Project>
+      <Project>{3270f983-cc3b-4194-a0c9-3c4a644a1fad}</Project>
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>

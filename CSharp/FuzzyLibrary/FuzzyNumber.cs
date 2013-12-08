@@ -131,10 +131,9 @@ namespace FuzzyLibrary
             foreach(var e in Domain.Arguments) 
                 if (this[e] > 0.01)
                     series.Points.Add(new DataPoint(e, this[e]));
-			//series.
-            //series.ChartType = SeriesChartType.FastLine;
-            //series.MarkerBorderWidth = 5;
-            //series.Color = color;
+            series.ChartType = SeriesChartType.FastLine;
+            series.MarkerBorderWidth = 5;
+            series.Color = color;
             return series;
         }
     }
