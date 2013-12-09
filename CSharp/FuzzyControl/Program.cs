@@ -26,6 +26,11 @@ namespace FuzzyControl
             return x * sigma + M;
         }
 
+        static Series[] RunCar(Func<double, double, FuzzyNumber> algorithm, Color color)
+        {
+            return RunCar((x, y) => algorithm(x, y).Average(), color);
+        }
+
         static Series[] RunCar(Func<double, double, double> algorithm, Color color)
         {
             double x = 0;
@@ -97,6 +102,27 @@ namespace FuzzyControl
             return result;
         }
 
+        static FuzzyNumber FuzzyLogic(double x, double y)
+        {
+            FuzzyNumber Positive = domain.CreateEmpty();
+            
+            FuzzyNumber Negative = domain.CreateEmpty();
+            FuzzyNumber TurnLeft = domain.Near(Math.PI);
+            FuzzyNumber TurnRIght = domain.Near(-Math.PI);
+            
+            
+            foreach (var e in domain.Arguments)
+            {
+                Positive[e] = Math.Max(0, Math.Min(1, e));
+                Negative[e] = 1 - Positive[e];
+            }
+            
+            
+
+
+            return null;
+        }
+
 
 
         static Chart GetChart(params Series[] series)
@@ -146,6 +172,8 @@ namespace FuzzyControl
             valuesChart = new Chart { ChartAreas = { new ChartArea() }, Dock = DockStyle.Fill };
 
             domain.NearFunction = Domain.NearQuadratic(2);
+
+            FuzzyLogic(1, 1);
 
 
             AddAlgorithm(ExactAlgorithm, Color.Red);

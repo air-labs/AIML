@@ -126,6 +126,20 @@ namespace FuzzyLibrary
             return SetOperation(a,b,a.Domain.S);
         }
 
+
+        public static FuzzyNumber Relation(Func<double, double, double> relation, FuzzyNumber argument)
+        {
+            FuzzyNumber number = new FuzzyNumber(argument.Domain);
+            foreach (var x in argument.Domain.Arguments)
+                foreach (var y in argument.Domain.Arguments)
+                {
+
+                }
+            return null;
+        }
+                
+
+
         public Series ToPlot(Color color)
         {
             var series = new Series();
