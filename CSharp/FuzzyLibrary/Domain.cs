@@ -37,6 +37,8 @@ namespace FuzzyLibrary
             ArrayLength = (int)((Max - Min) / Precision) + 10;
         }
 
+        public FuzzyNumber CreateEmpty() { return new FuzzyNumber(this); }
+
         public static readonly Func<double, double, double> SMax = (x, y) => Math.Max(x, y);
         public static readonly Func<double, double, double> SSum = (x, y) => x + y - x * y;
 

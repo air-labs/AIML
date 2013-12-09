@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace FuzzyLibrary
@@ -135,6 +136,38 @@ namespace FuzzyLibrary
             series.MarkerBorderWidth = 5;
             series.Color = color;
             return series;
+        }
+
+        public void ShowPlot()
+        {
+            Application.Run(new Form
+            {
+                Controls = 
+                {
+                    new Chart
+                    {
+                        Dock= DockStyle.Fill,
+                        ChartAreas = { new ChartArea()},
+                        Series = { ToPlot(Color.Red) }
+                    }
+                }
+            });
+
+        }
+
+        public static void ShowChart(params Series[] series)
+        {
+            var chart= new Chart
+                    {
+                        Dock= DockStyle.Fill,
+                        ChartAreas = { new ChartArea()},
+                    };
+            foreach(var e in series) chart.Series.Add(e);
+            Application.Run(new Form
+            {
+                Controls = { chart }
+            });
+
         }
     }
 }
