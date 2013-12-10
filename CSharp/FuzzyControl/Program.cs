@@ -26,10 +26,7 @@ namespace FuzzyControl
             return x * sigma + M;
         }
 
-        static Series[] RunCar(Func<double, double, FuzzyNumber> algorithm, Color color)
-        {
-            return RunCar((x, y) => algorithm(x, y).Average(), color);
-        }
+
 
         static Series[] RunCar(Func<double, double, double> algorithm, Color color)
         {
@@ -96,31 +93,28 @@ namespace FuzzyControl
                     var probability = gaussFunction(dx, 0) * gaussFunction(dy, 0);
                     result[value] += probability;
                 }
-            var max= domain.Arguments.Max(z => result[z]);
-            foreach (var e in domain.Arguments)
-                result[e] /= max;
+            var total = result.Domain.Arguments.Sum(z => result[z]);
+            foreach (var e in result.Domain.Arguments)
+                result[e] /= total;
             return result;
         }
 
         static FuzzyNumber FuzzyLogic(double x, double y)
         {
-            FuzzyNumber Positive = domain.CreateEmpty();
-            
-            FuzzyNumber Negative = domain.CreateEmpty();
-            FuzzyNumber TurnLeft = domain.Near(Math.PI);
-            FuzzyNumber TurnRIght = domain.Near(-Math.PI);
-            
-            
-            foreach (var e in domain.Arguments)
-            {
-                Positive[e] = Math.Max(0, Math.Min(1, e));
-                Negative[e] = 1 - Positive[e];
-            }
-            
-            
+            var positive = domain.NumberFromLambda(z => { if (z <0 ) return 0; else return z/domain.Max; });
+            var turnRight = domain.Near(Math.PI);
 
+            var result1 = FuzzyNumber.Relation(Implication(positive, turnRight), domain.Near(y));
 
-            return null;
+            var negative = domain.NumberFromLambda(z => { if (z >0) return 0; else return -z/domain.Max; });
+            var turnLeft = domain.Near(-Math.PI);
+            var result2 = FuzzyNumber.Relation(Implication(negative, turnLeft), domain.Near(y));
+
+            FuzzyNumber.ShowChart(result1.ToPlot(Color.Red), result2.ToPlot(Color.Blue));
+            FuzzyNumber.ShowChart(positive.ToPlot(Color.Red), negative.ToPlot(Color.Blue));
+            //  FuzzyNumber.ShowChart((result1 & result2).ToPlot(Color.Orange));
+            
+            return result1 & result2;
         }
 
 
@@ -155,8 +149,15 @@ namespace FuzzyControl
         {
             var fuzzy = FuzzyAlgorithm(x, y);
             var probably = MostProbableAlgorithm(x, y);
-            FuzzyNumber.ShowChart(fuzzy.ToPlot(Color.Red), probably.ToPlot(Color.Blue));
+            var logic = FuzzyLogic(x, y);
+            FuzzyNumber.ShowChart(fuzzy.ToPlot(Color.Red), probably.ToPlot(Color.Blue), logic.ToPlot(Color.Orange));
         }
+
+        static Func<double, double, double> Implication(FuzzyNumber from, FuzzyNumber to)
+        {
+            return (x, y) => Math.Max(1 - from[x], from[y]);
+        }
+
 
         /// <summary>
         /// The main entry point for the application.
@@ -174,18 +175,20 @@ namespace FuzzyControl
             domain.NearFunction = Domain.NearQuadratic(2);
 
             FuzzyLogic(1, 1);
+            return;
 
+          //  FuzzyLogic(1, 1);
 
+          //  AddAlgorithm((x,y)=>MostProbableAlgorithm(x,y).ArgMax(), Color.Blue);
             AddAlgorithm(ExactAlgorithm, Color.Red);
-            AddAlgorithm((x,y)=>FuzzyAlgorithm(x,y).Average(), Color.Green);
-            AddAlgorithm((x,y)=>MostProbableAlgorithm(x,y).Average(), Color.Blue);
-
+          //  AddAlgorithm((x,y)=>FuzzyAlgorithm(x,y).Average(), Color.Green);
+            AddAlgorithm((x, y) => FuzzyLogic(x, y).Average(), Color.Orange);
 
 
             var tableControl = new TableLayoutPanel { RowCount = 2, ColumnCount = 2, Dock= DockStyle.Fill };
             tableControl.Controls.Add(pathChart,0,0);
             tableControl.Controls.Add(controlChart,0,1);
-            tableControl.Controls.Add(valuesChart, 1, 0);
+       //     tableControl.Controls.Add(valuesChart, 1, 0);
 
             tableControl.RowStyles.Add(new RowStyle { SizeType = System.Windows.Forms.SizeType.Percent, Height = 50 });
             tableControl.RowStyles.Add(new RowStyle { SizeType = System.Windows.Forms.SizeType.Percent, Height = 50 });

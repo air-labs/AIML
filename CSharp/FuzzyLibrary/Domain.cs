@@ -71,6 +71,14 @@ namespace FuzzyLibrary
             return result;
         }
 
+        public FuzzyNumber NumberFromLambda(Func<double, double> lambda)
+        {
+            var result = new FuzzyNumber(this);
+            foreach (var e in Arguments)
+                result[e] = lambda(e);
+            return result;
+        }
+
         public IEnumerable<double> Arguments
         {
             get
