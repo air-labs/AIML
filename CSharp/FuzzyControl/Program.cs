@@ -43,7 +43,7 @@ namespace FuzzyControl
             double x = 0;
             double y = 0;
             double angle=Math.PI/2;
-            var rnd = new Random(1);
+            var rnd = new Random(1); //1,4 - идеально, 2 - допилить Гогена
             
 
             var path=new Series() { Color = color, ChartType = SeriesChartType.FastLine };
@@ -157,14 +157,17 @@ namespace FuzzyControl
 
         static FuzzyNumber FuzzyLogic(double x, double y)
         {
+            //var argument = domain.Near(y)*domain.Near(x);
+            var argument = domain.Near(y);
+
             var positive = domain.NumberFromLambda(z => { if (z <0 ) return 0; else return z/domain.Max; });
             var turnRight = domain.Near(1);
 
-            var result1 = FuzzyNumber.Relation(GoguenImplication(positive, turnRight), domain.Near(y));
+            var result1 = FuzzyNumber.Relation(GoguenImplication(positive, turnRight), argument);
 
             var negative = domain.NumberFromLambda(z => { if (z >0) return 0; else return -z/domain.Max; });
             var turnLeft = domain.Near(-1);
-            var result2 = FuzzyNumber.Relation(GoguenImplication(negative, turnLeft), domain.Near(y));
+            var result2 = FuzzyNumber.Relation(GoguenImplication(negative, turnLeft), argument);
    
             return result1 & result2;
         }
@@ -225,12 +228,12 @@ namespace FuzzyControl
                  Color = Color.Green
              });
 
-            //algorithms.Add(new Algorithm
-            //{
-            //    AlgorithmToFuzzy = MostProbableAlgorithm,
-            //    AlgorithmToNumber = (x, y) => FuzzyAlgorithm(x, y).ArgMax(),
-            //    Color = Color.Blue
-            //});
+            algorithms.Add(new Algorithm
+            {
+                AlgorithmToFuzzy = MostProbableAlgorithm,
+                AlgorithmToNumber = (x, y) => FuzzyAlgorithm(x, y).ArgMax(),
+                Color = Color.Blue
+            });
 
             algorithms.Add(new Algorithm
             {
@@ -240,7 +243,7 @@ namespace FuzzyControl
             });
 
             //Compare(0.01, 0.8);
-         //   Compare(0.1);
+            Compare(0.1);
 
             RunAll();
             return;

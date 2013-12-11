@@ -80,7 +80,9 @@ namespace FuzzyLibrary
         {
             var sum = Domain.Arguments.Select(z => z * this[z]).Sum();
             var wei = Domain.Arguments.Select(z => this[z]).Sum();
-            return sum / wei;
+            var result=sum / wei;
+            if (double.IsNaN(result)) return 0;
+            return result;
         }
 
         public double ArgMax()
