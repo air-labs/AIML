@@ -148,21 +148,24 @@ namespace FuzzyControl
             return result;
         }
 
+
+
+        static Func<double, double, double> GoguenImplication(FuzzyNumber from, FuzzyNumber to)
+        {
+            return (x,y) => { if (from[x]==0) return 1; else return Math.Min(1,to[y]/from[x]); };
+         }
+
         static FuzzyNumber FuzzyLogic(double x, double y)
         {
             var positive = domain.NumberFromLambda(z => { if (z <0 ) return 0; else return z/domain.Max; });
-            var turnRight = domain.Near(Math.PI);
+            var turnRight = domain.Near(1);
 
-            var result1 = FuzzyNumber.Relation(Implication(positive, turnRight), domain.Near(y));
+            var result1 = FuzzyNumber.Relation(GoguenImplication(positive, turnRight), domain.Near(y));
 
             var negative = domain.NumberFromLambda(z => { if (z >0) return 0; else return -z/domain.Max; });
-            var turnLeft = domain.Near(-Math.PI);
-            var result2 = FuzzyNumber.Relation(Implication(negative, turnLeft), domain.Near(y));
-
-            FuzzyNumber.ShowChart(result1.ToPlot(Color.Red), result2.ToPlot(Color.Blue));
-            FuzzyNumber.ShowChart(positive.ToPlot(Color.Red), negative.ToPlot(Color.Blue));
-            //  FuzzyNumber.ShowChart((result1 & result2).ToPlot(Color.Orange));
-            
+            var turnLeft = domain.Near(-1);
+            var result2 = FuzzyNumber.Relation(GoguenImplication(negative, turnLeft), domain.Near(y));
+   
             return result1 & result2;
         }
 
@@ -199,10 +202,7 @@ namespace FuzzyControl
             });
         }
 
-        static Func<double, double, double> Implication(FuzzyNumber from, FuzzyNumber to)
-        {
-            return (x, y) => Math.Max(1 - from[x], from[y]);
-        }
+      
 
 
         /// <summary>
@@ -218,24 +218,31 @@ namespace FuzzyControl
             domain.NearFunction = Domain.NearQuadratic(2);
 
             algorithms.Add(new Algorithm { AlgorithmToFuzzy = null, AlgorithmToNumber = ExactAlgorithm, Color = Color.Red });
-           algorithms.Add(new Algorithm 
-            { 
-                AlgorithmToFuzzy = FuzzyAlgorithm, 
-                AlgorithmToNumber = (x,y)=>FuzzyAlgorithm(x,y).Average(),
-                Color = Color.Green 
-            });
+            algorithms.Add(new Algorithm
+             {
+                 AlgorithmToFuzzy = FuzzyAlgorithm,
+                 AlgorithmToNumber = (x, y) => FuzzyAlgorithm(x, y).Average(),
+                 Color = Color.Green
+             });
+
+            //algorithms.Add(new Algorithm
+            //{
+            //    AlgorithmToFuzzy = MostProbableAlgorithm,
+            //    AlgorithmToNumber = (x, y) => FuzzyAlgorithm(x, y).ArgMax(),
+            //    Color = Color.Blue
+            //});
 
             algorithms.Add(new Algorithm
             {
-                AlgorithmToFuzzy = MostProbableAlgorithm,
-                AlgorithmToNumber = (x, y) => FuzzyAlgorithm(x, y).ArgMax(),
-                Color = Color.Blue
+                AlgorithmToFuzzy = FuzzyLogic,
+                AlgorithmToNumber = (x, y) => FuzzyLogic(x, y).Average(),
+                Color = Color.Orange
             });
 
-            Compare(0.01, 0.8);
-            Compare(0.01);
+            //Compare(0.01, 0.8);
+         //   Compare(0.1);
 
-            //RunAll();
+            RunAll();
             return;
 
         
