@@ -2,21 +2,10 @@
 \usepackage[utf8]{inputenc}
 \usepackage[russian]{babel}
 \usepackage{aiml}
-\usepackage{framed}
 
 
-\newcommand{\citate}[3]
-{
-\begin{framed}
-{
-\fontfamily{Liberation Serif}\selectfont
-#1
-}
-\end{framed}
-\begin{flushright}
-(#2, {\it #3})
-\end{flushright}
-}
+
+
 
 \begin{document}
 
@@ -28,16 +17,12 @@
 
 \begin{frame}
 \citate{
-If at each stage the motion of a machine (in the sense of § 1) is completely
-determined by the configuration, we shall call the machine an "automatic machine" (or $a$-machine).
+Машину, каждое перемещение которой ... полностью определено ее конфигурацией, мы будем называть автоматической машиной (or $a$-machine).
 
-For some purposes we might use machines (choice machines or
-c-manhines) whose motion is onty partially determined by the configuration
-... When such a machine
-reaches one of these ambiguous configurations, it cannot go on until some
-arbitrary choice has been made by an external operator ... In this
-paper I deal only with automatic machines, and will therefore often omit
-the prefix a-.
+Однако для некоторых целей мы можем использовать машины ($c$-машины), чье поведение только частично определено их конфигурацией. 
+... Когда такая машина достигает неоднозначной конфигурации, она останавливается до тех пор, пока внешний оператор не выберет
+какой-либо вариант продолжения. В этой статье я рассматриваю лишь автоматические машины, и потому опускаю префикс $a$.
+
 }{Alan Turing}{On computable numbers, with an application to the Entscheidungsproblem}
 \end{frame}
 
@@ -46,45 +31,54 @@ the prefix a-.
 \begin{frame}
 \citate
 {
-The behaviour of the \alert<2->{computer} at any moment is determined by the symbols which \alert<3->{he} is observing, and \alert<4>{his "state of mind"} at that moment. We may suppose that there is a bound $B$ to the number of symbols or squares which the computer can observe at one moment. If \alert<4>{he wishes} to observe more, he must use successive observations. We will also suppose that the number of \alert<4>{states of mind} which need be taken into account is finite.
+Поведение компьютера в каждый момент времени определено символами, который он наблюдает, и его ``состоянием сознания''. 
+Мы можем считать, что количество таких символов ограничено в каждый момент времени сверху границей $B$. Если компьютеру нужно рассмотреть 
+больше символов, необходимо использовать последовательные наблюдения. Мы также можем считать, что количество его состояний сознания также конечно.
 }{Alan Turing}{On computable numbers, with an application to the Entscheidungsproblem}
-
 \end{frame}
 
 \begin{frame}
 \citate
 {
-...a game which we call the ``imitation game''. It is played (by) a man (A), a woman (B), and an interrogator (C). The interrogator stays in a room apart front the other two. The object of the game for the interrogator is to determine which of the other two is the man and which is the woman. He knows them by labels X and Y. The interrogator is allowed to put questions to A and B thus:\\[0.2cm]
-
-C: Will X please tell me the length of his or her hair?\\[0.2cm]
-
-Now suppose X is actually A, then A must answer:\\[0.2cm]
-
-``My hair is shingled, and the longest strands are about nine inches long.''
-}{Alan Turing}{Computing machinery and intelligence}
-
+The behaviour of the computer at any moment is determined by the symbols which \alert<2->{he} is observing, and \alert<2->{his "state of mind"} at that moment. We may suppose that there is a bound $B$ to the number of symbols or squares which the computer can observe at one moment. If \alert<2->{he wishes} to observe more, he must use successive observations. We will also suppose that the number of \alert<2->{states of mind} which need be taken into account is finite.
+}{Alan Turing}{On computable numbers, with an application to the Entscheidungsproblem}
 \end{frame}
+
+\begin{frame}
+\citate
+{
+[Рассмотрим] игру, которую мы будем называть ``игрой в имитацию''. В нее играют мужчина (A), женщина (B), и жюри (C). Жюри располагается в отдельной от остальных комнате. Цель жюри состоит в том, чтобы определить, кто из игроков мужчина, а кто -- женщина, [цель игроков -- запутать жюри]. Жюри знает игроков по меткам X и Y. Далее жюри задает вопросы, например:\\[0.2cm]
+
+C: X, какая у вас длина волос? \\[0.2cm]
+
+Предположим, что X -- это мужчина, и X отвечает:\\[0.2cm]
+
+``У меня стрижка под фокстрот, а самые длинные пряди около 20 сантиметров''
+}{Alan Turing}{Computing machinery and intelligence}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\includegraphics[width=0.4\textwidth]{Portraits/Shingled.jpg}
+\end{center}
+\end{frame}
+
 
 \begin{frame}
 
 \citate
 {
-We now ask the question, ``What will happen when a machine takes the part of A in this game?'' Will the interrogator decide wrongly? These questions replace our original, ``Can machines think?''
+Зададимся теперь вопросом, ``Что бы случилось, если бы машина заняла место A в этой игре?'' Может быть, жюри бы ошиблось? Этим вопросом мы заменим наш начальный вопрос, ``Может ли машина мыслить?''.
 }{Alan Turing}{Computing machinery and intelligence}
 
 \end{frame}
 
 \begin{frame}
-\begin{columns}
-\column{0.5\textwidth}
+\doublebio{
 \bio{McCulloch}{Warren McCulloch}{1898-1969}{}
-\column{0.5\textwidth}
+}{
 \bio{Pitts}{Walter Pitts}{1923-1969}{}
-\end{columns}
-\end{frame}
-
-\begin{frame}
-\bio{Rosenblatt}{Frank Rosenblatt}{1928-1971}{}
+}
 \end{frame}
 
 \begin{frame}
@@ -94,10 +88,69 @@ We now ask the question, ``What will happen when a machine takes the part of A i
 \begin{frame}
 \citate
 {
-We propose that a 2 month, 10 man study of artificial intelligence be carried out during the summer of 1956 at Dartmouth College in Hanover, New Hampshire. The study is to proceed on the basis of the conjecture that every aspect of learning or any other feature of intelligence can in principle be so precisely described that a machine can be made to simulate it. An attempt will be made to find how to make machines use language, form abstractions and concepts, solve kinds of problems now reserved for humans, and improve themselves. We think that a significant advance can be made in one or more of these problems if a carefully selected group of scientists work on it together for a summer.
+Мы предлагаем двухмесячный исследовательский семинар в составе десяти человек для исследования искусственного интеллекта в течение лета 1956 года в Дортмундском колледже Гановера, Нью-Хэмпшир. Отправной точкой исследования является убеждение в том, что все аспекты обучения, и других проявлений интеллекта, могут быть настолько точно описаны, что машина может запрограммирована на их выполнение. Будет сделана попытка выяснить, как машины могут использовать язык, делать абстракции, решать различные виды задач, которые пока решает лишь человек, и самообучаться. Мы полагаем, что возможно существенное продвижение в этом вопросе, если тщательно отобранная группа ученых будет совместно работать над ним в течение лета.
 }{McCarthy et al.}{Proposal for the project}
 \end{frame}
 
 \section{Золотой век}
+
+\begin{frame}
+\begin{center}
+ \includegraphics[width=\textwidth]{tictactoe.jpg}
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+\bio{Robinson}{John Alan Robinson}{1928-н.д.}{Создатель метода резолюций}
+\end{frame}
+
+
+\begin{frame}
+\bio{Rosenblatt}{Frank Rosenblatt}{1928-1971}{}
+\end{frame}
+
+\begin{frame}
+\bio{Unimate}{UNIMATE}{}{Первый промышленный робот}
+\end{frame}
+
+
+\begin{frame}
+\citate
+{
+В течение трех-восьми лет интеллект машины сравняется с общим интеллектом среднего человека. Я имею в виду, что машина сможет читать Шекспира, обслуживать автомобиль, заниматься политикой, рассказывать анекдоты и спорить. В этот же момент, машина начнет самообучаться с невероятной скоростью. В течение нескольких месяцев она достигнет уровня гения, а дальше ее возможности станут невообразимыми. 
+}{Marvin Minsky}{Quoted by Life, 1970}
+\end{frame}
+
+\section{Первая зима}
+
+\begin{frame}
+\doublebio{
+\bio{Minsky}{Marvin Lee Minsky}{1927--}{}
+}{
+\bio{Papert}{Seymour Papert}{1928--}{}
+}
+\end{frame}
+
+
+\begin{frame}
+\bio{Lighthill}{Michael James Lighthill}{1924-1998}{Автор Lighthill report}
+\end{frame}
+
+\begin{frame}
+\citate
+{\small
+Иногда говорят, что мотивацией мужчин для работы ... в ``чистой науке'' является компенсация невозможности рождения детей. Если это правда, то Building Robots -- это идеальная компенсация! ... большая часть роботов построена так, что функционирует в соответствии с представлениями мужчин о мире ребенка: роботы играют в игры, разгадывают головоломки, описывают словами картинки (вроде ``медведя на коврике с мячом''). Но богатая эмоциональная составляющая детства полностью отсутствует. На это обычно отвечают, что робототехника -- молодая наука, а потому роботы способны имитировать лишь детские действия. Однако, автор пришел к ... мнению, что отношения между роботами и их строителями напоминают псевдо-детско-родительские.}{Charles Lighthill}{Artificial Intelligence: A General Survey}
+\end{frame}
+
+\begin{frame}
+ \bio{Moravec}{Hans Moravec}{1948--}{}
+\end{frame}
+
+\begin{frame}
+ \bio{Searl}{John Searl}{1932--}{}
+\end{frame}
+
+
 
 \end{document}

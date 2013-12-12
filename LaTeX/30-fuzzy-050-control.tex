@@ -5,15 +5,109 @@
 
 \begin{document}
 
+\begin{frame}\frametitle{Постановка задачи}
+
+\begin{tikzpicture}
+\begin{scope}[rotate=45]
+\draw[rounded corners,blue] (-2,-1) rectangle (2,1);
+\draw[->] (0,0)--(3,0) node[above] {$x$};
+\draw[->] (0,0)--(0,2) node[left] {$y$};
+\uncover<5->{
+\draw[->,red,ultra thick] (0,0) arc (90:45:3);
+}
+\end{scope}
+\draw[dotted](0,0)--(2,0);
+\draw (1,1) arc (45:0:1.414);
+\node at (1.5,0.5) {$\alpha$};
+\uncover<2->{
+\node[draw,ultra thick,circle] at (5,0) {$X_t,Y_t$};
+}
+\end{tikzpicture}
+\uncover<3->{$$
+(X_t,Y_t)\rightarrow(X_r,Y_r)
+$$}
+\uncover<4->{$$
+\Delta\alpha=\arctan Y_r/X_r
+$$}
+\end{frame}
+
+\begin{frame}\frametitle{Вероятностный подход}
+\uncover<+->{$$
+F_A(x)=P\{ A\le x \}
+$$}
+\uncover<+->{$$
+F_A(x)=\int_{-\infty}^{x} f_A(x) dx
+$$}
+\uncover<+->{$$
+P \{ A=x \} =0
+$$}
+\uncover<+->{
+\begin{tikzpicture}[x=2cm,y=2cm]
+\draw[->,thick] (0,0.01) -- (4.5,0.01) node[below] {$d$};
+\draw[->,thick] (0,0) -- (0,1.2) node[left] {$f_A$};
+\draw[red,thick] plot file {Plots/2.txt};
+\end{tikzpicture}
+}
+\end{frame}
+
+\begin{frame}\frametitle{Вероятностный подход}
+ 
+\citate{
+...in this class, we'll only care about probability distributions over finitely many events, so all the subtle questions of integrability, measurability, and so on won't arise. 
+
+In my view, probability theory is yet another example where mathematicians immediately go to infinite-dimensional spaces, in order to solve the problem of having a nontrivial problem to solve in the first place! And that's fine — whatever floats your boat. I'm not criticizing that. But in theoretical computer science, we've already got our hands full with $2^n$ choices. We need $2^{\aleph_0}$ choices like we need a hole in the head.
+
+}{Scott Aaronson}{Quantum computing since Democritus}
+
+\end{frame}
+
+\begin{frame}\frametitle{Вероятностный подход}
+
+\uncover<+->{$$
+\mathbb{D}=\{d_{-k},d_{-k+1},\ldots,d_0=0,d_1=\varepsilon,d_2=2\varepsilon,\ldots,d_k\gg 0\}
+$$}
+\uncover<+->{$$
+x=d_i\ \Leftrightarrow\ x\in[d_i-\varepsilon/2,d_i+\varepsilon/2)
+$$}
+\uncover<+->{$$
+P \{A=a\}=K_A \cdot f_A(a)
+$$}
+\uncover<+->{$$
+K_A\ :\ \left[\sum_{a\in\mathbb{D}} P\{A=a \}\right]=1
+$$}
+
+
+\end{frame}
+
+\begin{frame}
+
+\uncover<+->{$$
+h:\mathbb{R}\times\mathbb{R}\rightarrow\mathbb{R}
+$$}
+\uncover<+->{$$
+C=h(A,B)
+$$}
+\uncover<+->{$$
+P\{ C=c \}=\sum_{a,b\ :\ h(a,b)=c} P\{ A=a\ \cap\ B=b\}=
+$$}
+\uncover<+->{$$
+=\sum_{a,b\ :\ h(a,b)=c} P\{ A=a \}P\{ B=b \}=
+$$}
+\uncover<+->{$$
+= K_C\cdot \sum_{a,b\ :\ h(a,b)=c} f_A(a)f_B(b)
+$$}
+
+\end{frame}
+
 \begin{frame}\frametitle{Точное вычисление нечетких операций}
-\uncover<+->{}
+
 \uncover<+->{$$
 \mu_X(x)=\max\left[0,1-\left(\frac{x-\ceil{X}}{q}\right)^2\right]
-$$}
-\uncover<+->{$$
+$$
+$$
 \mu_Y(y)=\max\left[0,1-\left(\frac{x-\ceil{Y}}{q}\right)^2\right]
-$$}
-\uncover<+->{$$
+$$
+$$
 Z=\arctan Y/X
 $$}
 \uncover<+->{$$
@@ -36,5 +130,41 @@ $$
 
 \end{frame}
 
+\begin{frame}\frametitle{Нечеткий вывод}
+\uncover<+->{\begin{center}
+Если цель слева, надо повернуть налево.
+\end{center}}
+\uncover<+->{$$
+\mu_L(y)=\left\{\begin{array}{l l}
+                 0 &, y<0 \\
+                 y/M & y\ge 0 \\
+                \end{array}\right.
+$$}
+\uncover<+->{$$
+\mu_{TL}(\alpha)=1-(x-\pi/4)^2
+$$}
+\uncover<+->{$$
+L\rightarrow TL, \rho\fsubset\mathbb{R}\times\mathbb{R}
+$$}
+\uncover<+->{$$
+\mu_{\rho}(y,\alpha)=\rightarrow_G\left[\mu_L(y),\mu_R(\alpha)\right]
+$$}
+\uncover<+->{$$
+\rightarrow_G(a,b)=\min(1,b/a)
+$$}
+\uncover<+->{$$
+\mu_{\rho(Y)}(\alpha)=\max_{y\in\mathbb{R}}\mu_Y(y)\mu_\rho(y,\alpha)=\max_{y\in\mathbb{R}}(\mu_Y(y)\min(\mu_L(y),\mu_TL(\alpha))
+$$}
+\end{frame}
 
+\begin{frame}\frametitle{Нечеткий вывод}
+\begin{center}
+Если цель слева, надо повернуть налево.
+А если справа, то направо.
+\end{center}
+
+$$
+\alpha=|\rho_L(Y)\fcap \rho_R(Y)|
+$$
+\end{frame}
 \end{document}

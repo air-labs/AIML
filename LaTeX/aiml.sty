@@ -5,11 +5,33 @@
 \usepackage{multirow}
 \usepackage{tikz}
 \usepackage{cancel}
+\usepackage{framed}
 
 \newcommand{\fuz}[1]{\frac{\mu(#1)}{#1}}
 
 \newcommand{\ceil}[1]{\lceil #1 \rceil}
 
+\newcommand{\citate}[3]
+{
+\begin{framed}
+{
+\fontfamily{Liberation Serif}\selectfont
+#1
+}
+\end{framed}
+\begin{flushright}
+(#2, {\it #3})
+\end{flushright}
+}
+
+\newcommand{\doublebio}[2]{
+\begin{columns}[t]
+\column{0.5\textwidth}
+#1
+\column{0.5\textwidth}
+#2
+\end{columns}
+}
 
 \newcommand{\foperation}[1]{\widetilde{#1}}
 \newcommand{\fcup}{\foperation{\cup}}
