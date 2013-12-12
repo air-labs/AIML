@@ -83,16 +83,10 @@ namespace FuzzyLibrary
             return sum / wei;
         }
 
-        public double Median()
+        public double ArgMax()
         {
-            var halfSum = Domain.Arguments.Select(z => this[z]).Sum()/2;
-            double partial = 0;
-            foreach (var e in Domain.Arguments)
-            {
-                partial += this[e];
-                if (partial > halfSum) return e;
-            }
-            throw new ArgumentException();
+            var max = Domain.Arguments.Max(z => this[z]);
+            return Domain.Arguments.FirstOrDefault(z => this[z] == max);
         }
 
         public double Ceiling()
@@ -119,12 +113,14 @@ namespace FuzzyLibrary
         }
         public static FuzzyNumber operator |(FuzzyNumber a, FuzzyNumber b)
         {
-            return SetOperation(a,b,a.Domain.T);
+            return SetOperation(a,b,a.Domain.S);
         }
         public static FuzzyNumber operator &(FuzzyNumber a, FuzzyNumber b)
         {
-            return SetOperation(a,b,a.Domain.S);
+            return SetOperation(a,b,a.Domain.T);
         }
+
+
 
 
         public static FuzzyNumber Relation(Func<double, double, double> relation, FuzzyNumber argument)
@@ -132,10 +128,8 @@ namespace FuzzyLibrary
             FuzzyNumber number = new FuzzyNumber(argument.Domain);
             foreach (var x in argument.Domain.Arguments)
                 foreach (var y in argument.Domain.Arguments)
-                {
-
-                }
-            return null;
+                    number[y] = argument.Domain.S(number[y], argument.Domain.T(argument[x], relation(x, y)));
+            return number;
         }
                 
 

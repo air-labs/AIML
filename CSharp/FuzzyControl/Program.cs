@@ -9,6 +9,14 @@ using FuzzyLibrary;
 
 namespace FuzzyControl
 {
+    class Algorithm
+    {
+        public Func<double, double, FuzzyNumber> AlgorithmToFuzzy;
+        public Func<double, double, double> AlgorithmToNumber;
+        public Color Color;
+    }
+
+
     static class Program
     {
         static double TargetX = 5;
@@ -18,6 +26,9 @@ namespace FuzzyControl
         static int StepCount = (int)(TargetX / Velocity);
         static int IntermediateStepCount = 50;
 
+
+        #region Запуск
+
         static double BoxMuller(Random rnd, double M, double sigma)
         {
             var U = rnd.NextDouble();
@@ -26,10 +37,6 @@ namespace FuzzyControl
             return x * sigma + M;
         }
 
-        static Series[] RunCar(Func<double, double, FuzzyNumber> algorithm, Color color)
-        {
-            return RunCar((x, y) => algorithm(x, y).Average(), color);
-        }
 
         static Series[] RunCar(Func<double, double, double> algorithm, Color color)
         {
@@ -37,13 +44,13 @@ namespace FuzzyControl
             double y = 0;
             double angle=Math.PI/2;
             var rnd = new Random(1);
-            var result = new[]
-                {
-                    new Series() { Color = color, ChartType = SeriesChartType.FastLine },
-                    new Series() { Color = color, ChartType = SeriesChartType.FastLine },
-                    new Series() { Color = color, ChartType = SeriesChartType.FastPoint },
+            
 
-                };
+            var path=new Series() { Color = color, ChartType = SeriesChartType.FastLine };
+            var dangles=new Series() { Color = color, ChartType = SeriesChartType.FastLine };
+            var values=new Series() { Color = color, ChartType = SeriesChartType.FastPoint };
+
+
             for (int i=0;i<StepCount;i++)
             {
                 var tX = BoxMuller(rnd, TargetX-x, TargetDeviation);
@@ -62,20 +69,59 @@ namespace FuzzyControl
                     angle += dangle;
                     x += Velocity * Math.Cos(angle)/IntermediateStepCount;
                     y += Velocity * Math.Sin(angle) / IntermediateStepCount;
-                    result[0].Points.Add(new DataPoint(x, y)); 
+                    path.Points.Add(new DataPoint(x, y)); 
                 }
-                result[1].Points.Add(new DataPoint(i, dangle));
-                result[2].Points.Add(new DataPoint(y, dangle));
+                dangles.Points.Add(new DataPoint(i, dangle));
+                values.Points.Add(new DataPoint(y, dangle));
             }
-            return result;
+            return new Series[] { path, dangles };
         }
+
+        static void RunAll()
+        {
+            var charts = Enumerable.Range(0, 2).Select(z => new Chart { ChartAreas = { new ChartArea() }, Dock = DockStyle.Fill }).ToArray();
+            foreach (var e in algorithms)
+            {
+                var series = RunCar(e.AlgorithmToNumber, e.Color);
+                for (int i = 0; i < series.Length; i++)
+                    charts[i].Series.Add(series[i]);
+            }
+
+            int rowCount = 2;
+            int columnCount = 2;
+
+            var tableControl = new TableLayoutPanel { RowCount = rowCount, ColumnCount = columnCount, Dock = DockStyle.Fill };
+            for (int i = 0; i < charts.Length; i++)
+            {
+                tableControl.Controls.Add(charts[i], i % rowCount, i / rowCount);
+            }
+          
+            tableControl.RowStyles.Add(new RowStyle { SizeType = System.Windows.Forms.SizeType.Percent, Height = 50 });
+            tableControl.RowStyles.Add(new RowStyle { SizeType = System.Windows.Forms.SizeType.Percent, Height = 50 });
+            tableControl.ColumnStyles.Add(new ColumnStyle { SizeType = System.Windows.Forms.SizeType.Percent, Width = 50 });
+            tableControl.ColumnStyles.Add(new ColumnStyle { SizeType = System.Windows.Forms.SizeType.Percent, Width = 50 });
+
+            var form = new Form
+            {
+                WindowState = FormWindowState.Maximized,
+                Controls = 
+                {
+                   tableControl
+                }
+            };
+
+            Application.Run(form);
+        }
+        #endregion
+        #region Алгоритмы
 
         static double ExactAlgorithm(double x, double y)
         {
             return Math.Atan2(y, x);
         }
 
-        static Domain domain=new Domain(-7,7,0.05);
+
+        static Domain domain=new Domain(-7,7,0.1);
 
         static FuzzyNumber FuzzyAlgorithm(double x, double y)
         {
@@ -96,67 +142,68 @@ namespace FuzzyControl
                     var probability = gaussFunction(dx, 0) * gaussFunction(dy, 0);
                     result[value] += probability;
                 }
-            var max= domain.Arguments.Max(z => result[z]);
-            foreach (var e in domain.Arguments)
-                result[e] /= max;
+            var total = result.Domain.Arguments.Sum(z => result[z]);
+            foreach (var e in result.Domain.Arguments)
+                result[e] /= total;
             return result;
         }
 
+
+
+        static Func<double, double, double> GoguenImplication(FuzzyNumber from, FuzzyNumber to)
+        {
+            return (x,y) => { if (from[x]==0) return 1; else return Math.Min(1,to[y]/from[x]); };
+         }
+
         static FuzzyNumber FuzzyLogic(double x, double y)
         {
-            FuzzyNumber Positive = domain.CreateEmpty();
-            
-            FuzzyNumber Negative = domain.CreateEmpty();
-            FuzzyNumber TurnLeft = domain.Near(Math.PI);
-            FuzzyNumber TurnRIght = domain.Near(-Math.PI);
-            
-            
-            foreach (var e in domain.Arguments)
+            var positive = domain.NumberFromLambda(z => { if (z <0 ) return 0; else return z/domain.Max; });
+            var turnRight = domain.Near(1);
+
+            var result1 = FuzzyNumber.Relation(GoguenImplication(positive, turnRight), domain.Near(y));
+
+            var negative = domain.NumberFromLambda(z => { if (z >0) return 0; else return -z/domain.Max; });
+            var turnLeft = domain.Near(-1);
+            var result2 = FuzzyNumber.Relation(GoguenImplication(negative, turnLeft), domain.Near(y));
+   
+            return result1 & result2;
+        }
+
+        #endregion
+
+
+
+       static  List<Algorithm> algorithms = new List<Algorithm>();
+
+      
+
+        static void Compare(double x, double y)
+        {
+            var args = algorithms.Where(z => z.AlgorithmToFuzzy != null).Select(z => z.AlgorithmToFuzzy(x, y).ToPlot(z.Color)).ToArray();
+            FuzzyNumber.ShowChart(args);
+        }
+
+        static void Compare(double x)
+        {
+            var chart = new Chart { ChartAreas = { new ChartArea() }, Dock = DockStyle.Fill };
+            foreach (var e in algorithms)
             {
-                Positive[e] = Math.Max(0, Math.Min(1, e));
-                Negative[e] = 1 - Positive[e];
+                var serie = new Series { Color = e.Color, ChartType = SeriesChartType.FastLine};
+                foreach (var y in domain.Arguments)
+                {
+                    var value = e.AlgorithmToNumber(x, y);
+                    serie.Points.Add(new DataPoint(y, value));
+                }
+                chart.Series.Add(serie);
             }
-            
-            
-
-
-            return null;
+            Application.Run(new Form
+            {
+                Controls = { chart }
+            });
         }
 
+      
 
-
-        static Chart GetChart(params Series[] series)
-        {
-            var chart =
-            new Chart
-                    {
-                        ChartAreas = { new ChartArea() },
-                        Dock = DockStyle.Fill
-                    };
-            foreach (var s in series)
-                chart.Series.Add(s);
-            return chart;
-        }
-
-
-        static Chart pathChart;
-        static Chart controlChart;
-        static Chart valuesChart;
-
-        static void AddAlgorithm(Func<double, double, double> algorithm, Color color)
-        {
-            var path = RunCar(algorithm, color);
-            pathChart.Series.Add(path[0]);
-            controlChart.Series.Add(path[1]);
-            valuesChart.Series.Add(path[2]);
-        }
-
-        static void Compare(int x, int y)
-        {
-            var fuzzy = FuzzyAlgorithm(x, y);
-            var probably = MostProbableAlgorithm(x, y);
-            FuzzyNumber.ShowChart(fuzzy.ToPlot(Color.Red), probably.ToPlot(Color.Blue));
-        }
 
         /// <summary>
         /// The main entry point for the application.
@@ -167,41 +214,38 @@ namespace FuzzyControl
 
 
 
-            pathChart = new Chart { ChartAreas = { new ChartArea() }, Dock = DockStyle.Fill };
-            controlChart = new Chart { ChartAreas = { new ChartArea() }, Dock = DockStyle.Fill };
-            valuesChart = new Chart { ChartAreas = { new ChartArea() }, Dock = DockStyle.Fill };
-
+       
             domain.NearFunction = Domain.NearQuadratic(2);
 
-            FuzzyLogic(1, 1);
+            algorithms.Add(new Algorithm { AlgorithmToFuzzy = null, AlgorithmToNumber = ExactAlgorithm, Color = Color.Red });
+            algorithms.Add(new Algorithm
+             {
+                 AlgorithmToFuzzy = FuzzyAlgorithm,
+                 AlgorithmToNumber = (x, y) => FuzzyAlgorithm(x, y).Average(),
+                 Color = Color.Green
+             });
 
+            //algorithms.Add(new Algorithm
+            //{
+            //    AlgorithmToFuzzy = MostProbableAlgorithm,
+            //    AlgorithmToNumber = (x, y) => FuzzyAlgorithm(x, y).ArgMax(),
+            //    Color = Color.Blue
+            //});
 
-            AddAlgorithm(ExactAlgorithm, Color.Red);
-            AddAlgorithm((x,y)=>FuzzyAlgorithm(x,y).Average(), Color.Green);
-            AddAlgorithm((x,y)=>MostProbableAlgorithm(x,y).Average(), Color.Blue);
-
-
-
-            var tableControl = new TableLayoutPanel { RowCount = 2, ColumnCount = 2, Dock= DockStyle.Fill };
-            tableControl.Controls.Add(pathChart,0,0);
-            tableControl.Controls.Add(controlChart,0,1);
-            tableControl.Controls.Add(valuesChart, 1, 0);
-
-            tableControl.RowStyles.Add(new RowStyle { SizeType = System.Windows.Forms.SizeType.Percent, Height = 50 });
-            tableControl.RowStyles.Add(new RowStyle { SizeType = System.Windows.Forms.SizeType.Percent, Height = 50 });
-            tableControl.ColumnStyles.Add(new ColumnStyle { SizeType = System.Windows.Forms.SizeType.Percent, Width = 50 });
-            tableControl.ColumnStyles.Add(new ColumnStyle { SizeType = System.Windows.Forms.SizeType.Percent, Width = 50 });
-
-            var form = new Form
+            algorithms.Add(new Algorithm
             {
-                WindowState = FormWindowState.Maximized,
-                Controls = 
-                {
-                   tableControl
-                }
-            };
+                AlgorithmToFuzzy = FuzzyLogic,
+                AlgorithmToNumber = (x, y) => FuzzyLogic(x, y).Average(),
+                Color = Color.Orange
+            });
 
-            Application.Run(form);
+            //Compare(0.01, 0.8);
+         //   Compare(0.1);
+
+            RunAll();
+            return;
+
+        
         }
     }
 }
