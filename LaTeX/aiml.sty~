@@ -24,14 +24,7 @@
 \end{flushright}
 }
 
-\newcommand{\doublebio}[2]{
-\begin{columns}[t]
-\column{0.5\textwidth}
-#1
-\column{0.5\textwidth}
-#2
-\end{columns}
-}
+
 
 \newcommand{\foperation}[1]{\widetilde{#1}}
 \newcommand{\fcup}{\foperation{\cup}}
@@ -47,15 +40,27 @@
 \tikzstyle{neu}=[circle,fill=blue!50,inner sep=8pt]
 \newcommand{\dd}[2]{\frac{\partial #1}{\partial #2}}
 
-\newcommand{\bio}[4]
+\newcommand{\bio}[3]
 {
 \begin{center}
 
 \includegraphics[width=4cm]{Portraits/#1.jpg}
 
 
-{\bf #2} (#3)
+{\bf #2}
 
-#4
+#3
+\end{center}
+}
+
+
+\newcommand{\doublebio}[5]{
+\begin{center}
+
+\begin{tabular}{c c}
+\includegraphics[width=4cm]{Portraits/#1.jpg} & \includegraphics[width=4cm]{Portraits/#3.jpg} \\
+{\bf #2 } & {\bf #4} \\
+\end{tabular}
+#5
 \end{center}
 }
