@@ -7,6 +7,9 @@
 \usepackage{cancel}
 \usepackage{framed}
 
+
+\newcommand{\imp}[2]{\overset{#1}{\underset{#2}{\longrightarrow}}}
+
 \newcommand{\fuz}[1]{\frac{\mu(#1)}{#1}}
 
 \newcommand{\ceil}[1]{\lceil #1 \rceil}
@@ -61,6 +64,8 @@
 \includegraphics[width=4cm]{Portraits/#1.jpg} & \includegraphics[width=4cm]{Portraits/#3.jpg} \\
 {\bf #2 } & {\bf #4} \\
 \end{tabular}
+
+
 #5
 \end{center}
 }

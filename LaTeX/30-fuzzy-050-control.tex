@@ -53,9 +53,13 @@ $$}
 \begin{frame}\frametitle{Вероятностный подход}
  
 \citate{
-...in this class, we'll only care about probability distributions over finitely many events, so all the subtle questions of integrability, measurability, and so on won't arise. 
+... в этом курсе, нас интересуют исключительно вероятностные распределения по конечному числу событий, 
+поэтому нетривиальные вопросы интегрируемости, измеримости и т.д. мы рассматривать не будем.
 
-In my view, probability theory is yet another example where mathematicians immediately go to infinite-dimensional spaces, in order to solve the problem of having a nontrivial problem to solve in the first place! And that's fine — whatever floats your boat. I'm not criticizing that. But in theoretical computer science, we've already got our hands full with $2^n$ choices. We need $2^{\aleph_0}$ choices like we need a hole in the head.
+Мне кажется, что теория вероятностей -- очередной пример того, как математики немедленно переходят 
+в бесконечномерные пространства, в первую очередь для того, чтобы решить проблему отсутствия подходящей проблемы для решения.
+Я не осуждю это, но в компьютерных науках даже количество вариантов $2^n$ очень велико. А уж число вариантов $2^{\aleph_0}$ нам нужно, 
+как лишняя дырка в голове.
 
 }{Scott Aaronson}{Quantum computing since Democritus}
 
@@ -130,13 +134,20 @@ $$
 
 \end{frame}
 
+\section{Нечеткий вывод}
+
+\begin{frame}
+ \bio{Mamdani}{Ebrahim Mamdani}{Application of fuzzy algorithms for the control of a simple dynamic plant (1974)}
+\end{frame}
+
+
 \begin{frame}\frametitle{Нечеткий вывод}
 \uncover<+->{\begin{center}
 Если цель слева, надо повернуть налево.
 \end{center}}
 \uncover<+->{$$
 \mu_L(y)=\left\{\begin{array}{l l}
-                 0 &, y<0 \\
+                 0, & y<0 \\
                  y/M & y\ge 0 \\
                 \end{array}\right.
 $$}
@@ -144,16 +155,16 @@ $$}
 \mu_{TL}(\alpha)=1-(x-\pi/4)^2
 $$}
 \uncover<+->{$$
-L\rightarrow TL, \rho\fsubset\mathbb{R}\times\mathbb{R}
+\mu_{\imp{L,TL}{G}}(y,\alpha)=\imp{}{G}\left[\mu_L(y),\mu_R(\alpha)\right]
 $$}
 \uncover<+->{$$
-\mu_{\rho}(y,\alpha)=\rightarrow_G\left[\mu_L(y),\mu_R(\alpha)\right]
+\imp{}{G}(a,b)=\min(1,b/a)
 $$}
 \uncover<+->{$$
-\rightarrow_G(a,b)=\min(1,b/a)
+\mu_{\imp{L,TL}{G}}(\alpha)=\max_{y\in\mathbb{R}}\mu_Y(y)\mu_{\imp{L,TL}{G}}(y,\alpha)=
 $$}
 \uncover<+->{$$
-\mu_{\rho(Y)}(\alpha)=\max_{y\in\mathbb{R}}\mu_Y(y)\mu_\rho(y,\alpha)=\max_{y\in\mathbb{R}}(\mu_Y(y)\min(\mu_L(y),\mu_TL(\alpha))
+=\max_{y\in\mathbb{R}}\left[\mu_Y(y)\min(1,\mu_L(y)/\mu_TL(\alpha))\right]
 $$}
 \end{frame}
 
@@ -164,7 +175,33 @@ $$}
 \end{center}
 
 $$
-\alpha=|\rho_L(Y)\fcap \rho_R(Y)|
+\alpha=\left|\imp{L,TL}{G}(Y)\fcap \imp{R,TR}{G}(Y)\right|
 $$
 \end{frame}
+
+\begin{frame}\frametitle{Нечеткий вывод}
+\begin{center}
+Если цель слева (L) и достаточно далеко (F), надо повернуть налево (TL).
+\end{center}
+
+\uncover<+->{$$
+L(y)\wedge F(x)\rightarrow TL(\alpha)
+$$}
+
+\uncover<+->{$$
+(y \fin L) \fwedge (x\fin F)\imp{}{G} (\alpha\fin TL)
+$$}
+
+\uncover<+->{$$
+\imp{L\wedge F,TL}{G}=\imp{}{G}\left( \mu_L(y)\fwedge \mu_R(x), \mu_TL(\alpha)\right)
+$$}
+
+\uncover<+->{$$
+\imp{L\wedge F,TL}{G}=\imp{}{G}\left( \mu_L(y)\mu_R(x), \mu_TL(\alpha)\right)
+$$}
+
+
+\end{frame}
+
+
 \end{document}
