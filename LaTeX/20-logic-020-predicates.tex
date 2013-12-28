@@ -1,7 +1,6 @@
 \documentclass[24pt,pdf,hyperref={unicode}]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage{aiml}
-
 \newcommand{\nothing}
 {
 \begin{minipage}{1cm}
@@ -13,6 +12,7 @@
 }
 
 \begin{document}
+
 
 
 \begin{frame}\frametitle{Дедуктивные рассуждения}
@@ -51,11 +51,13 @@ $$
 \begin{frame}\frametitle{Модель}
 \begin{columns}
 \column{0.5\textwidth}
-Генеологическое древо
+
+\uncover<+->{\includegraphics[width=\textwidth]{tree.png}}
+
 
 \column{0.5\textwidth}
 
-$P(x,y)$, $C(x,y)$\\[1cm]
+\uncover<+->{$P(x,y)$, $C(x,y)$}
 
 \begin{itemize}
 \item<+-> $P(Tywin,Cercei)$
