@@ -6,7 +6,7 @@
 \usepackage{tikz}
 \usepackage{cancel}
 \usepackage{framed}
-
+\usepackage{ragged2e}
 
 \newcommand{\imp}[2]{\overset{#1}{\underset{#2}{\longrightarrow}}}
 
@@ -14,13 +14,12 @@
 
 \newcommand{\ceil}[1]{\lceil #1 \rceil}
 
+
 \newcommand{\citate}[3]
 {
 \begin{framed}
-{
-\fontfamily{Liberation Serif}\selectfont
+\justifying
 #1
-}
 \end{framed}
 \begin{flushright}
 (#2, {\it #3})
