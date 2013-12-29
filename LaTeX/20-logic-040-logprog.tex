@@ -15,17 +15,18 @@
 \begin{columns}
 \column{0.5\textwidth}
 
-
-
+\uncover<1->{
 \begin{tikzpicture}[x=0.7cm, y=0.7cm]
 \myrect{0}{0}{6.5}{1}{Table}
 \myrect{0.5}{1}{1}{1}{A}
 \myrect{2}{1}{1.5}{1.5}{B}
 \myrect{4}{1}{2}{2}{C}
 \end{tikzpicture}
+}
 
 {\small
 \begin{tikzpicture}[x=1cm,y=-2.7cm]
+\uncover<3->{
 \node(a+b+c) at (0,0) {$
 \begin{array}{l|l l l l}
 On & A & B & C & T \\
@@ -36,7 +37,9 @@ C  & 0 & 0 & 0 & 1 \\
 \hline\hline 
 Cl & 1 & 1 & 1 & \\
 \end{array}$};
+}
 
+\uncover<4->{
 \node(ab+c) at (0,1) {$
 \begin{array}{l|l l l l}
 On & A & B & C & T \\
@@ -49,6 +52,7 @@ Cl & 1 & 0 & 1 & \\
 \end{array}$};
 
 \path (a+b+c) edge[->] (ab+c);
+}
 
 
 \end{tikzpicture}
@@ -57,6 +61,7 @@ Cl & 1 & 0 & 1 & \\
 
 \column{0.5\textwidth}
 
+\uncover<2->{
 Действие:
 
 \begin{itemize}
@@ -80,6 +85,7 @@ Cl & 1 & 0 & 1 & \\
 \item $\neg On(what,from)$
 \item $Cl(from)$
 \end{itemize}
+}
 
 \end{columns}
 \end{frame}
@@ -87,24 +93,36 @@ Cl & 1 & 0 & 1 & \\
 \begin{frame}
 \begin{tikzpicture}[x=1.9cm, y=-2cm]
 
+\uncover<1->{
 \node (a+b+c) at (2.5,0) {$\begin{array}{l l l} A & B & C \end{array}$};
+}
+
+\uncover<2->{
 \node(ab+c) at (0,1) {$\begin{array}{l l} A \\ B & C \end{array}$};
+\path (a+b+c) edge[<->] (ab+c);
+}
+
+\uncover<3->{
 \node(ac+b) at (1,1) {$\begin{array}{l l} & A \\ B & C \end{array}$};
 \node(ba+c) at (2,1) {$\begin{array}{l l} B \\ A & C \end{array}$};
 \node(bc+a) at (3,1) {$\begin{array}{l l} & B \\ A & C \end{array}$};
 \node(ca+b) at (4,1) {$\begin{array}{l l} C \\ A & B \end{array}$};
 \node(cb+a) at (5,1) {$\begin{array}{l l} & C \\ A & B \end{array}$};
-\path (a+b+c) edge[<->] (ab+c);
+
 \path (a+b+c) edge[<->] (ac+b);
 \path (a+b+c) edge[<->] (ba+c);
 \path (a+b+c) edge[<->] (bc+a);
 \path (a+b+c) edge[<->] (ca+b);
 \path (a+b+c) edge[<->] (cb+a);
+}
 
+\uncover<4->{
 \path (ab+c) edge[<->] (ac+b);
 \path (ba+c) edge[<->] (bc+a);
 \path (ca+b) edge[<->] (cb+a);
+}
 
+\uncover<5->{
 \node(cab) at (0,2) {$\begin{array}{l} C \\ A \\ B \end{array}$};
 \node(bac) at (1,2) {$\begin{array}{l} B \\ A \\ C \end{array}$};
 \node(cba) at (2,2) {$\begin{array}{l} C \\ B \\ A \end{array}$};
@@ -118,6 +136,7 @@ Cl & 1 & 0 & 1 & \\
 \path (bc+a) edge[<->] (abc);
 \path (ca+b) edge[<->] (bca);
 \path (cb+a) edge[<->] (acb);
+}
 
 \end{tikzpicture}
 \end{frame}
