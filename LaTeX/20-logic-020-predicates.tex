@@ -33,44 +33,37 @@ $$
 }
 \end{frame}
 
-\begin{frame}\frametitle{Модель}
-\uncover<+->{
-$$
-\mathfrak{M}=(M,P_1,\ldots,P_n)
-$$
-}
-\uncover<+->{
-$$
-P_i:M^{k_i}\rightarrow\{0,1\}
-$$
-}
-\end{frame}
-
-\usetikzlibrary{trees}
 
 \begin{frame}\frametitle{Модель}
 \begin{columns}
 \column{0.5\textwidth}
 
-\uncover<+->{\includegraphics[width=\textwidth]{tree.png}}
+\uncover<3->{\includegraphics[width=\textwidth]{tree.png}}
 
 
 \column{0.5\textwidth}
 
-\uncover<+->{$P(x,y)$, $C(x,y)$}
+\uncover<1->{$$
+\mathfrak{M}=(M,P_1,\ldots,P_n)
+$$}
+\uncover<2->{$$
+P_i:M^{k_i}\rightarrow\{0,1\}
+$$}
+
+\uncover<3->{$P(x,y)$, $C(x,y)$}
 
 \begin{itemize}
-\item<+-> $P(Tywin,Cercei)$
+\item<4-> $P(Tywin,Cercei)$
 
-\item<+-> $C(Tommen,Cercei)$
+\item<5-> $C(Tommen,Cercei)$
 
-\item<+-> $C(Tyrion,Cercei)$
+\item<6-> $C(Tyrion,Cercei)$
 
-\item<+-> $\forall x,y\ P(x,y)\rightarrow C(y,x)$
+\item<7-> $\forall x,y\ P(x,y)\rightarrow C(y,x)$
 
-\item<+-> $\exists u,x,y,z\ C(u,x)\wedge C(u,y)\wedge C(x,z)\wedge C(y,z)$
+\item<8-> $\exists u,x,y,z\ C(u,x)\wedge C(u,y)\wedge C(x,z)\wedge C(y,z)$
 
-\item<+-> $\forall x \exists y\ P(y,x)$
+\item<9-> $\forall x \exists y\ P(y,x)$
 \end{itemize}
 \end{columns}
 \end{frame}
@@ -78,7 +71,7 @@ $$
 \begin{frame}\frametitle{Модель}
 \uncover<+->{
 \begin{center}
-$\mathfrak{N}=(\mathbb{N},P,S)$
+$\mathfrak{N}=(\mathbb{N},Eq,P,S)$
 
 $Eq(x,y)\Leftrightarrow x=y$
 
