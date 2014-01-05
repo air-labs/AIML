@@ -4,6 +4,8 @@
 
 \begin{document}
 
+\section{Генетический алгоритм}
+
 \begin{frame}\frametitle{Генетический алгоритм}
 \begin{columns}
 \column{0.5\textwidth} 
@@ -90,6 +92,55 @@ $$}
 \end{columns}
 \end{frame}
 
+\begin{frame}\frametitle{Пропорциональное скрещивание}
+
+\begin{columns}
+\column{0.5\textwidth}
+$$
+\begin{array}{c|c}
+$\textnumero$ & Value \\
+\hline
+1 & 0.5 \\
+2 & 0.25 \\
+3 & 0.125 \\
+4 & 0.125 \\
+\end{array}
+$$
+\column{0.5\textwidth}
+
+\only<2>{
+\begin{tikzpicture}
+\draw (0,0) circle (2); 
+\draw (0,0) -- (2,0);
+\draw (0,0) -- (-2,0);
+\draw (0,0) -- (0,-2);
+\draw (0,0) -- (1.414,-1.414);
+\node at (0,1) {1};
+\node at (-0.707,-0.707) {2};
+\node at (0.92,-0.38) {4};
+\node at (0.38,-0.92) {3};
+
+\end{tikzpicture}
+}
+\end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{Элитарное скрещивание}
+$$
+\begin{array}{l | l l l l l l l l l}
+  & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
+\hline
+1 &   & X & X & X & X & X & X & X & X \\
+2 &   &   & X & X & X & X & X &   &   \\
+3 &   &   &   & X & X &   &   &   &   \\
+4 &   &   &   &   & X &   &   &   &   \\
+\end{array}
+$$
+\end{frame}
+
+
+\section{Примеры задач}
+
 \begin{frame}\frametitle{Задача коммивояжера}
 
 \uncover<+->{
@@ -147,6 +198,12 @@ $$}
 $$}
 
 \end{frame}
+
+\begin{frame}\frametitle{Функциональное уравнение}
+
+\end{frame}
+
+
 
 
 \end{document}
