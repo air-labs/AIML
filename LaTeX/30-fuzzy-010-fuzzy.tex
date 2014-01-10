@@ -8,7 +8,9 @@
 \begin{document}
 
 \begin{frame}
-\bio{Zadeh}{Лотфи Задэ}{1921--н.д.}{Создатель нечеткой математики}
+ \bio
+ {Zadeh}{Lotfi Zadeh}
+ {Fuzzy sets (1965)}
 \end{frame}
 
 
@@ -37,7 +39,7 @@ x & y & x\wedge y & x\vee y \\
 \end{array}}
 &&
 \uncover<+->{\begin{array}{l}
-u\fwedge v=\max(u,v)\\
+u\fwedge v=\min(u,v)\\
 u\fvee v=\max(u,v)\\
 \end{array}}
 \\
@@ -143,7 +145,7 @@ $$
 \item монотонны;
 \item ассоциативны;
 \item коммутативны;
-\item связаны соотношениями де-Моргана $1-T(u,v)=S(1-u,1-v)$ и $1-S(u,y)=T(1-u,1-v)$;
+\item связаны соотношениями де Моргана $1-T(u,v)=S(1-u,1-v)$ и $1-S(u,y)=T(1-u,1-v)$;
 \item удовлетворяют граничным условиям $T(0,0)=T(0,1)=T(1,0)=0$, $T(1,1)=1$, $S(1,1)=S(0,1)=T(1,0)=1$, $S(0,0)=0$
 \end{enumerate}
 \end{frame}
@@ -153,34 +155,52 @@ $$
 \begin{frame}\frametitle{Нечеткие множества}
 $$
 \begin{array}{c p{0.1cm} c}
+\uncover<1->{
 \mathbb{A},\ A\subset\mathbb{A},\ a\in A
 &&
 \mathbb{M},\ A\fsubset\mathbb{M},\ m\fin M
+}
 \\[0.3cm]
+\uncover<2->{
 (a,A)\overset{\in}{\rightarrow}\{0,1\} 
 &&
-(m,M)\overset{\fin}{\rightarrow}[0,1]\\
+(m,M)\overset{\fin}{\rightarrow}[0,1]
+}
+\\
+\uncover<2->{
 &&
-\mu_M(m),\ \mu_M:\mathbb{M}\rightarrow[0,1]\\[0.3cm]
+\mu_M(m),\ \mu_M:\mathbb{M}\rightarrow[0,1]
+}
+\\[0.3cm]
+\uncover<3->{
 A=\{a_1,a_2,\ldots,a_n\}
 &&
-M=\left(\fuz{a_1}+\fuz{a_2}+\ldots+\fuz{a_n}\right)\\[0.3cm]
+M=\left(\fuz{m_1}+\fuz{m_2}+\ldots+\fuz{m_n}\right)
+}
+\\[0.3cm]
+\uncover<4->{
 B\subset A\Leftrightarrow \forall b\ (b \in B\rightarrow b\in A)
 &&
-N\subset M\Leftrightarrow \forall m\ \mu_N(m)\le\mu_M(m)\\[0.3cm]
-
+N\subset M\Leftrightarrow \forall m\ \mu_N(m)\le\mu_M(m)
+}
+\\[0.3cm]
+\uncover<5->{
 c\in A\cap B\Leftrightarrow c\in A\wedge c\in B
 &&
-\mu_{M\fcap N}(m)=\mu_M(m)\fwedge\mu_N(m)=\\
-&& T(\mu_M(m),\mu_N(m)) \\[0.3cm]
-
-
+\mu_{M\fcap N}(m)=\mu_M(m)\fwedge\mu_N(m)=
+}
+\\
+\uncover<5->{
+&& T(\mu_M(m),\mu_N(m))
+}
+\\[0.3cm]
+\uncover<6->{
 c\in A\cup B\Leftrightarrow c\in A\vee c\in B
 &&
 \mu_{M\fcup N}(m)=\mu_M(m)\fvee\mu_N(m)=\\
-&& S(\mu_M(m),\mu_N(m)) \\[0.3cm]
-\\
-
+&& S(\mu_M(m),\mu_N(m))
+}
+\\[0.3cm]
 \end{array}
 $$
 \end{frame}
@@ -221,13 +241,14 @@ $$
 \only<4>
 {
 \fill[fill=teal,opacity=0.2] plot file {Plots/2_cap2_3.txt};
-\node at (2.5,0.2) {$A\fcap B,\ ab$};
+\node at (2.5,0.2) {$\begin{array}{c}A\fcup B\\a+b-ab\end{array}$};
+
 }
 
 \only<5>
 {
 \fill[fill=teal,opacity=0.2] plot file {Plots/2_cup2_3.txt};
-\node at (2.5,0.2) {$\begin{array}{c}A\fcup B\\a+b-ab\end{array}$};
+\node at (2.5,0.2) {$A\fcap B,\ ab$};
 }
 
 

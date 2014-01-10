@@ -7,6 +7,13 @@
 
 \section{Персептрон}
 
+\begin{frame}\frametitle{Нейрон}
+\begin{center}
+\includegraphics[width=0.6\textwidth]{Images/neuron.jpg}
+\end{center}
+\end{frame}
+
+
 \begin{frame}\frametitle{Персептрон}
 \begin{columns}
 \column{0.4\textwidth}
@@ -34,15 +41,15 @@ $$
 }
 
 \uncover<2-3>{
-\draw[ultra thick,red,smooth,tension=0.4] plot coordinates {(-1,-1) (-0.3,-0.8) (0.3,0.8) (1,1) } node[below] {${\rm tanh}(-\beta x)$};
+\draw[ultra thick,red,smooth,tension=0.6] plot coordinates {(-1,-1) (-0.3,-0.8) (0.3,0.8) (1,1) } node[below] {${\rm tanh}(-\beta x)$};
 }
 
 \uncover<3>{
-\draw[ultra thick,blue,smooth,tension=0.4] plot coordinates {(-1,-1) (-0.1,-0.9) (0.1,0.9) (1,1) } node[above] {${\rm tanh}(-\gamma x),\gamma>\beta$};
+\draw[ultra thick,blue,smooth,tension=0.6] plot coordinates {(-1,-1) (-0.1,-0.9) (0.1,0.9) (1,1) } node[above] {${\rm tanh}(-\gamma x),\gamma>\beta$};
 }
 
 \uncover<4>{
-\draw[ultra thick,red,smooth,tension=0.4] plot coordinates {(-1,0) (-0.1,0.1) (0.1,0.9) (1,1) } node[above] {$\frac{1}{1+e^{\beta x}}$};
+\draw[ultra thick,red,smooth,tension=0.6] plot coordinates {(-1,0) (-0.1,0.1) (0.1,0.9) (1,1) } node[above] {$\frac{1}{1+e^{\beta x}}$};
 }
 
 

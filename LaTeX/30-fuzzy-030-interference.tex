@@ -34,9 +34,39 @@
 
 \newcommand{\vc}{\centering\arraybackslash}
 
+
 \begin{document}
 
 \section{Нечеткая логика}
+
+
+\begin{frame}\frametitle{Нечеткая импликация}
+
+\uncover<+->{$$
+\begin{array}{c c|c}
+x & y & x\rightarrow y \\
+\hline
+0 & 0 & 1 \\
+0 & 1 & 1 \\
+1 & 0 & 0 \\
+1 & 1 & 1 \\
+\end{array}
+$$}
+
+\uncover<+->{$$
+x \imp{}{KD} y=\neg x \fvee y=\max(1-x,y)
+$$}
+
+\uncover<+->{$$
+x \imp{}{G} y = \left\{\begin{array}{l l}
+                        \min(1,y/x), & x>0 \\
+                        1 & x=0
+                       \end{array}\right.
+$$}
+\end{frame}
+
+
+
 
 \begin{frame}[t]\frametitle{Нечеткий вывод}
 
@@ -58,7 +88,7 @@ $\rho$  & \ar & \fo  & \mo \\
 $$}
 \only<4-11>{$$
 \begin{array}{ >\vc m{0.8cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
-$\only<1-6>{\rightarrow}\only<7->{\rightarrow_{KD}}$  & \ar   & \fo & \mo \\
+$\imp{N,H}{KD}$  & \ar   & \fo & \mo \\
 \hline
 \vskip 1pt
 \sk & \uncover<8->{0.7} & \uncover<9->{0.4} & \uncover<10->{0.2} \\
@@ -66,14 +96,15 @@ $\only<1-6>{\rightarrow}\only<7->{\rightarrow_{KD}}$  & \ar   & \fo & \mo \\
 \lc & \uncover<11>{0.8 & 0.8 & 0.8} \\
 \end{array}
 $$}
-\only<5-6>{$\mu_{\rightarrow}\left(\sk,\ar\right)$}
-\only<6>{$=0.8\rightarrow 0.7=\max(1-0.8,0.7)=0.7$}
-\only<7-11>{$$N\rightarrow H \Rightarrow
-\mu_{\rightarrow_{KD}}(n,h)=\mu_N(n)\rightarrow_{KD}\mu_H(h)=\max\left[1-\mu_N(n),\mu_H(h)\right]
+\only<5-11>{$$N\rightarrow H \Rightarrow
+\mu_{\imp{N,H}{KD}}(n,h)=\imp{}{KD}\left[\mu_N(n),\mu_H(h)\right]=\max\left[1-\mu_N(n),\mu_H(h)\right]
 $$}
+\only<6-7>{$\mu_{\imp{N,H}{KD}}\left(\sk,\ar\right)$}
+\only<7>{$=\imp{}{KD}(0.8,0.7)=\max(1-0.8,0.7)=0.7$}
+
 \only<12->{$$
 \begin{array}{ >\vc m{0.8cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
-$\rightarrow_{G}$  & \ar   & \fo & \mo \\
+$\imp{N,H}{G}$  & \ar   & \fo & \mo \\
 \hline
 \vskip 1pt
 \sk & \uncover<13>{0.875 & 0.5 & 0.125 } \\
@@ -82,17 +113,16 @@ $\rightarrow_{G}$  & \ar   & \fo & \mo \\
 \end{array}
 $$}
 \only<12->{$$N\rightarrow H \Rightarrow
-\mu_{\rightarrow{G}}(n,h)=\mu_N(n)\rightarrow_{G}\mu_H(h)=\min\left[1,y/x\right]
+\mu_{\imp{N,H}{G}}(n,h)=\imp{}{G}[\mu_N(n),\mu_H(h)]=\min\left[1,y/x\right]
 $$}
 \end{frame}
 
-\begin{frame}[t]
-$$\left(\sk[0.8]+\gh[0.5]+\lc[0.2]\right)\rightarrow\left(\ar[0.7]+\fo[0.4]+\mo[0.1]\right)
-$$\begin{columns}[t]
+\begin{frame}[t]\frametitle{Нечеткий вывод}
+\begin{center}$\left(\sk[0.8]+\gh[0.5]+\lc[0.2]\right)\rightarrow\left(\ar[0.7]+\fo[0.4]+\mo[0.1]\right)$\end{center}
+\begin{columns}[t]
 \column{0.4\textwidth}
-$$
-\begin{array}{ >\vc m{0.8cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
-$\rightarrow_{KD}$  & \ar   & \fo & \mo \\
+$$\begin{array}{ >\vc m{0.8cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
+$\imp{N,H}{KD}$  & \ar   & \fo & \mo \\
 \hline
 \vskip 1pt
 \sk & 0.7 & 0.4 & 0.2 \\
@@ -102,7 +132,7 @@ $\rightarrow_{KD}$  & \ar   & \fo & \mo \\
 $$
 $$
 \begin{array}{ >\vc m{0.8cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
-$\rightarrow_{G}$  & \ar   & \fo & \mo \\
+$\imp{N,H}{G}$  & \ar   & \fo & \mo \\
 \hline
 \vskip 1pt
 \sk & 0.875 & 0.5 & 0.125 \\
@@ -116,36 +146,85 @@ $$
 \mu_B(b)=\max_{a\in\mathbb{A}}\left[\mu_A(a) \mu_\rho(a,b)\right]
 $$}
 \only<2-3>{$$
-\rightarrow_{KD}\left(\sk[0.8]+\gh[0.5]+\lc[0.2]\right)=
+\imp{N,H}{KD}\left(\sk[0.8]+\gh[0.5]+\lc[0.2]\right)=
 $$
 $$
 =\left( \ar[0.56]+\fo[0.32]+\mo[0.25] \right)
 $$}
 \only<3>{$$
-\rightarrow_{G}(\ldots)=\left( \ar[0.7]+\fo[0.4]+\mo[0.1] \right)
+\imp{N,H}{G}(\ldots)=\left( \ar[0.7]+\fo[0.4]+\mo[0.1] \right)
 $$}
 \only<4>{$$
-\rightarrow_{KD}\left(\sk[0.9]+\gh[0.4]+\lc[0.2]\right)=
+\imp{H,N}{KD}\left(\sk[0.9]+\gh[0.4]+\lc[0.2]\right)=
 $$
 $$
 =\left( \ar[0.63]+\fo[0.36]+\mo[0.18] \right)
 $$
 $$
-\rightarrow_{G}(\ldots)=\left( \ar[0.72]+\fo[0.45]+\mo[0.1125] \right)
+\imp{N,H}{G}(\ldots)=\left( \ar[0.72]+\fo[0.45]+\mo[0.1125] \right)
 $$}
 \only<5>{$$
-\rightarrow_{KD}\left(\sk[0.1]+\gh[0.2]+\lc[0.8]\right)=
+\imp{N,H}{KD}\left(\sk[0.1]+\gh[0.2]+\lc[0.8]\right)=
 $$
 $$
 =\left( \ar[0.64]+\fo[0.64]+\mo[0.64] \right)
 $$
 $$
-\rightarrow_{G}(\ldots)=\left( \ar[0.8]+\fo[0.8]+\mo[0.4] \right)
+\imp{N,H}{G}(\ldots)=\left( \ar[0.8]+\fo[0.8]+\mo[0.4] \right)
 $$}
 \end{columns}
 \end{frame}
-\begin{frame}
-Goguen,
-Kleene-Dines
+
+\begin{frame}\frametitle{Вывод формулы нечеткого вывода}
+$$
+\uncover<1->{
+\begin{array}{ >\vc m{0.8cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
+$Ef$  & \ar   & \fo & \mo \\
+\hline
+\vskip 1pt
+\sk & 1 & 1  & 0 \\
+\gh &  1 & 1 & 0 \\
+\lc &  0 &  0 & 0 \\
+\end{array}
+}
+\ \ \ 
+\uncover<4->{
+\begin{array}{ >\vc m{0.8cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
+$Ex$  & \ar   & \fo & \mo \\
+\hline
+\vskip 1pt
+\sk & 1 & 1  & 0 \\
+\gh &  1 & 1 & 0 \\
+\lc &  1 &  1 & 1 \\
+\end{array}
+}
+$$
+\uncover<2->{$$
+\begin{array}{ >\vc m{0.8cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
+  & \sk   & \gh & \lc \\
+\hline
+\vskip 1pt
+$N(n)$  &  1 & 1 & 0 \\
+\end{array}
+\ \ \ 
+\begin{array}{ >\vc m{0.8cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
+ & \ar   & \fo & \mo \\
+\hline
+\vskip 1pt
+$H(h)$  &  1 & 1 & 0 \\
+\end{array}
+$$}
+\uncover<3->{$$
+Ex(n,h):=N(n)\rightarrow H(h) \approx Ef(n,h)
+$$}
+\uncover<5->{$$
+Ex(n,h)=(n\in N)\rightarrow (h\in H)
+$$}
+\uncover<6->{$$
+\foperation{Ex(n,h)}=(n\fin N) \imp{}{KD} (h\fin H) = \imp{}{KD}\left[\mu_N(n),\mu_H(h)\right]
+$$}
+ 
 \end{frame}
+
+
 \end{document}

@@ -32,22 +32,33 @@ $};
 \subsection{Принцип расширения}
 
 \begin{frame}\frametitle{Принцип расширения}
-$$
+\uncover<+->{$$
 A\fsubset\mathbb{A},\ B\fsubset\mathbb{B},\ C\fsubset\mathbb{C}
-$$
-$$
+$$}
+\uncover<+->{$$
 \star:\mathbb{A}\times\mathbb{B}\rightarrow\mathbb{C}
 $$
 $$
 C=A\star B
+$$}
+\uncover<+->{$$
+\rho_\star\subset(\mathbb{A}\times\mathbb{B})\times\mathbb{C}
 $$
 $$
-\mu_C(c)=\underset{a,b\ :\ a\star b=c}S\left[T(\mu_A(a),\mu_B(b))\right]
-$$
-$$
+C=\rho_\star(A,B)
+$$}
+\uncover<+->{$$
+\mu_C(c)=\underset{(a,b)\in\mathbb{A\times B}}{S}\left[T\left(\mu_{(A,B)}(a,b),\mu_{\rho_\star}((a,b),c)\right)\right]
+$$}
+\uncover<+->{$$
+\mu_C(c)=\underset{(a,b)\in\mathbb{A\times B}}{S}\left[(a\fin A)\fwedge(b\fin B)\fwedge((a,b,c)\fin\rho_\star)\right]
+$$}
+\uncover<+->{$$
 \mu_C(c)=\max_{a,b\ :\ a\star b=c}\left[\mu_A(a)\mu_B(b)\right]
-$$
+$$}
 \end{frame}
+
+
 
 \begin{frame}[t]\frametitle{Принцип расширения}
 \begin{columns}[t]
@@ -197,6 +208,9 @@ $$
 \end{array}
 $$
 \end{enumerate}
+\uncover<+->{$$
+|A|=\int_{a\in\mathbb{R}}\mu_A(a)ada
+$$}
 \end{frame}
 
 \begin{frame}\frametitle{Нечеткие операции}
@@ -263,8 +277,6 @@ $};
 \end{tikzpicture}
 \end{frame}
 
-
-\subsection{Нечеткое управление}
 
 
 
