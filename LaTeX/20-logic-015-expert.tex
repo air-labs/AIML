@@ -1,4 +1,4 @@
-\documentclass[24pt,pdf,hyperref={unicode}]{beamer}
+\documentclass[24pt,pdf,hyperref={unicode},aspectratio=169]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage{aiml}
 \usepackage{framed}
@@ -43,7 +43,7 @@
 \end{enumerate}
 }}
 
-\only<6-8>{\law{
+\only<7-8>{\law{
 {\bf Статья 162. Разбой}
 \begin{enumerate}
 \item Разбой, то есть нападение в целях хищения чужого имущества, совершенное с применением насилия, опасного для жизни или здоровья, либо с угрозой применения такого насилия, --- ...
@@ -61,9 +61,13 @@
 \vspace{1cm}
 
 \only<3>{$\za\wedge\av\wedge\neg\ce\rightarrow \uga\ $ }
+
 \only<4-> {$\neg\za\vee\neg\av\vee\ce\vee \uga\ $ }
+
 \only<6-> {$\neg\za\vee\neg\av\vee\ce\vee\neg \na \vee \ugb\ $ }
+
 \only<8->{$\neg\na\vee\neg\ce\vee \ra\ $ }
+
 \only<10->{$\neg\za\vee\neg\ce\vee\na\vee\kr\ $}
 \end{columns}
 

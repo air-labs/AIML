@@ -1,4 +1,4 @@
-\documentclass[24pt,pdf,hyperref={unicode}]{beamer}
+\documentclass[24pt,pdf,hyperref={unicode},aspectratio=169]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage{aiml}
 \begin{document}
@@ -175,6 +175,24 @@ $$
 }
 \end{frame}
 
+\begin{frame}\frametitle{Эквивалентность высказываний}
+\uncover<+->{$$
+\overline{A}\wedge\overline{B}=\overline{A\vee B}
+$$}
+\uncover<+->{$$
+(\overline{A}\wedge\overline{B})\leftrightarrow(\overline{A\vee B})
+$$}
+\uncover<+->{$$
+\left[(\overline{A}\wedge\overline{B})\rightarrow(\overline{A\vee B})\right]\wedge
+\left[(\overline{A\vee B})\rightarrow(\overline{A}\wedge\overline{B})\right]
+$$}
+\uncover<+->{$$
+\mathcal{L}\vdash
+\left[(\overline{A}\wedge\overline{B})\rightarrow(\overline{A\vee B})\right]\wedge
+\left[(\overline{A\vee B})\rightarrow(\overline{A}\wedge\overline{B})\right]
+$$}
+\end{frame}
+
 \begin{frame}\frametitle{Законы логики высказываний}
 {\small
 $$
@@ -234,7 +252,7 @@ $$
 \begin{frame}\frametitle{Приведение к КНФ}
 $$
 \begin{array}{l}
-\neg A\rightarrow \overline{B\rightarrow C} \\
+\uncover<+->{\neg A\rightarrow \overline{B\rightarrow C}}\\
 \uncover<+->{ A \vee \overline{\neg B \vee C }} \\
 \uncover<+->{ A \vee (B \wedge \neg C) } \\
 \uncover<+->{ (A\vee B) \wedge (A \vee \neg C) }
@@ -276,7 +294,7 @@ $$
 }
 
 \uncover<4->{
-\node (s3) at (2,1) {$\begin{array}{l} A=X\\ B=V \vee W\\ C=\neg U \end{array}$};
+\node (s3) at (2,1) {$\begin{array}{l} A=X\\ B=V \\ C=\neg U \end{array}$};
 \node (r3) at (2,-0.5) {$V\vee \neg U$};
 \path (p2) edge[->] (s3);
 \path (p3) edge[->] (s3);

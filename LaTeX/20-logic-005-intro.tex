@@ -1,10 +1,67 @@
-\documentclass[24pt,pdf,hyperref={unicode}]{beamer}
+\documentclass[24pt,pdf,hyperref={unicode},aspectratio=169]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage{aiml}
 \begin{document}
 
 
 \section{Введение в логику}
+
+
+
+\begin{frame}\frametitle{Дедуктивные рассуждения}
+\begin{tabular}{l l}
+ & Все страны Южной Америки -- республики \\
+ & Бразилия -- страна Южной Америки\\
+ \hline
+$\therefore$ & Бразилия -- республика \\
+\end{tabular}
+\end{frame}
+
+\begin{frame}\frametitle{Дедуктивные рассуждения}
+\begin{tabular}{l l}
+ & Все страны Южной Америки -- республики \\
+ & Китай -- это не страна Южной Америки\\
+ \hline
+$\therefore$ & Китай -- республика \\
+\end{tabular}
+\end{frame}
+
+\begin{frame}\frametitle{Дедуктивные рассуждения}
+\begin{tabular}{l l}
+ & Все страны Азии -- республики \\
+ & Тайланд -- это страна Азии\\
+ \hline
+$\therefore$ & Тайланд -- республика \\
+\end{tabular}
+\end{frame}
+
+\begin{frame}\frametitle{Дедуктивные рассуждения}
+\begin{tabular}{l l}
+ & Все книги содержат буквы \\
+ & <<Война и мир>> -- книга \\
+ \hline
+$\therefore$ & <<Война и мир>> содержит буквы\\
+\end{tabular}
+\end{frame}
+
+\begin{frame}\frametitle{Дедуктивные рассуждения}
+\begin{tabular}{l l}
+ & Все $A$ есть $B$\\
+ & Некоторый $x$ является $A$\\
+ \hline
+$\therefore$ & $x$ является $B$ \\
+\end{tabular}
+\end{frame}
+
+\begin{frame}\frametitle{Дедуктивные рассуждения}
+\begin{tabular}{l l}
+ & У матери Джона есть дочь\\
+ \hline
+$\therefore$ & У Джона есть сестра \\
+\end{tabular}
+\end{frame}
+
+
 
 \begin{frame}\frametitle{Индуктивные рассуждения}
 \begin{tabular}{l l}
@@ -41,42 +98,6 @@ $\therefore$ & Все республики -- страны Южной Амери
 \begin{flushright}
  \uncover<2>{\includegraphics[width=4cm]{Merkel.jpg}}
 \end{flushright}
-\end{frame}
-
-
-\begin{frame}\frametitle{Дедуктивные рассуждения}
-\begin{tabular}{l l}
- & Все страны Южной Америки -- республики \\
- & Бразилия -- страна Южной Америки\\
- \hline
-$\therefore$ & Бразилия -- республика \\
-\end{tabular}
-\end{frame}
-
-\begin{frame}\frametitle{Дедуктивные рассуждения}
-\begin{tabular}{l l}
- & Все книги содержат буквы \\
- & <<Война и мир>> -- книга \\
- \hline
-$\therefore$ & <<Война и мир>> содержит буквы\\
-\end{tabular}
-\end{frame}
-
-\begin{frame}\frametitle{Дедуктивные рассуждения}
-\begin{tabular}{l l}
- & Все $A$ есть $B$\\
- & Некоторый $x$ является $A$\\
- \hline
-$\therefore$ & $x$ является $B$ \\
-\end{tabular}
-\end{frame}
-
-\begin{frame}\frametitle{Дедуктивные рассуждения}
-\begin{tabular}{l l}
- & У матери Джона есть дочь\\
- \hline
-$\therefore$ & У Джона есть сестра \\
-\end{tabular}
 \end{frame}
 
 

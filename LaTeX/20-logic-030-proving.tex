@@ -1,4 +1,4 @@
-\documentclass[24pt,pdf,hyperref={unicode}]{beamer}
+\documentclass[24pt,pdf,hyperref={unicode},aspectratio=169]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage{aiml}
 
@@ -10,7 +10,7 @@ $\mathcal{G}=(\mathbb{G},\cdot)$
 \begin{itemize}
 \item<+-> $\forall x,y,z,u\ (x\cdot y=z) \wedge (x\cdot y=u)\rightarrow (z=u)$
 
-\item<+-> $\forall x,y,z\ (x\cdot (y\cdot x))=((x\cdot y)\cdot z) $
+\item<+-> $\forall x,y,z\ (x\cdot (y\cdot z))=((x\cdot y)\cdot z) $
 
 \item<+-> $\exists e\forall x\ (x\cdot e)=(e\cdot x)=x$
 
@@ -45,7 +45,7 @@ $$
 \item<+-> $\forall x \forall y \forall z \forall u\ G(x,y,z) \wedge G(x,y,u)\rightarrow Eq(z,u)$
 \item<+-> $\forall x \forall y \forall z \forall u\ \overline{G(x,y,z) \wedge G(x,y,u)}\vee Eq(z,u)$
 \item<+-> $\forall x \forall y \forall z \forall u\ \neg G(x,y,z) \vee \neg G(x,y,u)\vee Eq(z,u)$
-\item<+-> $G(x,y,z) \vee \neg G(x,y,u)\vee Eq(z,u)$
+\item<+-> $\neg G(x,y,z) \vee \neg G(x,y,u)\vee Eq(z,u)$
 \end{itemize}
 \end{frame}
 
@@ -79,9 +79,11 @@ $$
 
 \begin{frame}\frametitle{Доказательство теоремы}
 
+\uncover<+->{}
+
 \begin{tikzpicture}
 
-\node (eq) at (0,5) {$G(x,y,z) \vee \neg G(x,y,u)\vee Eq(z,u)$};
+\node (eq) at (0,5) {$\neg G(x,y,z) \vee \neg G(x,y,u)\vee Eq(z,u)$};
 \node (i1) at (4,4) {$G(s,i,s)$};
 \node (i2) at (4,3) {$G(i,s,s)$};
 \node (e2) at (4,2) {$G(e,t,t)$};
@@ -110,7 +112,7 @@ $$
 
 \begin{frame}\frametitle{Поиск теоремы}
 \begin{tikzpicture}
-\node (eq) at (0,5) {$G(x,y,z) \vee \neg G(x,y,u)\vee Eq(z,u)$};
+\node (eq) at (0,5) {$\neg G(x,y,z) \vee \neg G(x,y,u)\vee Eq(z,u)$};
 \node (e2) at (4,4) {$G(e,t,t)$};
 \node (e1) at (4,3) {$G(t,e,t)$};
 
@@ -143,6 +145,32 @@ $$
 
 
 \end{tikzpicture}
+\end{frame}
+
+\begin{frame}\frametitle{Зацикливание метода резолюций}
+\uncover<+->{}
+$$
+\begin{array}{l}
+P(a) \\
+\neg P(x) \vee P(f(x))\\
+\hline \\
+\end{array}
+$$
+\uncover<+->{$$
+\begin{array}{l}
+P(f(a)) \\
+\neg P(x) \vee P(f(x))\\
+\hline \\
+\end{array}
+$$}
+\uncover<+->{$$
+\begin{array}{l}
+P(f(f(a))) \\
+\neg P(x) \vee P(f(x))\\
+\hline
+\ldots \\
+\end{array}
+$$}
 \end{frame}
 
 \begin{frame}\frametitle{Robbin's conjecture}

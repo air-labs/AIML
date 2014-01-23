@@ -1,4 +1,4 @@
-\documentclass[24pt,pdf,hyperref={unicode}]{beamer}
+\documentclass[24pt,pdf,hyperref={unicode},aspectratio=169]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage{aiml}
 \newcommand{\nothing}
@@ -33,12 +33,29 @@ $$
 }
 \end{frame}
 
+\begin{frame}\frametitle{Дедуктивные рассуждения}
+\uncover<+->{
+\begin{tabular}{l l}
+ & Если страна находится в Южной Америке, то она республика \\
+ & Бразилия находится в Южной Америке \\
+ \hline
+$\therefore$ & Бразилия -- республика \\
+\end{tabular}\\[2cm]
+}
+\uncover<+->{
+{\large
+$$
+\frac{A\rightarrow B, C}{?}
+$$
+}
+}
+\end{frame}
 
 \begin{frame}\frametitle{Модель}
 \begin{columns}
 \column{0.5\textwidth}
 
-\uncover<3->{\includegraphics[width=\textwidth]{tree.png}}
+\uncover<3->{\includegraphics[scale=0.25]{tree.png}}
 
 
 \column{0.5\textwidth}
@@ -49,9 +66,7 @@ $$}
 \uncover<2->{$$
 P_i:M^{k_i}\rightarrow\{0,1\}
 $$}
-
 \uncover<3->{$P(x,y)$, $C(x,y)$}
-
 \begin{itemize}
 \item<4-> $P(Tywin,Cercei)$
 
@@ -161,7 +176,7 @@ $$
 \begin{frame}\frametitle{Предваренная нормальная форма}
 
 \begin{itemize}
-\item<+-> $(\forall x\ P(x))\oplus (\exists x\ \neg Q(x))$
+\item<+-> $(\forall x\ P(x))\oplus (\exists x\ Q(x))$
 \item<+-> $\left[\overline{(\forall x\ P(x))}\wedge(\exists x\ Q(x))\right] \bigvee \left[(\forall x\ P(x))\wedge\overline{(\exists x\ Q(x)})\right]$
 \item<+-> $\left[(\exists x\ \overline{P(x)})\wedge(\exists x\ Q(x))\right] \bigvee \left[(\forall x\ P(x))\wedge\overline{(\exists x\ Q(x)})\right]$
 \item<+-> $\left[(\exists x\ \overline{P(x)})\wedge(\exists x\ Q(x))\right] \bigvee \left[(\forall x\ P(x))\wedge(\forall x\ \overline{Q(x)})\right]$
@@ -222,7 +237,7 @@ $$
 \uncover<+->{
 \begin{array}{l}
 P(f(x))\vee Q(x) \\
-P(f(a))
+\neg P(f(a))
 \end{array}
 }
 \uncover<+->{
@@ -250,14 +265,14 @@ $$
 $$
 \uncover<+->{
 \begin{array}{l}
-P(x,a))\vee Q(x) \\
+P(x,a)\vee Q(x) \\
 \neg P(b,x)
 \end{array}
 }
 \uncover<+->{
 \Rightarrow
 \begin{array}{l}
-P(x,a))\vee Q(x) \\
+P(x,a)\vee Q(x) \\
 \neg P(b,y)
 \end{array}
 }
@@ -274,7 +289,7 @@ $$
 $$
 \uncover<+->{
 \begin{array}{l}
-P(a,y))\vee Q(g(y)) \\
+P(a,y)\vee Q(g(y)) \\
 \neg P(x,f(x))
 \end{array}
 }
