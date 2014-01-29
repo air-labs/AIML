@@ -1,0 +1,79 @@
+\documentclass[24pt,pdf,hyperref={unicode},aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{aiml}
+\usepackage{pgfplots}
+
+
+
+\begin{document}
+
+\begin{frame}\frametitle{Логика высших порядков}
+
+\uncover<+->{
+$P$ является биекцией из $A$ в $B$
+$$
+\forall x \forall y \forall z\ P(x,y)\wedge P(x,z)\rightarrow Eq(y,z)
+$$
+$$
+\forall x \exists y\ A(x)\wedge B(y)\wedge P(x,y)
+$$
+$$
+\forall y \exists x\ A(x)\wedge B(y)\wedge P(x,y)
+$$
+$$
+\forall x \forall y\ \forall z P(x,z) \wedge P(y,z) \rightarrow Eq(x,y)
+$$}
+
+\uncover<+->{
+Равномощность $A$ и $B$:
+
+$$
+\exists P \left[ \forall x \forall y \forall z\ P(x,y)\wedge P(x,z)\rightarrow Eq(y,z) \right]\wedge\ldots
+$$}
+
+
+\end{frame}
+
+\begin{frame}\frametitle{Принцип доказательства от противного}
+
+\begin{itemize}
+\item<+-> Необходимо доказать, что $\exists x P(x)$
+\item<+-> Предположим, что $\forall x \neg P(x)$
+\item<+-> Придем к противоречию
+\item<+-> Следовательно, $\exists x P(x)$
+\end{itemize}
+\uncover<+->{
+\begin{center}
+Но чему равен $x$?
+\end{center}
+}
+\end{frame}
+
+\begin{frame}\frametitle{Модальная логика}
+
+\uncover<+->{
+Модальные операторы:
+
+\begin{itemize}
+\item $KA$ -- $А$ известно
+\item $\diamond A$ -- $A$ возможно 
+\end{itemize}}
+
+\uncover<+->{
+\begin{tabular}{l l l}
+A1 & Принцип объективности знания & $KA\rightarrow A$ \\
+A2 & Дистрибутивность знания и конъюнкции & $A(A\wedge B)\rightarrow KA\wedge KB$ \\
+A3 & Принцип познаваемости мира & $A\rightarrow \diamond K A$ \\
+\end{tabular}
+}
+
+\begin{itemize}
+\item<+-> Предположим, $A\wedge\neg KA$ 
+\item<+-> По A3, $\diamond K (A\wedge\neg KA)$ 
+\item<+-> По A2, $\diamond ( KA \wedge K(\neg KA) )$ 
+\item<+-> По А1, $\diamond ( KA \wedge \neg KA) $
+\item<+-> Противоречие. Все уже познано.
+\end{itemize}
+\end{frame}
+
+\end{document}
