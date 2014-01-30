@@ -6,15 +6,19 @@
 \usepackage{xifthen}
 \usepackage{xparse}
 
+
+\newcommand{\ImageSizeAlone}{0.6cm}
+\newcommand{\ImageSizeFuzzy}{0.4cm}
+
 \newcommand{\fuzzyimage}[2]{
 \ifthenelse{\isempty{#2}}
 {
-\ifmmode{\begin{array}{c}\includegraphics[width=0.6cm]{HOMM5/#1.jpg}\end{array}}
-\else{\includegraphics[width=0.6cm]{HOMM5/#1.jpg}}
+\ifmmode{\begin{array}{c}\includegraphics[width=\ImageSizeAlone]{HOMM5/#1.jpg}\end{array}}
+\else{\includegraphics[width=\ImageSizeAlone]{HOMM5/#1.jpg}}
 \fi
 }
 {
-\dfrac{#2}{\includegraphics[width=0.5cm]{HOMM5/#1.jpg}}
+\dfrac{#2}{\includegraphics[width=\ImageSizeFuzzy]{HOMM5/#1.jpg}}
 }
 }
 
@@ -93,7 +97,7 @@ $$
 
 \column{0.5\textwidth}
 
-\only<1>{
+\only<2>{
 $\rho(a)=\{ b\ :\ (a,b)\in\rho \}$\\[0.5cm]
 
 $\rho(a_1)=\{ b_2 \}$
@@ -113,7 +117,7 @@ $\rho \ne \rho:A\rightarrow B$
 $\sigma = \sigma:B\rightarrow C$
 }
 
-\only<2>{
+\only<3>{
 
 $\sigma^{-1}=\{(c,b)\ :\ (b,c)\in\sigma\}$\\[0.5cm]
 
@@ -127,12 +131,12 @@ $\rho^{-1}(b_2)=a_1$
 
 $\rho^{-1}(b_3)=a_2$\\[0.5cm]
 
-$\rho^{-1} = \rho^{-1}:A\rightarrow B$
+$\rho^{-1} = \rho^{-1}:B\rightarrow A$
 
-$\sigma^{-1} \ne \sigma^{-1} :B\rightarrow C$
+$\sigma^{-1} \ne \sigma^{-1} :C\rightarrow B$
 }
 
-\only<3>{
+\only<4>{
 
 $$
 \begin{array}{l l}
@@ -166,7 +170,7 @@ $$
 \rho(A)=\{ b\in\mathbb{B}\ :\ \exists a\in A, (a,b)\in\rho\}
 $$}
 \only<3->{$$
-= b\in\bigcup_{a\in\mathbb{A}}\{\underbrace{b,\ a\in A\wedge (a,b)\in\rho}_{\rho(A/a)\ne\rho(a)}\}
+= \bigcup_{a\in\mathbb{A}}\{\underbrace{b,\ a\in A\wedge (a,b)\in\rho}_{\rho(A/a)\ne\rho(a)}\}
 $$}
 \only<4-7>{$$
 b\in\rho(A/a)\Leftrightarrow a\in A\ \wedge\ (a,b)\in\rho
@@ -319,9 +323,9 @@ $
 \end{frame}
 
 
+\renewcommand{\ImageSizeAlone}{0.4cm}
 
 \begin{frame}[t]\frametitle{Композиция нечетких отношений}
-{\small
 \begin{columns}[t]
 \column{0.5\textwidth}
 $$
@@ -365,7 +369,7 @@ $\sigma$   & \aca & \hel & \nec \\
 $$
 $$
 \tau=\rho\circ\sigma
-,\ \tau\fsubset\mathbb{M}\times\mathbb{H}
+,\ \tau\fsubset\mathbb{C}\times\mathbb{H}
 $$
 $$
 \begin{array}{ >\vc m{0.7cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
@@ -379,8 +383,9 @@ $\tau$   & \aca & \hel & \nec \\
 \end{array}
 $$
 \end{columns}
-}
 \end{frame}
+
+\renewcommand{\ImageSizeAlone}{0.6cm}
 
 \begin{frame}[t]\frametitle{Композиция нечетких отношений}
 \begin{columns}[t]

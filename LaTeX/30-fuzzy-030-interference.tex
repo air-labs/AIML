@@ -1,4 +1,4 @@
-\documentclass[24pt,pdf,hyperref={unicode}]{beamer}
+\documentclass[24pt,pdf,hyperref={unicode},aspectratio=169]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage{etex}
 \usepackage{aiml}
@@ -6,15 +6,18 @@
 \usepackage{xifthen}
 \usepackage{xparse}
 
+\newcommand{\ImageSizeAlone}{0.6cm}
+\newcommand{\ImageSizeFuzzy}{0.4cm}
+
 \newcommand{\fuzzyimage}[2]{
 \ifthenelse{\isempty{#2}}
 {
-\ifmmode{\begin{array}{c}\includegraphics[width=0.6cm]{HOMM5/#1.jpg}\end{array}}
-\else{\includegraphics[width=0.6cm]{HOMM5/#1.jpg}}
+\ifmmode{\begin{array}{c}\includegraphics[width=\ImageSizeAlone]{HOMM5/#1.jpg}\end{array}}
+\else{\includegraphics[width=\ImageSizeAlone]{HOMM5/#1.jpg}}
 \fi
 }
 {
-\dfrac{#2}{\includegraphics[width=0.5cm]{HOMM5/#1.jpg}}
+\dfrac{#2}{\includegraphics[width=\ImageSizeFuzzy]{HOMM5/#1.jpg}}
 }
 }
 
@@ -120,6 +123,9 @@ $$}
 \begin{frame}[t]\frametitle{Нечеткий вывод}
 \begin{center}$\left(\sk[0.8]+\gh[0.5]+\lc[0.2]\right)\rightarrow\left(\ar[0.7]+\fo[0.4]+\mo[0.1]\right)$\end{center}
 \begin{columns}[t]
+
+\renewcommand{\ImageSizeAlone}{0.4cm}
+
 \column{0.4\textwidth}
 $$\begin{array}{ >\vc m{0.8cm}| >\vc m{0.7cm} >\vc m{0.7cm} >\vc m{0.7cm}}
 $\imp{N,H}{KD}$  & \ar   & \fo & \mo \\
@@ -142,6 +148,9 @@ $\imp{N,H}{G}$  & \ar   & \fo & \mo \\
 $$
 
 \column{0.6\textwidth}
+
+\renewcommand{\ImageSizeAlone}{0.6cm}
+
 \only<2->{$$
 \mu_B(b)=\max_{a\in\mathbb{A}}\left[\mu_A(a) \mu_\rho(a,b)\right]
 $$}
@@ -252,6 +261,7 @@ $N(n)$  &  1 & 1 & 0 \\
 $H(h)$  &  1 & 1 & 0 \\
 \end{array}
 $$}
+{\small
 \uncover<3->{$$
 Ex(n,h):=N(n)\rightarrow H(h) \approx Ef(n,h)
 $$}
@@ -260,7 +270,7 @@ Ex(n,h)=(n\in N)\rightarrow (h\in H)
 $$}
 \uncover<6->{$$
 \foperation{Ex(n,h)}=(n\fin N) \imp{}{KD} (h\fin H) = \imp{}{KD}\left[\mu_N(n),\mu_H(h)\right]
-$$}
+$$}}
  
 \end{frame}
 
