@@ -1,4 +1,4 @@
-\documentclass[24pt,pdf,hyperref={unicode}]{beamer}
+\documentclass[24pt,pdf,hyperref={unicode},aspectratio=169]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage{aiml}
 \usepackage{pgfplots}
@@ -91,16 +91,18 @@ $$
 
 \begin{frame}\frametitle{Нечеткие логические связки}
 $$
+\uncover<+->{
 \begin{array}{c p{0.1cm} c}
 x\vee y &&  u\fvee v=u+v-uv \\
 x\wedge y && u\fwedge v=uv \\[0.3cm]
+}
 
 \uncover<+->{
-x\vee y=y\wedge x && u+v-uv=v+u-vu
+x\vee y=y\vee x && u+v-uv=v+u-vu
 }\\[0.3cm]
 
 \uncover<+->{
-x\wedge y=y\vee x  && uv=vu
+x\wedge y=y\wedge x  && uv=vu
 }\\[0.3cm]
 
 \uncover<+->{x\vee (y\vee z)=(x\vee y)\vee z
@@ -158,7 +160,7 @@ $$
 \uncover<1->{
 \mathbb{A},\ A\subset\mathbb{A},\ a\in A
 &&
-\mathbb{M},\ A\fsubset\mathbb{M},\ m\fin M
+\mathbb{M},\ M\fsubset\mathbb{M},\ m\fin M
 }
 \\[0.3cm]
 \uncover<2->{
@@ -181,7 +183,7 @@ M=\left(\fuz{m_1}+\fuz{m_2}+\ldots+\fuz{m_n}\right)
 \uncover<4->{
 B\subset A\Leftrightarrow \forall b\ (b \in B\rightarrow b\in A)
 &&
-N\subset M\Leftrightarrow \forall m\ \mu_N(m)\le\mu_M(m)
+N\fsubset M\Leftrightarrow \forall m\ \mu_N(m)\le\mu_M(m)
 }
 \\[0.3cm]
 \uncover<5->{
@@ -229,13 +231,13 @@ $$
 \only<2>
 {
 \fill[fill=teal,opacity=0.2] plot file {Plots/2_cap1_3.txt};
-\node at (2.5,0.2) {$A\fcap B,\ \min$};
+\node at (2.5,0.2) {$A\fcup B,\ \max$};
 }
 
 \only<3>
 {
 \fill[fill=teal,opacity=0.2] plot file {Plots/2_cup1_3.txt};
-\node at (2.5,0.2) {$A\fcup B,\ \max$};
+\node at (2.5,0.2) {$A\fcap B,\ \min$};
 }
 
 \only<4>
