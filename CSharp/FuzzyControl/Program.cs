@@ -14,6 +14,7 @@ namespace FuzzyControl
         public Func<double, double, FuzzyNumber> AlgorithmToFuzzy;
         public Func<double, double, double> AlgorithmToNumber;
         public Color Color;
+        public int Width;
     }
 
 
@@ -38,19 +39,16 @@ namespace FuzzyControl
         }
 
 
-        static Series[] RunCar(Func<double, double, double> algorithm, Color color)
+        static Series[] RunCar(Algorithm algorithm)
         {
             double x = 0;
             double y = 0;
             double angle=Math.PI/2;
-            var rnd = new Random(1); //1,4 - идеально, 2 - допилить Гогена
-            
+            var rnd = new Random(1);
 
-            var path=new Series() { Color = color, ChartType = SeriesChartType.FastLine };
-            var dangles=new Series() { Color = color, ChartType = SeriesChartType.FastLine };
-            var values=new Series() { Color = color, ChartType = SeriesChartType.FastPoint };
-
-
+            var path=new Series() { Color = algorithm.Color, ChartType = SeriesChartType.FastLine, BorderWidth = algorithm.Width };
+            var dangles=new Series() { Color = algorithm.Color, ChartType = SeriesChartType.FastLine };
+           
             for (int i=0;i<StepCount;i++)
             {
                 var tX = BoxMuller(rnd, TargetX-x, TargetDeviation);
@@ -61,7 +59,7 @@ namespace FuzzyControl
                 var rx = tr * Math.Cos(ta);
                 var ry = tr * Math.Sin(ta);
 
-                var dangle = algorithm(rx, ry);
+                var dangle = algorithm.AlgorithmToNumber(rx, ry);
                 dangle = Math.Sin(dangle) * Math.Min(Math.Abs(dangle), Math.PI/4);
                 dangle/=IntermediateStepCount;
                 for (int j = 0; j < IntermediateStepCount; j++)
@@ -72,7 +70,6 @@ namespace FuzzyControl
                     path.Points.Add(new DataPoint(x, y)); 
                 }
                 dangles.Points.Add(new DataPoint(i, dangle));
-                values.Points.Add(new DataPoint(y, dangle));
             }
             return new Series[] { path, dangles };
         }
@@ -82,7 +79,7 @@ namespace FuzzyControl
             var charts = Enumerable.Range(0, 2).Select(z => new Chart { ChartAreas = { new ChartArea() }, Dock = DockStyle.Fill }).ToArray();
             foreach (var e in algorithms)
             {
-                var series = RunCar(e.AlgorithmToNumber, e.Color);
+                var series = RunCar(e);
                 for (int i = 0; i < series.Length; i++)
                     charts[i].Series.Add(series[i]);
             }
@@ -128,7 +125,7 @@ namespace FuzzyControl
             return FuzzyNumber.BinaryOperation(domain.Near(x), domain.Near(y), ExactAlgorithm);
         }
 
-        static FuzzyNumber MostProbableAlgorithm(double x, double y)
+        static FuzzyNumber ProbabilisticAlgorithm(double x, double y)
         {
             var gaussFunction = Domain.NearGauss(TargetDeviation);
             int pointCount = 100;
@@ -157,7 +154,6 @@ namespace FuzzyControl
 
         static FuzzyNumber FuzzyLogic(double x, double y)
         {
-            //var argument = domain.Near(y)*domain.Near(x);
             var argument = domain.Near(y);
 
             var positive = domain.NumberFromLambda(z => { if (z <0 ) return 0; else return z/domain.Max; });
@@ -214,36 +210,43 @@ namespace FuzzyControl
         [STAThread]
         static void Main()
         {
-
-
-
-       
+                  
             domain.NearFunction = Domain.NearQuadratic(2);
 
-            algorithms.Add(new Algorithm { AlgorithmToFuzzy = null, AlgorithmToNumber = ExactAlgorithm, Color = Color.Red });
+            algorithms.Add(new Algorithm 
+              { 
+                  AlgorithmToFuzzy = null, 
+                  AlgorithmToNumber = ExactAlgorithm, 
+                  Color = Color.Red, 
+                  Width=3 
+              });
+
             algorithms.Add(new Algorithm
              {
                  AlgorithmToFuzzy = FuzzyAlgorithm,
                  AlgorithmToNumber = (x, y) => FuzzyAlgorithm(x, y).Average(),
-                 Color = Color.Green
+                 Color = Color.Green,
+                 Width = 3
              });
 
-            algorithms.Add(new Algorithm
-            {
-                AlgorithmToFuzzy = MostProbableAlgorithm,
-                AlgorithmToNumber = (x, y) => FuzzyAlgorithm(x, y).ArgMax(),
-                Color = Color.Blue
-            });
+            //algorithms.Add(new Algorithm
+            //{
+            //    AlgorithmToFuzzy = ProbabilisticAlgorithm,
+            //    AlgorithmToNumber = (x, y) => FuzzyAlgorithm(x, y).Average(),
+            //    Color = Color.Orange,
+            //    Width=1
+            //});
 
-            algorithms.Add(new Algorithm
-            {
-                AlgorithmToFuzzy = FuzzyLogic,
-                AlgorithmToNumber = (x, y) => FuzzyLogic(x, y).Average(),
-                Color = Color.Orange
-            });
+            //algorithms.Add(new Algorithm
+            //{
+            //    AlgorithmToFuzzy = FuzzyLogic,
+            //    AlgorithmToNumber = (x, y) => FuzzyLogic(x, y).Average(),
+            //    Width=3
+            //});
 
-            //Compare(0.01, 0.8);
-            Compare(0.1);
+           //Compare(0.01, 0.8);
+
+            Compare(1);
 
             RunAll();
             return;
