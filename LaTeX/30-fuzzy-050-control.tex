@@ -44,9 +44,6 @@ $$}
 \uncover<+->{$$
 F_A(x)=\int_{-\infty}^{x} f_A(x) dx
 $$}
-\uncover<+->{$$
-P \{ A=x \} =0
-$$}
 \uncover<+->{
 \begin{tikzpicture}[x=2cm,y=2cm]
 \draw[->,thick] (0,0.01) -- (4.5,0.01) node[below] {$d$};
@@ -54,6 +51,10 @@ $$}
 \draw[red,thick] plot file {Plots/2.txt};
 \end{tikzpicture}
 }
+\uncover<+->{$$
+P \{ A=x \} =0
+$$}
+
 \end{frame}
 
 \begin{frame}\frametitle{Вероятностный подход}
@@ -146,6 +147,14 @@ $$
  \bio{Mamdani}{Ebrahim Mamdani}{Application of fuzzy algorithms for the control of a simple dynamic plant (1974)}
 \end{frame}
 
+\begin{frame}\frametitle{}
+{\huge
+if (y<0) return -PI;
+
+else return PI;
+}
+\end{frame}
+
 
 \begin{frame}\frametitle{Нечеткий вывод}
 \uncover<+->{\begin{center}
@@ -154,7 +163,7 @@ $$
 \uncover<+->{$$
 \mu_L(y)=\left\{\begin{array}{l l}
                  0, & y<0 \\
-                 y/M & y\ge 0 \\
+                 \min(1,y/M) & y\ge 0 \\
                 \end{array}\right.
 $$}
 \uncover<+->{$$
@@ -167,11 +176,13 @@ $$}
 \imp{}{G}(a,b)=\min(1,b/a)
 $$}
 \uncover<+->{$$
-\mu_{\imp{L,TL}{G}}(\alpha)=\max_{y\in\mathbb{R}}\mu_Y(y)\mu_{\imp{L,TL}{G}}(y,\alpha)=
-$$}
+A=\imp{L,TL}{G}(Y)
+$$
+}
 \uncover<+->{$$
-=\max_{y\in\mathbb{R}}\left[\mu_Y(y)\min(1,\mu_L(y)/\mu_TL(\alpha))\right]
+\mu_{\imp{L,TL}{G}}(\alpha)=\max_{y\in\mathbb{R}}\mu_Y(y)\mu_{\imp{L,TL}{G}}(y,\alpha)=\max_{y\in\mathbb{R}}\left[\mu_Y(y)\min(1,\mu_L(y)/\mu_TL(\alpha))\right]
 $$}
+
 \end{frame}
 
 \begin{frame}\frametitle{Нечеткий вывод}

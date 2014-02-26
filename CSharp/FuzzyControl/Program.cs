@@ -129,10 +129,10 @@ namespace FuzzyControl
         {
             var gaussFunction = Domain.NearGauss(TargetDeviation);
             int pointCount = 100;
-            var halfRange = 2 * TargetDeviation;
+            var halfRange = 3 * TargetDeviation;
             var step = (halfRange* 2) / pointCount;
             var result = domain.CreateEmpty();
-            for (double dx=-halfRange;dx<=x+halfRange;dx+=step)
+            for (double dx=-halfRange;dx<=+halfRange;dx+=step)
                 for (double dy = -halfRange; dy <= +halfRange; dy += step)
                 {
                     var value = ExactAlgorithm(x + dx, y + dy);
@@ -152,19 +152,26 @@ namespace FuzzyControl
             return (x,y) => { if (from[x]==0) return 1; else return Math.Min(1,to[y]/from[x]); };
          }
 
+        static double Logic(double x, double y)
+        {
+            if (y < 0) return -0.5;
+            else return 0.5;
+        }
+
         static FuzzyNumber FuzzyLogic(double x, double y)
         {
             var argument = domain.Near(y);
 
-            var positive = domain.NumberFromLambda(z => { if (z <0 ) return 0; else return z/domain.Max; });
-            var turnRight = domain.Near(1);
-
-            var result1 = FuzzyNumber.Relation(GoguenImplication(positive, turnRight), argument);
-
-            var negative = domain.NumberFromLambda(z => { if (z >0) return 0; else return -z/domain.Max; });
+            var isLeft = domain.NumberFromLambda(z => { if (z > 0) return 0; else return -z / domain.Max; });
             var turnLeft = domain.Near(-1);
-            var result2 = FuzzyNumber.Relation(GoguenImplication(negative, turnLeft), argument);
+            var result1 = FuzzyNumber.Relation(GoguenImplication(isLeft, turnLeft), argument);
    
+            
+            var isRight = domain.NumberFromLambda(z => { if (z < 0) return 0; else return z / domain.Max; });
+            var turnRight = domain.Near(1);
+            var result2 = FuzzyNumber.Relation(GoguenImplication(isRight, turnRight), argument);
+
+            
             return result1 & result2;
         }
 
@@ -210,8 +217,9 @@ namespace FuzzyControl
         [STAThread]
         static void Main()
         {
-                  
-            domain.NearFunction = Domain.NearQuadratic(2);
+
+//            domain.NearFunction = Domain.NearQuadratic(2);
+            domain.NearFunction = Domain.NearGauss(2);
 
             algorithms.Add(new Algorithm 
               { 
@@ -231,22 +239,32 @@ namespace FuzzyControl
 
             //algorithms.Add(new Algorithm
             //{
-            //    AlgorithmToFuzzy = ProbabilisticAlgorithm,
-            //    AlgorithmToNumber = (x, y) => FuzzyAlgorithm(x, y).Average(),
-            //    Color = Color.Orange,
-            //    Width=1
+            //    AlgorithmToFuzzy = null,
+            //    AlgorithmToNumber = Logic,
+            //    Color = Color.Magenta,
+            //    Width = 3
             //});
+
 
             //algorithms.Add(new Algorithm
             //{
-            //    AlgorithmToFuzzy = FuzzyLogic,
-            //    AlgorithmToNumber = (x, y) => FuzzyLogic(x, y).Average(),
+            //    AlgorithmToFuzzy = ProbabilisticAlgorithm,
+            //    AlgorithmToNumber = (x, y) => ProbabilisticAlgorithm(x, y).Average(),
+            //    Color = Color.Orange,
             //    Width=3
             //});
 
-           //Compare(0.01, 0.8);
+            algorithms.Add(new Algorithm
+            {
+                AlgorithmToFuzzy = FuzzyLogic,
+                AlgorithmToNumber = (x, y) => FuzzyLogic(x, y).Average(),
+                Color = Color.Magenta,
+                Width = 3
+            });
 
-            Compare(1);
+     
+
+            Compare(0.1);
 
             RunAll();
             return;
