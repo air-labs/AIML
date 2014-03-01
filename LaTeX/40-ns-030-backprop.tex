@@ -36,6 +36,7 @@
 }
 
 \begin{document}
+
 \tikzstyle{neu}=[circle,fill=blue!50]
 
 
@@ -132,27 +133,32 @@ $$
 \rightpicture
 
 \column{0.7\textwidth}
-\uncover<+->{}
-\uncover<+->{$$
+\uncover<2->{$$
 D_k(y_1,y_2)=(y_1-a_1)^2+(y_2-a_2)^2
-$$}
-\uncover<+->{$$
-\dd{D_k}{y_1}=\uncover<+->{2(y_1-a_1)}
-$$}
-\uncover<+->{$$
-y_1=\uncover<+->{f\underbrace{(w_{01}+x_1w_{11}+x_2w_{21})}_{S_1}}
 $$}
 $$
 \begin{array}{c p{1cm} c}
-\uncover<+->{\dd{y_1}{w_{21}}=\uncover<+->{f'(S_1)x_2}} && 
-\uncover<+->{\dd{y_2}{w_{21}}=\uncover<+->{0}} \\
+\uncover<3->{\dd{D_k}{y_1}=\uncover<4->{2(y_1-a_1)}} &&
+\uncover<5->{\dd{D_k}{y_2}=2(y_2-a_2)} \\
 \end{array}
 $$
-\uncover<+->{$$
-E_k(W)=D_k(f(S_1),f(S_2))
+\only<6-9>{$$
+y_1=y_1(w_{01},w_{11},w_{21})=\uncover<7-9>{f\underbrace{(w_{01}+x_1w_{11}+x_2w_{21})}_{S_1}}
 $$}
-\uncover<+->{$$
-\dd{E_k}{w_{21}}=\uncover<+->{\dd{E_k}{y_1}\dd{y_1}{w_{21}}+\dd{E_k}{y_2}\dd{y_2}{w_{21}}}\uncover<+->{=2(y_1-a_1)f'(S_1)x_2}
+\only<10-12>{$$
+y_2=y_2(w_{02},w_{12},w_{22})=f\underbrace{(w_{02}+x_1w_{12}+x_2w_{22})}_{S_2}
+$$}
+$$
+\begin{array}{c p{1cm} c}
+\uncover<8->{\dd{y_1}{w_{21}}=\uncover<9->{f'(S_1)x_2}} && 
+\uncover<11->{\dd{y_2}{w_{21}}=\uncover<12->{0}} \\
+\end{array}
+$$
+\uncover<13->{$$
+E_k(W)=D_k(y_1(w_{01},w_{11},w_{21}),y_2(w_{02},w_{12},w_{22}))
+$$}
+\uncover<14->{$$
+\dd{E_k}{w_{21}}=\uncover<15->{\dd{E_k}{y_1}\dd{y_1}{w_{21}}+\dd{E_k}{y_2}\dd{y_2}{w_{21}}}\uncover<16->{=2(y_1-a_1)f'(S_1)x_2}
 $$}
 \end{columns}
 \end{frame}
@@ -181,16 +187,17 @@ $$
 \end{array}
 $$
 \uncover<+->{$$
-E_k(W)=D_k(f(S_1),\ldots,f(S_n))
+E_k(W)=D_k(y_1(w_{01},\ldots,w_{mn}),\ldots,y_n(w_{0n},\ldots,w_{mn}))
 $$}
 \uncover<+->{$$
-\dd{E_k}{w_{ji}}=\uncover<+->{\sum_{l=1}^{n}\dd{E_k}{y_l}\dd{y_j}{w_{ji}}}\uncover<+->{=2(y_1-a_1)f'(S_i)x_j}
+\dd{E_k}{w_{ji}}=\uncover<+->{\sum_{l=1}^{n}\dd{D_k}{y_l}\dd{y_l}{w_{ji}}}\uncover<+->{=2(y_i-a_i)f'(S_i)x_j}
 $$}
 
 \end{columns}
 \end{frame}
 
 \begin{frame}\frametitle{Обратное распространение ошибки}
+
 \begin{tikzpicture}
 \tikzstyle{neu}=[circle,fill=blue!50];
 
@@ -222,67 +229,92 @@ $$}
     \path (n-\layA-\out) edge[->] (x-\layB-\out) ;
 }
 \end{tikzpicture}
-\begin{tabular}{p{5cm} p{5cm}}
+
 $$
-\dd{E}{v_{ij}}=\dd{E}{x_j}\dd{x_j}{v_{ij}}
-$$ 
-& 
+\begin{array}{c c c}
+\uncover<2->{E_k(W)=D_k(y_1,\ldots,y_n)} &
+\uncover<3->{y_i=y_i(x_1,\ldots,x_m)} &
+\uncover<4->{x_j=x_j(v_{0j},\ldots,v_{rj})} \\
+\end{array}
 $$
-\dd{E}{z_i}=\sum_{j=1}^{m}\dd{E}{x_j}\dd{x_j}{z_i}
-$$
-\end{tabular}
+\only<5>{Если бы $D_k=D_k(x_1,\ldots,x_m)$, то $\dd{E_k}{v_rs}=\sum_{j=1}^{m}\dd{D_k}{x_j}\dd{x_j}{w_{rs}}$}
+\only<6-7>{$$
+\begin{array}{c c}
+\dd{E_k}{w_rs}=\sum_{j=1}^{m}\dd{D_k}{x_j}\dd{x_j}{w_{rs}} & 
+\uncover<7>{\dd{D_k}{z_l}=\sum_{j=1}^m\dd{D_k}{x_j}\dd{x_j}{z_l}}
+\end{array}
+$$}
 \end{frame}
 
-\end{document}
 
 \begin{frame}\frametitle{Обратное распространение ошибки}
 \begin{columns}
+\column{0.3\textwidth}
 
-\only<4>
-{
+\rightpicture
+
+\column{0.7\textwidth}
+
 $$
-E(y_1,y_2)=(y_1-a_1)^2+(y_2-a_2)^2
+D_k(y_1,...,y_n)=(y_i-a_i)^2+...+(y_n-a_n)^2
 $$
 $$
-\dd{E}{y_1}=2(y_1-a_1)
+\dd{D_k}{y_1}=2(y_1-a_1)\ \ \ \dd{D_k}{y_2}=2(y_2-a_2)
 $$
-$$
+\only<2-4>{$$
 y_1=f\underbrace{(w_{01}+x_1w_{11}+x_2w_{21})}_{S_1}
+$$}
+\only<5-7>{$$
+y_2=f\underbrace{(w_{02}+x_1w_{12}+x_2w_{22})}_{S_2}
+$$}
 $$
+\begin{array}{c p{1cm} c}
+\uncover<3->{\dd{y_1}{x_1}=\uncover<4->{f'(S_1)w_{11}}} &&
+\uncover<6->{\dd{y_2}{x_1}=\uncover<7->{f'(S_2)w_{12}}}
+\end{array}
 $$
-\dd{y_1}{x_2}=f'(S_1)w_{12}
-$$
-$$
-\dd{y_2}{x_2}=f'(S_2)w_{22}
-$$
-$$
-\dd{E}{x_2}=\dd{E}{y_1}\dd{y_1}{x_2}+\dd{E}{y_1}\dd{y_1}{x_2}=
-$$
-$$
-=2(y_1-a_1)f'(S_1)w_{12}+2(y_2-a_2)f'(S_2)w_{22}
-$$
-}
-\only<5>
-{
-$$
-E(y_1,...,y_n)=(y_i-a_i)^2+...+(y_n-a_n)^2
-$$
-$$
-\dd{E}{y_i}=2(y_i-a_i)
-$$
-$$
-y_i=f\underbrace{(w_{0i}+x_1w_{1i}+...+x_nw_{ni})}_{S_i}
-$$
-$$
-\dd{y_i}{x_j}=f'(S_i)w_{ji}
-$$
-$$
-\dd{E}{x_j}=\sum_{i=1}^{n} \dd{E}{y_i}\dd{y_i}{x_j}=\sum_{i=1}^{n}2(y_i-a_i)f'(S_i)w_{ji}
-$$
-}
+\uncover<8->{$$
+\dd{D_k}{x_1}=\uncover<9->{\dd{D_k}{y_1}\dd{y_1}{x_1}+\dd{D_k}{y_2}\dd{y_2}{x_1}=}
+$$}
+\uncover<9->{$$
+\uncover<+->{=2(y_1-a_1)f'(S_1)w_{11}+2(y_2-a_2)f'(S_2)w_{12}}
+$$}
 
 \end{columns}
 \end{frame}
+
+
+\begin{frame}\frametitle{Обратное распространение ошибки}
+\begin{columns}
+\column{0.3\textwidth}
+
+\rightpicture
+
+\column{0.7\textwidth}
+
+$$
+D_k(y_1,y_2)=(y_1-a_1)^2+(y_2-a_2)^2
+$$
+$$
+\dd{D_k}{y_i}=2(y_i-a_i)
+$$
+$$
+\begin{array}{c p{0.3cm} c p{0.3cm} c}
+S_i=\sum_{j=0}^{m}x_jw_{ij} &&
+y_i=f(S_i) &&
+\dd{y_i}{x_j}=\uncover<+->{f'(S_i)w_{ji}} \\
+\end{array}
+$$
+\uncover<+->{$$
+\dd{D_k}{x_j}=\uncover<+->{\sum_{i=1}^{n}\dd{D_k}{y_i}\dd{y_i}{x_j}=}
+$$}
+\uncover<+->{$$
+=2 \sum_{i=1}^{n}(y_i-a_i)f'(S_i)w_{ji}
+$$}
+\end{columns}
+\end{frame}
+
+\end{document}
 
 
 
