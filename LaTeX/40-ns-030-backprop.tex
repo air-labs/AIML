@@ -314,6 +314,20 @@ $$}
 \end{columns}
 \end{frame}
 
+\begin{frame}\frametitle{Онлайн и оффлайн обучение}
+\uncover<+->{
+Ошибка сети на $i$-м примере: $E_i(W)=D_i(N(W,X_i))$
+
+Ошибка сети на всей выборке: $E(W)=\sum_{i=1}^{m}E_i(W)$ 
+}
+
+\uncover<+->{$$
+\dd{E}{w_{ij}}=\dd{\sum_{i=1}^{m}E_i(W)}{w_{ij}}=\sum_{i=1}^{m}\dd{E_i}{w_{ij}}
+$$}
+\uncover<+->{$$
+\nabla E = \sum_{i=1}^{m} \nabla E_i
+$$}
+\end{frame}
 \end{document}
 
 
