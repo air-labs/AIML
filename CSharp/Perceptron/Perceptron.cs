@@ -14,7 +14,8 @@ namespace Perceptron
 {
     static class Program
     {
-        static Func<bool, bool, bool> Function = (x, y) => (x ^ !y);
+        static Func<bool, bool, bool> Function = (x, y) => (x ^ y);
+        
         static List<int> LearningOrder = new List<int>
         {
              1,  1,
@@ -31,49 +32,59 @@ namespace Perceptron
 
         static Form form;
 
+        [STAThread]
+        static void Main()
+        {
+            weights = new double[3];
+            network = new ActivationNetwork(new SignumActivationFunction(), 2, 1);
+            weights[0] = ((ActivationNeuron)network.Layers[0].Neurons[0]).Threshold = 0;
+            weights[1] = network.Layers[0].Neurons[0].Weights[0] = 0.9;
+            weights[2] = network.Layers[0].Neurons[0].Weights[1] = 0.2;
+
+
+            learning = new PerceptronLearning(network);
+            learning.LearningRate = 0.005;
+
+            form = new MyForm() { WindowState = FormWindowState.Maximized };
+            form.Paint += (s, a) => Redraw(a.Graphics);
+
+            var timer = new System.Windows.Forms.Timer();
+            timer.Interval = 10;
+            timer.Tick += NextSample;
+            timer.Start();
+            Application.Run(form);
+        }
+
+        static void NextSample(object sender, EventArgs e)
+        {
+            var x = LearningOrder[LearningOrderPointer];
+            var y = LearningOrder[LearningOrderPointer + 1];
+            LearningOrderPointer += 2;
+            if (LearningOrderPointer >= LearningOrder.Count) LearningOrderPointer = 0;
+
+            var input = new double[] { x, y };
+            var output = new double[] { Function(x > 0, y > 0) ? 1 : -1 };
+
+            learning.Run(input, output);
+
+
+            weights[0] = ((ActivationNeuron)network.Layers[0].Neurons[0]).Threshold;
+            weights[1] = network.Layers[0].Neurons[0].Weights[0];
+            weights[2] = network.Layers[0].Neurons[0].Weights[1];
+
+            form.Invalidate();
+           
+        }
+
         static double[] weights;
         static float S;
         static int MarginX;
         static int MarginY;
+        
+        
         static PointF Plot(double x, double y)
         {
             return new PointF(MarginX+(float)(S*(2+x)),MarginY+(float)(S*(2-y)));
-        }
-
-
-        static IEnumerable<PointF> FindBorders(float A, float B, float C)
-        {
-            if (B==0)
-            {
-                if (C == 0) yield break;
-                yield return new PointF(-A/C,-1);
-                yield return new PointF(-A/C,1);
-                yield break;
-            }
-
-            if (A==0)
-            {
-                if (C == 0) yield break;
-                yield return new PointF(-1,-B/C);
-                yield return new PointF(1, -B/C);
-                yield break;
-            }
-
-            for (int x = -1; x <= 1; x++)
-                for (int y = -1; y <= 1; y++)
-                    if (x == 0 && y == 0) continue;
-                    else if (x == 0)
-                    {
-                        float yy = y;
-                        float xx = (-B*yy - C) / A;
-                        if (xx <= 1 && -1 <= xx) yield return new PointF(xx, yy);
-                    }
-                    else if (y == 0)
-                    {
-                        float xx = x;
-                        float yy = (-A*xx - C) / B;
-                        if (yy <= 1 && -1 <= yy) yield return new PointF(xx, yy);
-                    }
         }
 
 
@@ -112,64 +123,27 @@ namespace Perceptron
 
             var linePen = new Pen(Color.Black, 2) { DashStyle = DashStyle.Dash };
 
-            var points = FindBorders(A, B, C).ToArray();
-            if (points.Length <2) return;
-            var begin = Plot(points[0].X, points[0].Y);
-            var end = Plot(points[1].X, points[1].Y);
+            var sum = (float)Math.Sqrt(A * A + B * B);
+            if (sum == 0) return;
+            A /= sum;
+            B /= sum;
+            C /= sum;
+
+            var lineCenter = Plot(-C * A, -C * B);
+            var begin = new PointF(lineCenter.X - S * B, lineCenter.Y - S * A);
+            var end = new PointF(lineCenter.X + S * B, lineCenter.Y + S * A);
 
             g.DrawLine(linePen, begin, end);
-            var lineCenter = new PointF((begin.X + end.X) / 2, (begin.Y + end.Y) / 2);
-
+          
             var directionPen = new Pen(Color.Red, 2) { EndCap = LineCap.ArrowAnchor };
-            g.DrawLine(directionPen, lineCenter.X, lineCenter.Y, lineCenter.X + (float)(100 * A), lineCenter.Y - (float)(100 * B));
+            g.DrawLine(directionPen, lineCenter.X, lineCenter.Y, lineCenter.X + (float)(50 * A), lineCenter.Y - (float)(50 * B));
 
         }
 
 
 
-        static void NextSample(object sender, EventArgs e)
-        {
-            var x=LearningOrder[LearningOrderPointer];
-            var y=LearningOrder[LearningOrderPointer+1];
-            LearningOrderPointer+=2;
-            if (LearningOrderPointer >= LearningOrder.Count) LearningOrderPointer = 0;
-            
-            var input = new double[] { x,y };
-            var output = new double[] { Function(x > 0, y > 0) ? 1 : -1 };
-           
-            learning.Run(input, output);
-            
-            
-            weights[0] = ((ActivationNeuron)network.Layers[0].Neurons[0]).Threshold;
-            weights[1]= network.Layers[0].Neurons[0].Weights[0];
-            weights[2]=network.Layers[0].Neurons[0].Weights[1];
+  
 
-            form.Invalidate();
-            //Redraw(form.CreateGraphics());
-        }
-
-        [STAThread]
-        static void Main()
-        {
-            weights = new double[3];
-            network = new ActivationNetwork(new SignumActivationFunction(), 2, 1);
-            weights[0]=((ActivationNeuron)network.Layers[0].Neurons[0]).Threshold = 0;
-            weights[1] = network.Layers[0].Neurons[0].Weights[0] = 0.9;
-            weights[2] = network.Layers[0].Neurons[0].Weights[1] = 0.2;
-       
-
-            learning = new PerceptronLearning(network);
-            learning.LearningRate = 0.005;
-
-            form = new MyForm();
-            form.Paint += (s, a) => Redraw(a.Graphics);
-
-            var timer = new System.Windows.Forms.Timer();
-            timer.Interval = 10;
-            timer.Tick += NextSample;
-            timer.Start();
-            Application.Run(form);
-        }
 
 
     }
