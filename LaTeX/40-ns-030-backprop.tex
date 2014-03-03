@@ -1,4 +1,4 @@
-\documentclass[24pt,pdf,hyperref={unicode}]{beamer}
+\documentclass[24pt,pdf,hyperref={unicode},aspectratio=169]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[russian]{babel}
 \usepackage{graphics}
@@ -10,100 +10,9 @@
 
 
 \newcommand{\dd}[2]{\frac{\partial #1}{\partial #2}}
-\begin{document}
-\tikzstyle{neu}=[circle,fill=blue!50];
 
-
-
-\section{Обратное распространение ошибки}
-
-
-\begin{frame}\frametitle{Частные производные}
-Функция $n$ переменных:
-$$
-F:\mathbb{R}^n\rightarrow\mathbb{R} 
-$$
-$$
-F(x_1,\ldots,x_n)
-$$
-Частная производная по $i$-й переменной:
-$$
-\dd{F}{x_i}(x_1,\ldots,x_n)=
-$$
-$$
-=\lim_{\varepsilon\rightarrow 0}\frac{F(x_1,x_2,\ldots,x_i+\varepsilon,\ldots,x_n)-F(x_1,x_2,\ldots,x_i,\ldots,x_n)}{\varepsilon}
-$$
-$$
-\dd{F}{x_i}:\mathbb{R}^n\rightarrow\mathbb{R}
-$$
-
-\end{frame}
-
-\begin{frame}\frametitle{Частные производные}
-\uncover<+->{}
-$$
-F(x,y,z,u)=x^3+y^u+\sin z^2u^3
-$$
-$$
-\begin{array}{l l}
-\dd{F}{x} = & \uncover<+->{3x^2} \\
-\dd{F}{y}= & \uncover<+->{uy^u-1} \\
-\dd{F}{z}= & \uncover<+->{(-\cos z^2u^3)(u^32z)}
-\end{array}
-$$
-\end{frame}
-
-\begin{frame}\frametitle{Производная сложной функции}
-$$
-F=F(x_1,\ldots,x_n)
-$$
-$$
-G_i=G_i(y_1,\ldots,y_m)
-$$
-$$
-H(y_1,\ldots,y_n)=F(G_1(y_1,\ldots,y_m),\ldots, G_n(y_1,\ldots,y_n))
-$$
-$$
-\dd{H}{y_i}=\sum_{j=1}^{n}\dd{H}{G_j}\dd{G_j}{y_i}
-$$
-\end{frame}
-
-\begin{frame}\frametitle{Производная сложной функции}
-\uncover<+->{}
-$$
-F(x_1,\ldots,x_n)=\sum_{k=1}{n} a_ix_i
-$$
-$$
-G_i(y_1,\ldots,y_m)=\sum_{k=1}{m}y_k^i
-$$
-$$
-H(y_1,\ldots,y_n)=F(G_1(y_1,\ldots,y_m),\ldots, G_n(y_1,\ldots,y_n))
-$$
-\uncover<+->{
-$$
-\dd{F}{G_i}=a_i,\ \dd{G_i}{y_j}=iy_j^{i-1}
-$$
-}
-$$
-\dd{H}{y_j}=\uncover<+->{\sum_{i=1}^{n}\dd{H}{G_i}\dd{G_i}{y_j}=\sum_{i=1}^{n} a_iiy_j^{i-1}}
-$$
-
-\end{frame}
-
-\begin{frame}\frametitle{Градиент}
-\uncover<+->{}
-$$
-\nabla F = \left(\dd{F}{x_1},\dd{F}{x_2},\ldots,\dd{F}{x_n}\right)
-$$
-$$
-\nabla F : \uncover<+->{\mathbb{R}^n\rightarrow\mathbb{R}^n}
-$$
-\end{frame}
-
-\begin{frame}\frametitle{Обратное распространение ошибки}
-\begin{columns}
-
-\column{0.4\textwidth}
+\newcommand{\rightpicture}
+{
 \begin{tikzpicture}
 
 \node (x-0) at (0,4) {$1$};
@@ -124,97 +33,171 @@ $$
     \path (n-\out) edge[->] (y-\out) ;
 
 \end{tikzpicture}
+}
 
-\column{0.6\textwidth}
-\only<2>
-{
+\begin{document}
+
+\tikzstyle{neu}=[circle,fill=blue!50]
+
+
+
+\section{Обратное распространение ошибки}
+
+
+\begin{frame}\frametitle{Частная производная и градиент}
+\uncover<+->{}
+Функция $n$ переменных:
 $$
-E(y_1,y_2)=(y_1-a_1)^2+(y_2-a_2)^2
+f(x_1,\ldots,x_n) :\mathbb{R}^n\rightarrow\mathbb{R} 
 $$
+Частная производная по $i$-й переменной:
 $$
-\dd{E}{y_1}=2(y_1-a_1)
-$$
-$$
-y_1=f\underbrace{(w_{01}+x_1w_{11}+x_2w_{21})}_{S_1}
-$$
-$$
-\dd{y_1}{w_{21}}=f'(S_1)x_2
-$$
-$$
-\dd{E}{w_{21}}=\dd{E}{y_1}\dd{y_1}{w_{21}}
-$$
-$$
-=2(y_1-a_1)f'(S_1)x_2
-$$
-}
-\only<3>
-{
-$$
-E(y_1,...,y_n)=(y_i-a_i)^2+...+(y_n-a_n)^2
+\dd{f}{x_i}(x_1,\ldots,x_n)=
 $$
 $$
-\dd{E}{y_i}=2(y_i-a_i)
+=\lim_{\varepsilon\rightarrow 0})\left[f(x_1,x_2,\ldots,x_i+\varepsilon,\ldots,x_n)-f(x_1,x_2,\ldots,x_i,\ldots,x_n)\right]/\varepsilon
 $$
 $$
-y_i=f\underbrace{(w_{0i}+x_1w_{1i}+...+x_nw_{ni})}_{S_i}
+\dd{f}{x_i}:\uncover<+->{\mathbb{R}^n\rightarrow\mathbb{R}}
+$$
+\uncover<+->{
+Градиент функции:
+$$
+\nabla f = \left(\dd{f}{x_1},\dd{f}{x_2},\ldots,\dd{f}{x_n}\right)
 $$
 $$
-\dd{y_i}{w_{ji}}=f'(S_i)x_j
-$$
-$$
-\dd{E}{w_{ji}}=\dd{E}{y_i}\dd{y_i}{w_{ji}}
-$$
-$$
-=2(y_i-a_i)f'(S_i)x_j
+\nabla f : \uncover<+->{\mathbb{R}^n\rightarrow\mathbb{R}^n}
 $$
 }
-\only<4>
-{
+\end{frame}
+
+
+\begin{frame}\frametitle{Частные производные}
+\uncover<+->{}
 $$
-E(y_1,y_2)=(y_1-a_1)^2+(y_2-a_2)^2
-$$
-$$
-\dd{E}{y_1}=2(y_1-a_1)
-$$
-$$
-y_1=f\underbrace{(w_{01}+x_1w_{11}+x_2w_{21})}_{S_1}
+f(x,y,z,u)=x^3+y^u+\sin z^2u^3
 $$
 $$
-\dd{y_1}{x_2}=f'(S_1)w_{12}
+\begin{array}{l l}
+\dd{f}{x} = & \uncover<+->{3x^2} \\[0.5cm]
+\dd{f}{y}= & \uncover<+->{uy^u-1} \\[0.5cm]
+\dd{f}{z}= & \uncover<+->{(-\cos z^2u^3)(u^32z)}\\[0.5cm]
+\end{array}
+$$
+\end{frame}
+
+\begin{frame}\frametitle{Производная сложной функции}
+$$
+f=f(x_1,\ldots,x_n)
 $$
 $$
-\dd{y_2}{x_2}=f'(S_2)w_{22}
+x_i=x_i(y_1,\ldots,y_m)
 $$
 $$
-\dd{E}{x_2}=\dd{E}{y_1}\dd{y_1}{x_2}+\dd{E}{y_1}\dd{y_1}{x_2}=
+f(y_1,\ldots,y_m)=f(x_1(y_1,\ldots,y_m),\ldots, x_n(y_1,\ldots,y_m))
 $$
 $$
-=2(y_1-a_1)f'(S_1)w_{12}+2(y_2-a_2)f'(S_2)w_{22}
+\dd{f}{y_i}=\sum_{j=1}^{n}\dd{f}{x_j}\dd{x_j}{y_i}
+$$
+\end{frame}
+
+\begin{frame}\frametitle{Производная сложной функции}
+\uncover<+->{}
+$$
+f(x_1,\ldots,x_n)=\sum_{k=1}{n} a_ix_i
+$$
+$$
+x_i(y_1,\ldots,y_m)=\sum_{k=1}{m}y_k^i
+$$
+$$
+f(y_1,\ldots,y_m)=f(x_1(y_1,\ldots,y_m),\ldots, x_n(y_1,\ldots,y_m))
+$$
+\uncover<+->{
+$$
+\dd{f}{x_i}=a_i,\ \dd{x_i}{y_j}=iy_j^{i-1}
 $$
 }
-\only<5>
-{
 $$
-E(y_1,...,y_n)=(y_i-a_i)^2+...+(y_n-a_n)^2
+\dd{f}{y_j}=\uncover<+->{\sum_{i=1}^{n}\dd{f}{x_i}\dd{x_i}{y_j}=\sum_{i=1}^{n} a_iiy_j^{i-1}}
 $$
+
+\end{frame}
+
+
+
+\begin{frame}\frametitle{Обратное распространение ошибки}
+\begin{columns}
+
+\column{0.3\textwidth}
+
+\rightpicture
+
+\column{0.7\textwidth}
+\uncover<2->{$$
+D_k(y_1,y_2)=(y_1-a_1)^2+(y_2-a_2)^2
+$$}
 $$
-\dd{E}{y_i}=2(y_i-a_i)
+\begin{array}{c p{1cm} c}
+\uncover<3->{\dd{D_k}{y_1}=\uncover<4->{2(y_1-a_1)}} &&
+\uncover<5->{\dd{D_k}{y_2}=2(y_2-a_2)} \\
+\end{array}
 $$
+\only<6-9>{$$
+y_1=y_1(w_{01},w_{11},w_{21})=\uncover<7-9>{f\underbrace{(w_{01}+x_1w_{11}+x_2w_{21})}_{S_1}}
+$$}
+\only<10-12>{$$
+y_2=y_2(w_{02},w_{12},w_{22})=f\underbrace{(w_{02}+x_1w_{12}+x_2w_{22})}_{S_2}
+$$}
 $$
-y_i=f\underbrace{(w_{0i}+x_1w_{1i}+...+x_nw_{ni})}_{S_i}
+\begin{array}{c p{1cm} c}
+\uncover<8->{\dd{y_1}{w_{21}}=\uncover<9->{f'(S_1)x_2}} && 
+\uncover<11->{\dd{y_2}{w_{21}}=\uncover<12->{0}} \\
+\end{array}
 $$
+\uncover<13->{$$
+E_k(W)=D_k(y_1(w_{01},w_{11},w_{21}),y_2(w_{02},w_{12},w_{22}))
+$$}
+\uncover<14->{$$
+\dd{E_k}{w_{21}}=\uncover<15->{\dd{E_k}{y_1}\dd{y_1}{w_{21}}+\dd{E_k}{y_2}\dd{y_2}{w_{21}}}\uncover<16->{=2(y_1-a_1)f'(S_1)x_2}
+$$}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}\frametitle{Обратное распространение ошибки}
+\begin{columns}
+\column{0.3\textwidth}
+
+\rightpicture
+
+\column{0.7\textwidth}
+
+\uncover<+->{}
+\uncover<+->{$$
+D_k(y_1,...,y_n)=(y_i-a_i)^2+...+(y_n-a_n)^2
+$$}
+\uncover<+->{$$
+\dd{D_k}{y_i}=\uncover<+->{2(y_i-a_i)}
+$$}
 $$
-\dd{y_i}{x_j}=f'(S_i)w_{ji}
+\begin{array}{c p{0.3cm} c p{0.3cm} c}
+\uncover<+->{S_i=\sum_{j=0}^{m}x_jw_{ij}} &&
+\uncover<+->{y_i=f(S_i)} &&
+\uncover<+->{\dd{y_i}{w_{ji}}=\uncover<+->{f'(S_i)x_j}} \\
+\end{array}
 $$
-$$
-\dd{E}{x_j}=\sum_{i=1}^{n} \dd{E}{y_i}\dd{y_i}{x_j}=\sum_{i=1}^{n}2(y_i-a_i)f'(S_i)w_{ji}
-$$
-}
+\uncover<+->{$$
+E_k(W)=D_k(y_1(w_{01},\ldots,w_{mn}),\ldots,y_n(w_{0n},\ldots,w_{mn}))
+$$}
+\uncover<+->{$$
+\dd{E_k}{w_{ji}}=\uncover<+->{\sum_{l=1}^{n}\dd{D_k}{y_l}\dd{y_l}{w_{ji}}}\uncover<+->{=2(y_i-a_i)f'(S_i)x_j}
+$$}
 
 \end{columns}
 \end{frame}
 
 \begin{frame}\frametitle{Обратное распространение ошибки}
+
 \begin{tikzpicture}
 \tikzstyle{neu}=[circle,fill=blue!50];
 
@@ -246,19 +229,109 @@ $$
     \path (n-\layA-\out) edge[->] (x-\layB-\out) ;
 }
 \end{tikzpicture}
-\begin{tabular}{p{5cm} p{5cm}}
+
 $$
-\dd{E}{v_{ij}}=\dd{E}{x_j}\dd{x_j}{v_{ij}}
-$$ 
-& 
+\begin{array}{c c c}
+\uncover<2->{E_k(W)=D_k(y_1,\ldots,y_n)} &
+\uncover<3->{y_i=y_i(x_1,\ldots,x_m)} &
+\uncover<4->{x_j=x_j(v_{0j},\ldots,v_{rj})} \\
+\end{array}
 $$
-\dd{E}{z_i}=\sum_{j=1}^{m}\dd{E}{x_j}\dd{x_j}{z_i}
+\only<5>{Если бы $D_k=D_k(x_1,\ldots,x_m)$, то $\dd{E_k}{v_rs}=\sum_{j=1}^{m}\dd{D_k}{x_j}\dd{x_j}{w_{rs}}$}
+\only<6-7>{$$
+\begin{array}{c c}
+\dd{E_k}{w_rs}=\sum_{j=1}^{m}\dd{D_k}{x_j}\dd{x_j}{w_{rs}} & 
+\uncover<7>{\dd{D_k}{z_l}=\sum_{j=1}^m\dd{D_k}{x_j}\dd{x_j}{z_l}}
+\end{array}
+$$}
+\end{frame}
+
+
+\begin{frame}\frametitle{Обратное распространение ошибки}
+\begin{columns}
+\column{0.3\textwidth}
+
+\rightpicture
+
+\column{0.7\textwidth}
+
 $$
-\end{tabular}
+D_k(y_1,...,y_n)=(y_i-a_i)^2+...+(y_n-a_n)^2
+$$
+$$
+\dd{D_k}{y_1}=2(y_1-a_1)\ \ \ \dd{D_k}{y_2}=2(y_2-a_2)
+$$
+\only<2-4>{$$
+y_1=f\underbrace{(w_{01}+x_1w_{11}+x_2w_{21})}_{S_1}
+$$}
+\only<5-7>{$$
+y_2=f\underbrace{(w_{02}+x_1w_{12}+x_2w_{22})}_{S_2}
+$$}
+$$
+\begin{array}{c p{1cm} c}
+\uncover<3->{\dd{y_1}{x_1}=\uncover<4->{f'(S_1)w_{11}}} &&
+\uncover<6->{\dd{y_2}{x_1}=\uncover<7->{f'(S_2)w_{12}}}
+\end{array}
+$$
+\uncover<8->{$$
+\dd{D_k}{x_1}=\uncover<9->{\dd{D_k}{y_1}\dd{y_1}{x_1}+\dd{D_k}{y_2}\dd{y_2}{x_1}=}
+$$}
+\uncover<9->{$$
+\uncover<+->{=2(y_1-a_1)f'(S_1)w_{11}+2(y_2-a_2)f'(S_2)w_{12}}
+$$}
+
+\end{columns}
+\end{frame}
+
+
+\begin{frame}\frametitle{Обратное распространение ошибки}
+\begin{columns}
+\column{0.3\textwidth}
+
+\rightpicture
+
+\column{0.7\textwidth}
+
+$$
+D_k(y_1,y_2)=(y_1-a_1)^2+(y_2-a_2)^2
+$$
+$$
+\dd{D_k}{y_i}=2(y_i-a_i)
+$$
+$$
+\begin{array}{c p{0.3cm} c p{0.3cm} c}
+S_i=\sum_{j=0}^{m}x_jw_{ij} &&
+y_i=f(S_i) &&
+\dd{y_i}{x_j}=\uncover<+->{f'(S_i)w_{ji}} \\
+\end{array}
+$$
+\uncover<+->{$$
+\dd{D_k}{x_j}=\uncover<+->{\sum_{i=1}^{n}\dd{D_k}{y_i}\dd{y_i}{x_j}=}
+$$}
+\uncover<+->{$$
+=2 \sum_{i=1}^{n}(y_i-a_i)f'(S_i)w_{ji}
+$$}
+\end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{Онлайн и оффлайн обучение}
+\uncover<+->{
+Ошибка сети на $i$-м примере: $E_i(W)=D_i(N(W,X_i))$
+
+Ошибка сети на всей выборке: $E(W)=\sum_{i=1}^{m}E_i(W)$ 
+}
+
+\uncover<+->{$$
+\dd{E}{w_{ij}}=\dd{\sum_{i=1}^{m}E_i(W)}{w_{ij}}=\sum_{i=1}^{m}\dd{E_i}{w_{ij}}
+$$}
+\uncover<+->{$$
+\nabla E = \sum_{i=1}^{m} \nabla E_i
+$$}
+\end{frame}
+\end{document}
+
 
 
 \end{frame}
 
 
-
-\end{document}

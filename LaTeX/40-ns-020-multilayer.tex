@@ -1,4 +1,4 @@
-\documentclass[24pt,pdf,hyperref={unicode}]{beamer}
+\documentclass[24pt,pdf,hyperref={unicode},aspectratio=169]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[russian]{babel}
 \usepackage{graphics}
@@ -134,18 +134,24 @@ $$\\[1cm]
 
 \begin{frame}\frametitle{Постановка задачи}
 {\bf Дано:}
-\begin{tabular}{p{4cm} p{6cm}}
+\begin{tabular}{p{6cm} p{7.5cm}}
  $\mathcal{X}=(X_1,\ldots,X_k)$ & входные вектора, $X_i\in\mathbb{R}^n$\\[0.1cm]
  $\mathcal{A}=(A_1,\ldots,A_k)$ & правильные выходные вектора, $A_i\in\mathbb{R}^m$\\[0.1cm]
  $(\mathcal{X},\mathcal{A})$ & обучающая выборка  \\[0.1cm]
  $W$ & вектор весов нейронной сети \\[0.1cm]
  $N(W,X)$ & функция, соответствующая нейронной сети \\[0.1cm]
- $Y_i=N(W,X_i)$ & ответ нейронной сети, $Y_i\in\mathbb{R}^m$ \\[0.1cm]
-$E(Y_i,A_i)$ & \\
-$=\sum_{j=1}^{m} (Y_i[j]-A_i[j])^2 $ & функция ошибки \\
- \end{tabular}\\[1cm]
+ $Y=N(W,X)$ & ответ нейронной сети, $Y\in\mathbb{R}^m$ \\[0.1cm]
+ $D(Y,A) =\sum_{j=1}^{m} (Y[j]-A[j])^2$ & функция ошибки\\[0.1cm]
+ $D_i(Y)=D(Y,A_i) $ & функция ошибки на $i$-ом примере \\[0.1cm]
+  $E_i(W)=D_i(N(W,X_i))$ & ошибка сети на $i$-ом примере\\[0.1cm]
+  $E(W)=\sum_{i=1}^{m}E_i(W) $ & ошибка сети на всей обучающей выборке \\[0.1cm]      
+ \end{tabular}
 {\bf Найти:}
-вектор $W$ такой, что $\sum_{i=1}^k E(N(W,X_i),A_i)\rightarrow \min$
+
+вектор $W$ такой, что $E(W) \rightarrow \min$ (обучение на всей выборке)
+
+вектор $W$ такой, что $E_i(W) \rightarrow \min$ (обучение на одном примере)
+
 \end{frame}
 
 
@@ -155,9 +161,9 @@ $=\sum_{j=1}^{m} (Y_i[j]-A_i[j])^2 $ & функция ошибки \\
 \begin{enumerate}
  \item Инициализировать $x_1$ случайным значением из $\mathbb{R}$
  \item $i:=1$
- \item $x_{i+1}=x_i+\varepsilon f'(x_i)$
+ \item $x_{i+1}=x_i-\varepsilon f'(x_i)$
  \item $i++$
- \item ${\rm if}\ \ |x_{i+1}-x_i|>c\ \ {\rm goto}\ 3$
+ \item ${\rm if}\ \ f(x_{i+1})-f(x_i) >c\ \ {\rm goto}\ 3$
 \end{enumerate}
 \end{frame}
 
@@ -165,13 +171,12 @@ $=\sum_{j=1}^{m} (Y_i[j]-A_i[j])^2 $ & функция ошибки \\
 \begin{enumerate}
  \item Инициализировать $W_1$ случайным значением из $\mathbb{R}^n$
  \item $i:=1$
- \item $W_{i+1}=W_i+\varepsilon \nabla f(W_i)$
+ \item $W_{i+1}=W_i-\varepsilon \nabla f(W_i)$
  \item $i++$
- \item ${\rm if}\ \ ||W_{i+1}-W_i||>c\ \ {\rm goto}\ 3$
+ \item ${\rm if}\ \ f(W_{i+1})-f(W_i)>c\ \ {\rm goto}\ 3$
 \end{enumerate}
 \end{frame}
 
 
-
-
+\end{frame}
 \end{document}
