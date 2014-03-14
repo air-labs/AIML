@@ -13,8 +13,19 @@ namespace Common
         {     
             foreach (var l in network.Layers)
                 foreach (var n in l.Neurons)
+                {
+                    if (n is ActivationNeuron)
+                        (n as ActivationNeuron).Threshold = modifier((n as ActivationNeuron).Threshold);
                     for (int i = 0; i < n.Weights.Length; i++)
                         n.Weights[i] = modifier(n.Weights[i]);
+                }
+        }
+
+        public static double[] GetWeightsVector(this Network network)
+        {
+            var list = new List<double>();
+            network.ForEachWeight(z => { list.Add(z); return z; });
+            return list.ToArray();
         }
     }
 }

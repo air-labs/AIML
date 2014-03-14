@@ -12,31 +12,14 @@
 {\bf Дано:}
 \begin{tabular}{p{4cm} p{6cm}}
  $\mathcal{X}=(X_1,\ldots,X_k)$ & экспериментальные условия, $X_i\in\mathbb{R}^n$\\[0.1cm]
- $\mathcal{A}=(a_1,\ldots,a_k)$ & измеренные значения, $a_i\in\mathbb{R}$\\[0.1cm]
+ $\mathcal{A}=(A_1,\ldots,A_k)$ & измеренные значения, $A_i\in\mathbb{R}^m$\\[0.1cm]
  $(\mathcal{X},\mathcal{A})$ & экспериментальная база \\[0.1cm]
  $P$ & вектор параметров \\[0.1cm]
- $F(P,X)$ & класс функций, которыми ведется регрессия \\[0.1cm]
- $y_i=F(P,X_i)$ & регрессированное значение функции, $y_i\in\mathbb{R}$ \\[0.1cm]
-$\sum_{i=1}^{k} (y_i-a_i)^2 $ & среднеквадратичное отклонение\\
+ $F(P,X)$ & функция регрессии \\[0.1cm]
+ $\sum_{i=1}^{k} (F(P,X_i)-A_i)^2 $ & среднеквадратичное отклонение\\
  \end{tabular}\\[1cm]
  {\bf Найти:}
- параметры $P$ такие, что $\sum_{i=1}^{k} (y_i-a_i)^2 \rightarrow \min$
-\end{frame}
-
-\begin{frame}\frametitle{Задача регрессии}
-{\bf Дано:}
-\begin{tabular}{p{4cm} p{6cm}}
- $\mathcal{X}=(X_1,\ldots,X_k)$ & входные вектора, $X_i\in\mathbb{R}^n$\\[0.1cm]
- $\mathcal{A}=(A_1,\ldots,A_k)$ & правильные выходные вектора, $A_i\in\mathbb{R}^m$\\[0.1cm]
- $(\mathcal{X},\mathcal{A})$ & обучающая выборка  \\[0.1cm]
- $W$ & вектор весов нейронной сети \\[0.1cm]
- $N(W,X)$ & функция, соответствующая нейронной сети \\[0.1cm]
- $Y_i=N(W,X_i)$ & ответ нейронной сети, $Y_i\in\mathbb{R}^m$ \\[0.1cm]
-$E(Y_i,A_i)$ & \\
-$=\sum_{j=1}^{m} (Y_i[j]-A_i[j])^2 $ & функция ошибки \\
- \end{tabular}\\[1cm]
-{\bf Найти:}
-вектор $W$ такой, что $\sum_{i=1}^k E(N(W,X_i),A_i)\rightarrow \min$
+ параметры $P$ такие, что $\sum_{i=1}^{k} (F(P,X_i)-A_i)^2 \rightarrow \min$
 \end{frame}
 
 

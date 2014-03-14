@@ -48,7 +48,8 @@ namespace Common
             for (int i = 0; i < data.Count; i++)
                 DataFunction.Points.Add(new DataPoint(i + beginning, data[i]));
             supportingSerie.Points.Clear();
-            supportingSerie.Points.Add(new DataPoint(HistoryLength+beginning, data[0]));
+            if (data.Count>0)
+                supportingSerie.Points.Add(new DataPoint(HistoryLength+beginning, data[0]));
             
 
         }

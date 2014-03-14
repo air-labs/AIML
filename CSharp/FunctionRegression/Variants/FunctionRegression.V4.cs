@@ -11,7 +11,7 @@ using AForge.Neuro;
 using AForge.Neuro.Learning;
 using Common;
 
-namespace FunctionRegression
+namespace FunctionRegression.V4
 {
     static partial class FunctionRegression
     {
@@ -72,7 +72,7 @@ namespace FunctionRegression
                 Outputs = Inputs
                             .Select(z => network.Compute(z)[0])
                            .ToArray();
-                 form.BeginInvoke(new Action(UpdateCharts));
+            //     form.BeginInvoke(new Action(UpdateCharts));
             }
         }
 
