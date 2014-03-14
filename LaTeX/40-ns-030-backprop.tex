@@ -55,7 +55,7 @@ $$
 \dd{f}{x_i}(x_1,\ldots,x_n)=
 $$
 $$
-=\lim_{\varepsilon\rightarrow 0})\left[f(x_1,x_2,\ldots,x_i+\varepsilon,\ldots,x_n)-f(x_1,x_2,\ldots,x_i,\ldots,x_n)\right]/\varepsilon
+=\lim_{\varepsilon\rightarrow 0}\left[f(x_1,x_2,\ldots,x_i+\varepsilon,\ldots,x_n)-f(x_1,x_2,\ldots,x_i,\ldots,x_n)\right]/\varepsilon
 $$
 $$
 \dd{f}{x_i}:\uncover<+->{\mathbb{R}^n\rightarrow\mathbb{R}}
@@ -80,7 +80,7 @@ $$
 $$
 \begin{array}{l l}
 \dd{f}{x} = & \uncover<+->{3x^2} \\[0.5cm]
-\dd{f}{y}= & \uncover<+->{uy^u-1} \\[0.5cm]
+\dd{f}{y}= & \uncover<+->{uy^{u-1}} \\[0.5cm]
 \dd{f}{z}= & \uncover<+->{(-\cos z^2u^3)(u^32z)}\\[0.5cm]
 \end{array}
 $$
@@ -104,10 +104,10 @@ $$
 \begin{frame}\frametitle{Производная сложной функции}
 \uncover<+->{}
 $$
-f(x_1,\ldots,x_n)=\sum_{k=1}{n} a_ix_i
+f(x_1,\ldots,x_n)=\sum_{k=1}^{n} a_ix_i
 $$
 $$
-x_i(y_1,\ldots,y_m)=\sum_{k=1}{m}y_k^i
+x_i(y_1,\ldots,y_m)=\sum_{k=1}^{m}y_k^i
 $$
 $$
 f(y_1,\ldots,y_m)=f(x_1(y_1,\ldots,y_m),\ldots, x_n(y_1,\ldots,y_m))
@@ -158,7 +158,7 @@ $$
 E_k(W)=D_k(y_1(w_{01},w_{11},w_{21}),y_2(w_{02},w_{12},w_{22}))
 $$}
 \uncover<14->{$$
-\dd{E_k}{w_{21}}=\uncover<15->{\dd{E_k}{y_1}\dd{y_1}{w_{21}}+\dd{E_k}{y_2}\dd{y_2}{w_{21}}}\uncover<16->{=2(y_1-a_1)f'(S_1)x_2}
+\dd{E_k}{w_{21}}=\uncover<15->{\dd{D_k}{y_1}\dd{y_1}{w_{21}}+\dd{D_k}{y_2}\dd{y_2}{w_{21}}}\uncover<16->{=2(y_1-a_1)f'(S_1)x_2}
 $$}
 \end{columns}
 \end{frame}
@@ -174,14 +174,14 @@ $$}
 
 \uncover<+->{}
 \uncover<+->{$$
-D_k(y_1,...,y_n)=(y_i-a_i)^2+...+(y_n-a_n)^2
+D_k(y_1,...,y_n)=(y_1-a_1)^2+...+(y_n-a_n)^2
 $$}
 \uncover<+->{$$
 \dd{D_k}{y_i}=\uncover<+->{2(y_i-a_i)}
 $$}
 $$
 \begin{array}{c p{0.3cm} c p{0.3cm} c}
-\uncover<+->{S_i=\sum_{j=0}^{m}x_jw_{ij}} &&
+\uncover<+->{S_i=\sum_{j=0}^{m}x_jw_{ji}} &&
 \uncover<+->{y_i=f(S_i)} &&
 \uncover<+->{\dd{y_i}{w_{ji}}=\uncover<+->{f'(S_i)x_j}} \\
 \end{array}
@@ -237,10 +237,10 @@ $$
 \uncover<4->{x_j=x_j(v_{0j},\ldots,v_{rj})} \\
 \end{array}
 $$
-\only<5>{Если бы $D_k=D_k(x_1,\ldots,x_m)$, то $\dd{E_k}{v_rs}=\sum_{j=1}^{m}\dd{D_k}{x_j}\dd{x_j}{w_{rs}}$}
+\only<5>{Если бы $D_k=D_k(x_1,\ldots,x_m)$, то $\dd{E_k}{v_{rs}}=\sum_{j=1}^{m}\dd{D_k}{x_j}\dd{x_j}{v_{rs}}$}
 \only<6-7>{$$
 \begin{array}{c c}
-\dd{E_k}{w_rs}=\sum_{j=1}^{m}\dd{D_k}{x_j}\dd{x_j}{w_{rs}} & 
+\dd{E_k}{v_{rs}}=\sum_{j=1}^{m}\dd{D_k}{x_j}\dd{x_j}{v_{rs}} & 
 \uncover<7>{\dd{D_k}{z_l}=\sum_{j=1}^m\dd{D_k}{x_j}\dd{x_j}{z_l}}
 \end{array}
 $$}
@@ -256,7 +256,7 @@ $$}
 \column{0.7\textwidth}
 
 $$
-D_k(y_1,...,y_n)=(y_i-a_i)^2+...+(y_n-a_n)^2
+D_k(y_1,y_2)=(y_1-a_1)^2+(y_2-a_2)^2
 $$
 $$
 \dd{D_k}{y_1}=2(y_1-a_1)\ \ \ \dd{D_k}{y_2}=2(y_2-a_2)
@@ -291,16 +291,16 @@ $$}
 \rightpicture
 
 \column{0.7\textwidth}
-
+\uncover<+->{}
 $$
-D_k(y_1,y_2)=(y_1-a_1)^2+(y_2-a_2)^2
+D_k(y_1,...,y_n)=(y_i-a_i)^2+...+(y_n-a_n)^2
 $$
 $$
 \dd{D_k}{y_i}=2(y_i-a_i)
 $$
 $$
 \begin{array}{c p{0.3cm} c p{0.3cm} c}
-S_i=\sum_{j=0}^{m}x_jw_{ij} &&
+S_i=\sum_{j=0}^{m}x_jw_{ji} &&
 y_i=f(S_i) &&
 \dd{y_i}{x_j}=\uncover<+->{f'(S_i)w_{ji}} \\
 \end{array}
@@ -313,25 +313,4 @@ $$}
 $$}
 \end{columns}
 \end{frame}
-
-\begin{frame}\frametitle{Онлайн и оффлайн обучение}
-\uncover<+->{
-Ошибка сети на $i$-м примере: $E_i(W)=D_i(N(W,X_i))$
-
-Ошибка сети на всей выборке: $E(W)=\sum_{i=1}^{m}E_i(W)$ 
-}
-
-\uncover<+->{$$
-\dd{E}{w_{ij}}=\dd{\sum_{i=1}^{m}E_i(W)}{w_{ij}}=\sum_{i=1}^{m}\dd{E_i}{w_{ij}}
-$$}
-\uncover<+->{$$
-\nabla E = \sum_{i=1}^{m} \nabla E_i
-$$}
-\end{frame}
 \end{document}
-
-
-
-\end{frame}
-
-

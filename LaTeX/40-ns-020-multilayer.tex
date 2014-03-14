@@ -144,7 +144,7 @@ $$\\[1cm]
  $D(Y,A) =\sum_{j=1}^{m} (Y[j]-A[j])^2$ & функция ошибки\\[0.1cm]
  $D_i(Y)=D(Y,A_i) $ & функция ошибки на $i$-ом примере \\[0.1cm]
   $E_i(W)=D_i(N(W,X_i))$ & ошибка сети на $i$-ом примере\\[0.1cm]
-  $E(W)=\sum_{i=1}^{m}E_i(W) $ & ошибка сети на всей обучающей выборке \\[0.1cm]      
+  $E(W)=\sum_{i=1}^{k}E_i(W) $ & ошибка сети на всей обучающей выборке \\[0.1cm]      
  \end{tabular}
 {\bf Найти:}
 
@@ -163,7 +163,7 @@ $$\\[1cm]
  \item $i:=1$
  \item $x_{i+1}=x_i-\varepsilon f'(x_i)$
  \item $i++$
- \item ${\rm if}\ \ f(x_{i+1})-f(x_i) >c\ \ {\rm goto}\ 3$
+ \item ${\rm if}\ \ f(x_{i})-f(x_{i+1}) >c\ \ {\rm goto}\ 3$
 \end{enumerate}
 \end{frame}
 
@@ -173,10 +173,61 @@ $$\\[1cm]
  \item $i:=1$
  \item $W_{i+1}=W_i-\varepsilon \nabla f(W_i)$
  \item $i++$
- \item ${\rm if}\ \ f(W_{i+1})-f(W_i)>c\ \ {\rm goto}\ 3$
+ \item ${\rm if}\ \ f(W_{i})-f(W_{i+1})>c\ \ {\rm goto}\ 3$
 \end{enumerate}
 \end{frame}
 
 
+\begin{frame}\frametitle{Онлайн и оффлайн обучение}
+\uncover<+->{
+Ошибка сети на $i$-м примере: $E_i(W)=D_i(N(W,X_i))$
+
+Ошибка сети на всей выборке: $E(W)=\sum_{i=1}^{m}E_i(W)$ 
+}
+
+\uncover<+->{$$
+\dd{E}{w_{ij}}=\dd{\sum_{i=1}^{m}E_i(W)}{w_{ij}}=\sum_{i=1}^{m}\dd{E_i}{w_{ij}}
+$$}
+\uncover<+->{$$
+\nabla E = \sum_{i=1}^{m} \nabla E_i
+$$}
 \end{frame}
+
+\begin{frame}\frametitle{Ускорение обучения}
+
+\begin{itemize}
+\item<+-> Правильный выбор коэффициента
+$$
+W_{i+1}=W_i-\varepsilon \nabla f(W_i)
+$$
+
+(начать с $\varepsilon=1$)
+
+\item<+-> Повторение алгоритма градиентного спуска на каждом примере (3-5 раз)
+
+\item<+-> Правило момента
+
+$$
+\Delta{i} = W_{i}-W_{i-1}
+$$
+$$
+W_{i+1} = W_i-\varepsilon \nabla f(W_i)+\alpha\Delta_i, \ \ \ 
+\alpha\approx 0.1
+$$
+\item<+-> Стимуляция нейронов
+
+$$
+W_{i+1} = (1-\gamma)W_i-\varepsilon \nabla f(W_i)+\alpha\Delta_i,\ \ \ 
+\gamma \approx 10^{-4}
+$$
+
+\item<+-> Адаптивный выбор $\varepsilon$?
+
+\item<+-> Сопряженные градиенты, обучение на гессиане??
+\end{itemize}
+
+
+\end{frame}
+
+
 \end{document}
