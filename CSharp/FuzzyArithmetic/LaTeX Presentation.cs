@@ -26,7 +26,7 @@ namespace FuzzyArithmetic
             {
                 file.WriteLine("# N mu");
                 foreach(var e in num.Domain.Arguments)
-                    if (num[e] > 0.01)
+                    if (Math.Abs(num[e]) > 0.01)
                         file.WriteLine("{0}\t{1}", DTS(e), DTS(num[e]));
             }
             using (var file = new StreamWriter(@"..\..\..\..\LaTeX\Plots\" + Name + ".value.txt"))
@@ -119,6 +119,11 @@ namespace FuzzyArithmetic
 
             SavePlot("F_direct", ((domain.Near(2)+domain.Near(3))/domain.Near(3)));
             SavePlot("F_ext", FuzzyNumber.BinaryOperation(domain.Near(2), domain.Near(3), (a, b) => (a + b) / b));
+
+            domain = new Domain(-5, 5);
+            var tanh = domain.CreateEmpty();
+            foreach (var e in domain.Arguments) tanh[e] = Math.Tanh(e);
+            SavePlot("Tanh", tanh);
       }
     }
 }

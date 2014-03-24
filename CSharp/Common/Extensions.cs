@@ -10,15 +10,20 @@ namespace Common
     public static class Extensions
     {
         public static void ForEachWeight(this Network network, Func<double, double> modifier)
-        {     
+        {
             foreach (var l in network.Layers)
-                foreach (var n in l.Neurons)
-                {
-                    if (n is ActivationNeuron)
-                        (n as ActivationNeuron).Threshold = modifier((n as ActivationNeuron).Threshold);
-                    for (int i = 0; i < n.Weights.Length; i++)
-                        n.Weights[i] = modifier(n.Weights[i]);
-                }
+                l.ForEachWeight(modifier);
+        }
+
+        public static void ForEachWeight(this Layer layer, Func<double, double> modifier)
+        {
+            foreach (var n in layer.Neurons)
+            {
+                if (n is ActivationNeuron)
+                    (n as ActivationNeuron).Threshold = modifier((n as ActivationNeuron).Threshold);
+                for (int i = 0; i < n.Weights.Length; i++)
+                    n.Weights[i] = modifier(n.Weights[i]);
+            }
         }
 
         public static double[] GetWeightsVector(this Network network)

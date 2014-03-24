@@ -22,5 +22,15 @@
  параметры $P$ такие, что $\sum_{i=1}^{k} (F(P,X_i)-A_i)^2 \rightarrow \min$
 \end{frame}
 
+\begin{frame}\frametitle{Функция Tanh}
+\begin{tikzpicture}[x=1cm,y=2cm]
+\draw[->,thick] (-5,0) -- (5,0) node[below] {$x$};
+\draw[->,thick] (0,-1.2) -- (0,1.2) node[left] {$tanh(x)$};
+\draw[thin] (1,0) node[below]{1} -- (1,0.78);
+\draw[thin] (2,0) node[below]{2} -- (2,0.95);
+\draw[red, ultra thick] plot file {Plots/Tanh.txt};
+
+\end{tikzpicture}
+\end{frame}
 
 \end{document}

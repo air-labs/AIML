@@ -39,7 +39,9 @@ namespace FunctionRegression
                 Sizes[0],
                 Sizes.Skip(1).ToArray()
                 );
-            network.ForEachWeight(z => rnd.NextDouble() * 2 - 1);
+            network.Layers[0].ForEachWeight(z => rnd.NextDouble() * 2 - 1);
+            network.Layers[1].ForEachWeight(z => 0.1*(rnd.NextDouble() * 2 - 1));
+            network.Layers[0].ForEachWeight(z => 0.1*(rnd.NextDouble() * 2 - 1));
 
 
 
@@ -63,8 +65,7 @@ namespace FunctionRegression
                             Errors.Enqueue(e);
                     }
 
-                    if (iterationCount<20000)
-                        network.ForEachWeight(z => z * 0.9999);
+            
 
                 }
                 watch.Stop();
@@ -72,7 +73,7 @@ namespace FunctionRegression
                 Outputs = Inputs
                             .Select(z => network.Compute(z)[0])
                            .ToArray();
-                 form.BeginInvoke(new Action(UpdateCharts));
+                     form.BeginInvoke(new Action(UpdateCharts));
             }
         }
 
