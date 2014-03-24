@@ -10,17 +10,19 @@ namespace Common
 {
     public class HistoryChart : Chart
     {
-        List<double> data = new List<double>();
-        int beginning;
+        public int DotsCount = 200;
+        public List<double> values = new List<double>();
+        public Queue<double> temp = new Queue<double>();
+        public double Max = 1;
         ChartArea area;
-        public Series DataFunction { get; private set; }
-        Series supportingSerie;
-        public int HistoryLength { get; set; }
+        public Series DataFunction;
+        int averageCount = 1;
+
         public HistoryChart()
         {
             area = new ChartArea()
             {
-
+                AxisY = { Minimum = 0 }
             };
             ChartAreas.Add(area);
             DataFunction = new Series
@@ -28,31 +30,34 @@ namespace Common
                 ChartType = SeriesChartType.FastLine
             };
             Series.Add(DataFunction);
-            supportingSerie = new Series { Color = Color.Transparent };
-            Series.Add(supportingSerie);
         }
 
         public void AddRange(IEnumerable<double> range)
         {
-            data.AddRange(range);
-            int adjustment = data.Count - HistoryLength;
-            if (adjustment > 0)
+            foreach (var e in range) temp.Enqueue(e);
+
+            while (temp.Count > averageCount)
             {
-                data.RemoveRange(0, adjustment);
-                beginning += adjustment;
-                area.AxisX.Minimum = beginning;
-                area.AxisX.Maximum = beginning + HistoryLength;
+                double sum = 0;
+                for (int i = 0; i < averageCount; i++) sum += temp.Dequeue();
+                sum /= averageCount;
+                values.Add(sum);
+                if (values.Count >= DotsCount)
+                {
+                    for (int j = 0; j < values.Count - 1; j++)
+                    {
+                        values[j] = (values[j] + values[j + 1]) / 2;
+                        values.RemoveAt(j + 1);
+                    }
+
+                    area.AxisX.Maximum = 2*DotsCount * averageCount;
+                    averageCount *= 2;
+                }
             }
 
             DataFunction.Points.Clear();
-            for (int i = 0; i < data.Count; i++)
-                DataFunction.Points.Add(new DataPoint(i + beginning, data[i]));
-            supportingSerie.Points.Clear();
-            if (data.Count>0)
-                supportingSerie.Points.Add(new DataPoint(HistoryLength+beginning, data[0]));
-            
-
+            for (int i = 0; i < values.Count; i++)
+                DataFunction.Points.Add(new DataPoint(averageCount*i, Math.Min(values[i],1)));
         }
-
     }
 }

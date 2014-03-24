@@ -11,13 +11,13 @@ using AForge.Neuro;
 using AForge.Neuro.Learning;
 using Common;
 
-namespace FunctionRegression.V2
+namespace FunctionRegression.V5
 {
     static partial class FunctionRegression
     {
         static Range LearningRange = new Range(0, 1, 0.025);
         static Func<double, double> Function = z => ((z * 10) * Math.Sin(z * 10)) / 10;
-        static int[] Sizes = new int[] { 1, 5, 5, 1 };
+        static int[] Sizes = new int[] { 1, 20, 20, 1 };
 
 
         static double[][] Inputs;
@@ -47,21 +47,32 @@ namespace FunctionRegression.V2
             teacher.LearningRate = 1;
             teacher.Momentum = 0.1;
 
+            int iterationCount = 0;
             while (true)
             {
                 var watch = new Stopwatch();
                 watch.Start();
                 while (watch.ElapsedMilliseconds < 200)
                 {
-                    Errors.Enqueue(teacher.RunEpoch(Inputs, Answers));
-                    network.ForEachWeight(z => z * (1 - 3e-5));
+                    iterationCount++;
+                    var sample = rnd.Next(Inputs.Length);
+                    for (int i = 0; i < 10; i++)
+                    {
+                        var e = teacher.Run(Inputs[sample], Answers[sample]); ;
+                        if (i == 0)
+                            Errors.Enqueue(e);
+                    }
+
+                    if (iterationCount<20000)
+                        network.ForEachWeight(z => z * 0.9999);
+
                 }
                 watch.Stop();
 
                 Outputs = Inputs
                             .Select(z => network.Compute(z)[0])
-                            .ToArray();
-              //   form.BeginInvoke(new Action(UpdateCharts));
+                           .ToArray();
+            //     form.BeginInvoke(new Action(UpdateCharts));
             }
         }
 

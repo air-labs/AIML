@@ -47,15 +47,13 @@ namespace FunctionRegression.V4
             teacher.LearningRate = 1;
             teacher.Momentum = 0.1;
 
-            int iterationCount = 0;
             while (true)
             {
                 var watch = new Stopwatch();
                 watch.Start();
                 while (watch.ElapsedMilliseconds < 200)
                 {
-                    iterationCount++;
-                    var sample = rnd.Next(Inputs.Length);
+                   var sample = rnd.Next(Inputs.Length);
                     for (int i = 0; i < 10; i++)
                     {
                         var e = teacher.Run(Inputs[sample], Answers[sample]); ;
@@ -63,9 +61,7 @@ namespace FunctionRegression.V4
                             Errors.Enqueue(e);
                     }
 
-                    if (iterationCount<20000)
-                        network.ForEachWeight(z => z * 0.9999);
-
+               
                 }
                 watch.Stop();
 

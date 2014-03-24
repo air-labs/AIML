@@ -153,7 +153,6 @@ namespace SymbolRecognition
             success = new HistoryChart
             {
                 DataFunction = { Color = Color.Blue },
-                HistoryLength = 100,
                 Dock = DockStyle.Right,
                 Size = new Size(400, 400)
             };

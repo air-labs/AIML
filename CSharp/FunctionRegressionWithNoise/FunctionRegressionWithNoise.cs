@@ -123,7 +123,6 @@ namespace FunctionRegression
 
             history = new HistoryChart
                     {
-                        HistoryLength = 1000,
                         DataFunction =
                         {
                             Color = Color.Blue

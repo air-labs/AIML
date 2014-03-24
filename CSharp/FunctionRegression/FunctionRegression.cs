@@ -17,7 +17,7 @@ namespace FunctionRegression
     {
         static Range LearningRange = new Range(0, 1, 0.025);
         static Func<double, double> Function = z => ((z * 10) * Math.Sin(z * 10)) / 10;
-        static int[] Sizes = new int[] { 1, 20, 20, 1 };
+        static int[] Sizes = new int[] { 1, 10, 10, 1 };
 
 
         static double[][] Inputs;
@@ -39,9 +39,7 @@ namespace FunctionRegression
                 Sizes[0],
                 Sizes.Skip(1).ToArray()
                 );
-            network.Layers[0].ForEachWeight(z => rnd.NextDouble() * 2 - 1);
-            network.Layers[1].ForEachWeight(z => 0.1*(rnd.NextDouble() * 2 - 1));
-            network.Layers[0].ForEachWeight(z => 0.1*(rnd.NextDouble() * 2 - 1));
+            network.ForEachWeight(z => rnd.NextDouble() * 2 - 1);
 
 
 
@@ -49,31 +47,28 @@ namespace FunctionRegression
             teacher.LearningRate = 1;
             teacher.Momentum = 0.1;
 
-            int iterationCount = 0;
             while (true)
             {
                 var watch = new Stopwatch();
                 watch.Start();
                 while (watch.ElapsedMilliseconds < 200)
                 {
-                    iterationCount++;
                     var sample = rnd.Next(Inputs.Length);
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i < 3; i++)
                     {
                         var e = teacher.Run(Inputs[sample], Answers[sample]); ;
                         if (i == 0)
                             Errors.Enqueue(e);
                     }
 
-            
-
+                    var vector = network.GetWeightsVector();
                 }
                 watch.Stop();
 
                 Outputs = Inputs
                             .Select(z => network.Compute(z)[0])
-                           .ToArray();
-                     form.BeginInvoke(new Action(UpdateCharts));
+                            .ToArray();
+                 form.BeginInvoke(new Action(UpdateCharts));
             }
         }
 
