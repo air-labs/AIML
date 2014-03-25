@@ -17,7 +17,7 @@ namespace FunctionRegression.V3
     {
         static Range LearningRange = new Range(0, 1, 0.025);
         static Func<double, double> Function = z => ((z * 10) * Math.Sin(z * 10)) / 10;
-        static int[] Sizes = new int[] { 1, 20, 20, 1 };
+        static int[] Sizes = new int[] { 1, 10, 10, 1 };
 
 
         static double[][] Inputs;

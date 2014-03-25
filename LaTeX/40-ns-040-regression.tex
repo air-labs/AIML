@@ -1,4 +1,4 @@
-\documentclass[24pt,pdf,hyperref={unicode}]{beamer}
+\documentclass[24pt,pdf,hyperref={unicode},aspectratio=169]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage{aiml}
 
@@ -10,24 +10,26 @@
 
 \begin{frame}\frametitle{Задача регрессии}
 {\bf Дано:}
-\begin{tabular}{p{4cm} p{6cm}}
+
+\begin{tabular}{p{4cm} p{7cm}}
  $\mathcal{X}=(X_1,\ldots,X_k)$ & экспериментальные условия, $X_i\in\mathbb{R}^n$\\[0.1cm]
  $\mathcal{A}=(A_1,\ldots,A_k)$ & измеренные значения, $A_i\in\mathbb{R}^m$\\[0.1cm]
  $(\mathcal{X},\mathcal{A})$ & экспериментальная база \\[0.1cm]
  $P$ & вектор параметров \\[0.1cm]
  $F(P,X)$ & функция регрессии \\[0.1cm]
- $\sum_{i=1}^{k} (F(P,X_i)-A_i)^2 $ & среднеквадратичное отклонение\\
+ $\sum_{i=1}^{k} ||F(P,X_i)-A_i||^2 $ & среднеквадратичное отклонение\\
  \end{tabular}\\[1cm]
  {\bf Найти:}
- параметры $P$ такие, что $\sum_{i=1}^{k} (F(P,X_i)-A_i)^2 \rightarrow \min$
+ параметры $P$ такие, что $\sum_{i=1}^{k} ||F(P,X_i)-A_i||^2 \rightarrow \min$
 \end{frame}
 
 \begin{frame}\frametitle{Функция Tanh}
 \begin{tikzpicture}[x=1cm,y=2cm]
 \draw[->,thick] (-5,0) -- (5,0) node[below] {$x$};
-\draw[->,thick] (0,-1.2) -- (0,1.2) node[left] {$tanh(x)$};
-\draw[thin] (1,0) node[below]{1} -- (1,0.78);
-\draw[thin] (2,0) node[below]{2} -- (2,0.95);
+\draw[->,thick] (0,-1.2) -- (0,1.4) node[left] {$tanh(x)$};
+\draw[dotted] (0,1) node[left]{1} -- (5,1);
+\draw[dotted] (1,0) node[below]{1} -- (1,0.78);
+\draw[dotted] (2,0) node[below]{2} -- (2,0.95);
 \draw[red, ultra thick] plot file {Plots/Tanh.txt};
 
 \end{tikzpicture}
