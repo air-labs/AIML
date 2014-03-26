@@ -1,0 +1,99 @@
+\documentclass[24pt,pdf,hyperref={unicode}]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{aiml}
+
+\begin{document}
+
+\begin{frame}
+\uncover<+->{$$
+n(x_1,\ldots,x_n)=f\left(\sum_{i=1}^n x_iw_i\right)
+$$}
+\uncover<+->{$$
+n(x_1,x_2)=x_1x_2?
+$$}
+\only<+>{$$
+\begin{tikzpicture}[x=3cm]
+\node[neu] (n) at (0,0) {$f(x)=x$};
+\node (x) at (-1,0) {$x_1$};
+\path (x) edge[->] node[above]{$x_2$} (n);
+\node (y) at (1,0) {$x_1x_2$};
+\path (n) edge[->] (y);
+\end{tikzpicture}
+$$}
+\uncover<+->{$$
+x_1x_2=\exp(\ln x_1 + \ln x_2)
+$$}
+\uncover<+->{$$
+\begin{tikzpicture}[x=1.5cm]
+\node (x1) at (0,1) {$x_1$};
+\node (x2) at (0,-1) {$x_2$};
+\node[neu] (n1) at (1,1) {$\ln$};
+\node[neu] (n2) at (1,-1) {$\ln$};
+\path (x1) edge[->] node[above] {$1$} (n1);
+\path (x2) edge[->] node[above] {$1$} (n2);
+\node[neu] (n3) at (2,0) {$\exp$};
+\path (n1) edge[->] node[above] {$1$} (n3);
+\path (n2) edge[->] node[above] {$1$} (n3);
+\node (y) at (3,0) {$x_1x_2$};
+\path (n3) edge[->] (y);
+\end{tikzpicture}
+$$}
+
+\end{frame}
+
+
+\begin{frame}
+\bio{Hilbert}{David Hilbert}{Mathematische Probleme (1900)}
+\end{frame}
+
+\begin{frame}
+Тринадцатая проблема Гильберта:\\[1cm]
+
+Можно ли решить общее уравнение седьмой степени с помощью функций, зависящих только от двух переменных?
+\end{frame}
+
+\begin{frame}
+\begin{small}
+\doublebio
+{Arnold}{Владимир Игоревич Арнольд}
+{Kolmogorov}{Андрей Николаевич Колмогоров}
+{
+$ $\\[0.2cm]
+
+О представлении непрерывных функций трех переменных суперпозициями непрерывных функций двух переменных (1959)\\[0.2cm]
+
+О представлении непрерывных функций нескольких переменных в виде суперпозиций непрерывных функций одной переменной и сложения (1957)}
+\end{small}
+\end{frame}
+
+\begin{frame}
+
+$$
+f(x_1,\dots,x_n)=\sum_{q=0}^{2 n} \Phi_q \left(\sum_{p=1}^n\psi_{q,p}(x_p)\right)
+$$
+\end{frame}
+
+\begin{frame}\frametitle{Рекуррентные нейронные сети}
+\end{frame}
+
+\begin{frame}
+\doublebio
+{Siegelmann}{Hava Siegelmann}
+{Sontag}{Eduardo Sontag}
+{
+Computation Beyond the Turing Limit (1995)
+}
+\end{frame}
+
+\begin{frame}\frametitle{Проблема останова}
+\begin{itemize}
+\item Не существует программы $P$, которая по тексту программы $X$ и ее входу $Y$ определяла, остановится ли $X$ на $Y$, или не остановится.
+\item Не существует программы $P$, которая по тексту программы $X$ определяет, что она останавливается на любых входных данных.
+\item Существует способ присвоить каждой программе уникальный целочисленный номер.
+\item Пусть $M$ -- множество всех номеров, соответствующих программам, которые всегда останавливаются.
+\item Тогда не существует программы, которая бы по числу $x$ проверяла, что $x\in M$
+\end{itemize}
+\end{frame}
+
+
+\end{document}
