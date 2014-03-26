@@ -57,7 +57,7 @@ namespace FunctionRegression
 
             history = new HistoryChart
                     {
-                       
+                        Max = 0.1,
                         DataFunction =
                         {
                             Color = Color.Blue

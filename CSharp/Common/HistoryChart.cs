@@ -13,7 +13,16 @@ namespace Common
         public int DotsCount = 200;
         public List<double> values = new List<double>();
         public Queue<double> temp = new Queue<double>();
-        public double Max = 1;
+        double max = 1;
+        public double Max
+        {
+            get { return max; }
+            set
+            {
+                area.AxisY.Maximum = value;
+                max = value;
+            }
+        }
         ChartArea area;
         public Series DataFunction;
         int averageCount = 1;
@@ -57,7 +66,7 @@ namespace Common
 
             DataFunction.Points.Clear();
             for (int i = 0; i < values.Count; i++)
-                DataFunction.Points.Add(new DataPoint(averageCount*i, Math.Min(values[i],1)));
+                DataFunction.Points.Add(new DataPoint(averageCount*i, Math.Min(values[i],max*0.9)));
         }
     }
 }
