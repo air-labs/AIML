@@ -8,6 +8,9 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Common
 {
+ 
+
+
     public class HistoryChart : Chart
     {
         public int DotsCount = 200;
@@ -31,7 +34,8 @@ namespace Common
         {
             area = new ChartArea()
             {
-                AxisY = { Minimum = 0 }
+                AxisY = { Minimum = 0 },
+                AxisX = { Minimum = 0 }
             };
             ChartAreas.Add(area);
             DataFunction = new Series

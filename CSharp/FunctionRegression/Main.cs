@@ -12,6 +12,7 @@ namespace FunctionRegression
 {
     static partial class FunctionRegression
     {
+        static RegressionTaskV0 task = new RegressionTaskV2A();
 
         static Form form;
         static Series computedFunction;
@@ -21,23 +22,18 @@ namespace FunctionRegression
         static void UpdateCharts()
         {
             computedFunction.Points.Clear();
-            for (int i = 0; i < Inputs.Length; i++)
-                computedFunction.Points.Add(new DataPoint(Inputs[i][0], Outputs[i]));
+            for (int i = 0; i < task.Inputs.Length; i++)
+                computedFunction.Points.Add(new DataPoint(task.Inputs[i][0], task.Outputs[i]));
 
-            history.AddRange(Errors);
+            history.AddRange(task.Errors);
             double error;
-            while (Errors.TryDequeue(out error)) ;
+            while (task.Errors.TryDequeue(out error)) ;
         }
 
         [STAThread]
         static void Main()
         {
-            Inputs = LearningRange.GenerateSamples();
-            Answers = Inputs
-                        .Select(z => z[0])
-                        .Select(Function)
-                        .Select(z => new[] { z })
-                        .ToArray();
+            task.Prepare();            
 
             var targetFunction = new Series()
             {
@@ -45,8 +41,8 @@ namespace FunctionRegression
                 Color = Color.Red,
                 BorderWidth = 2
             };
-            for (int i = 0; i < Inputs.Length; i++)
-                targetFunction.Points.Add(new DataPoint(Inputs[i][0], Answers[i][0]));
+            for (int i = 0; i < task.Inputs.Length; i++)
+                targetFunction.Points.Add(new DataPoint(task.Inputs[i][0], task.Answers[i][0]));
 
             computedFunction = new Series()
             {
@@ -57,7 +53,7 @@ namespace FunctionRegression
 
             history = new HistoryChart
                     {
-                        Max = 0.1,
+                        Max = task.MaxError,
                         DataFunction =
                         {
                             Color = Color.Blue
@@ -67,7 +63,7 @@ namespace FunctionRegression
 
             form = new Form()
             {
-                Text = "Function regression",
+                Text = task.GetType().Name,
                 Size = new Size(800, 600),
                 FormBorderStyle = FormBorderStyle.FixedDialog,
                 Controls =
@@ -80,13 +76,13 @@ namespace FunctionRegression
                             {
                                 AxisX=
                                 {
-                                    Minimum = LearningRange.Minimum,
-                                    Maximum = LearningRange.Maximum
+                                    Minimum = task.Inputs.Min(z=>z[0]),
+                                    Maximum = task.Inputs.Max(z=>z[0])
                                 },
                                 AxisY=
                                 {
-                                    Minimum = Math.Min(-1.5,Answers.Min(z=>z[0])),
-                                    Maximum = Math.Max(1.5, Answers.Max(z=>z[0]))
+                                    Minimum = Math.Min(-1.5,task.Answers.Min(z=>z[0])),
+                                    Maximum = Math.Max(1.5, task.Answers.Max(z=>z[0]))
                                 }
                             }
                         },
@@ -97,8 +93,8 @@ namespace FunctionRegression
                 }
             };
 
-            new Action(Learning).BeginInvoke(null, null);
-
+            task.UpdateCharts += (s, a) => form.BeginInvoke(new Action(UpdateCharts));
+            new Action(task.Learn).BeginInvoke(null, null);
             Application.Run(form);
         }
     }

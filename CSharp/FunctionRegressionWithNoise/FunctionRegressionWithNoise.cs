@@ -15,36 +15,57 @@ namespace FunctionRegression
 {
     static class FunctionRegression
     {
-        static Range LearningRange = new Range(0, 1, 0.1);
-        static Range ControlRange = new Range(0, 1, 0.01);
-        static Func<double, double> Function = z =>  -(z-0.5)*(z-0.5)+0.25;
-        static int[] Sizes = new int[] { 1, 30, 30, 1 };
-        static double Noise=0.4;
+        static Range LearningRange = new Range(-1, 1, 0.25);
+        static Range FunctionRange = new Range(-1, 1, 0.01);
+
+
+        static Func<double, double> Function = z => 0.8 * (2 * z * z - 1);
+        static int[] Sizes = new int[] { 1, 5, 5, 1 };
+        static double Noise=0.5;
 
         static double[][] LearningInputs;
-        static double[][] ControlInputs;
-        static double[] Outputs;
-        static double[][] Answers;
-        static ConcurrentQueue<double> Errors = new ConcurrentQueue<double>();
+        static double[][] LearningAnswers;
+        static double[][] FunctionInputs;
+        static double[] FunctionOutputs;
 
-
+  
+        static ConcurrentQueue<double> LearningErrors = new ConcurrentQueue<double>();
+        
         static BackPropagationLearning teacher;
         static ActivationNetwork network;
         static Random rnd = new Random(1);
 
+        #region Контрольная выборка
+        static Range ControlRange = new Range(0.5, 9.5, 0.1);
+        static double[][] ControlInputs;
+        static double[][] ControlAnswers;
+        static ConcurrentQueue<double> ControlErrors = new ConcurrentQueue<double>();
+        #endregion
+
+        static double GetError(double[][] inputs, double[][] answers)
+        {
+            double sum = 0;
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                var output = network.Compute(inputs[i]);
+                sum += Math.Abs(answers[i][0] - output[0]);
+            }
+            return sum / inputs.Length;
+        }
+
         static void Learning()
         {
-
-
             network = new ActivationNetwork(
-                new SigmoidFunction(),
+                new Tanh(0.1),
                 Sizes[0],
                 Sizes.Skip(1).ToArray()
                 );
-            network.ForEachWeight(z => rnd.NextDouble() * 2 - 1);
+
+            foreach (var layer in network.Layers)
+                layer.ForEachWeight(z => (rnd.NextDouble() * 2 - 1) / layer.InputsCount);
 
             teacher = new BackPropagationLearning(network);
-            teacher.LearningRate = 2;
+            teacher.LearningRate = 1;
             teacher.Momentum = 0.1;
 
             while(true)
@@ -53,11 +74,19 @@ namespace FunctionRegression
                 watch.Start();
                 while(watch.ElapsedMilliseconds<200)
                 {
-                    Errors.Enqueue(teacher.RunEpoch(LearningInputs, Answers));
+                    //LearningErrors.Enqueue(GetError(LearningInputs,LearningAnswers));
+                    //ControlErrors.Enqueue(GetError(ControlInputs, ControlAnswers));
+
+                    var sample = rnd.Next(LearningInputs.Length);
+                    for (int i = 0; i < 3; i++)
+                        teacher.Run(LearningInputs[sample], LearningAnswers[sample]);
+                    
+
                 }
+                
                 watch.Stop();
 
-                Outputs = ControlInputs
+                FunctionOutputs = FunctionInputs
                             .Select(z => network.Compute(z)[0])
                             .ToArray();
                 form.BeginInvoke(new Action(UpdateCharts));
@@ -72,12 +101,13 @@ namespace FunctionRegression
         static void UpdateCharts()
         {
             computedFunction.Points.Clear();
-            for (int i = 0; i < ControlInputs.Length; i++)
-               computedFunction.Points.Add(new DataPoint(ControlInputs[i][0], Outputs[i]));
+            for (int i = 0; i < FunctionInputs.Length; i++)
+               computedFunction.Points.Add(new DataPoint(FunctionInputs[i][0], FunctionOutputs[i]));
        
-            history.AddRange(Errors);
+            history.AddRange(LearningErrors);
+
             double error;
-            while (Errors.TryDequeue(out error));
+            while (LearningErrors.TryDequeue(out error));
         }
 
 
@@ -85,9 +115,16 @@ namespace FunctionRegression
         static void Main()
         {
             LearningInputs = LearningRange.GenerateSamples();
-            Answers = LearningInputs
+            LearningAnswers = LearningInputs
                         .Select(z => z[0])
                         .Select(z=>Function(z)*(1+rnd.NextDouble()*Noise-Noise/2))
+                        .Select(z => new[] { z })
+                        .ToArray();
+
+            ControlInputs = ControlRange.GenerateSamples();
+            ControlAnswers = ControlInputs
+                        .Select(z => z[0])
+                        .Select(z => Function(z) * (1 + rnd.NextDouble() * Noise - Noise / 2))
                         .Select(z => new[] { z })
                         .ToArray();
 
@@ -98,9 +135,17 @@ namespace FunctionRegression
                 MarkerSize=5
             };
             for (int i = 0; i < LearningInputs.Length; i++)
-                learningPoints.Points.Add(new DataPoint(LearningInputs[i][0], Answers[i][0]));
+                learningPoints.Points.Add(new DataPoint(LearningInputs[i][0], LearningAnswers[i][0]));
 
-            ControlInputs = ControlRange.GenerateSamples();
+            var controlPoints = new Series()
+            {
+                ChartType = SeriesChartType.Point,
+                Color = Color.Blue,
+                MarkerSize = 5
+            };
+
+
+            FunctionInputs = FunctionRange.GenerateSamples();
 
 
             var targetFunction = new Series()
@@ -109,8 +154,8 @@ namespace FunctionRegression
                 Color = Color.Orange,
                 BorderWidth = 2
             };
-            for (int i = 0; i < ControlInputs.Length; i++)
-                targetFunction.Points.Add(new DataPoint(ControlInputs[i][0], Function(ControlInputs[i][0])));
+            for (int i = 0; i < FunctionInputs.Length; i++)
+                targetFunction.Points.Add(new DataPoint(FunctionInputs[i][0], Function(FunctionInputs[i][0])));
 
 
 
@@ -139,7 +184,10 @@ namespace FunctionRegression
                 {
                     new Chart
                     {
-                        ChartAreas = { new ChartArea() },
+                        ChartAreas = { new ChartArea()
+                        {
+                            AxisY = {Maximum=1, Minimum=-1 }
+                        }},
                         Series = { learningPoints, targetFunction, computedFunction },
                         Dock= DockStyle.Top
                     },
