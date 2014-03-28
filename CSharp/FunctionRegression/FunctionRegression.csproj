@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RegressionTask.V2B.cs" />
     <Compile Include="RegressionTask.V7.cs" />
     <Compile Include="RegressionTask.V8.cs" />
     <Compile Include="RegressionTask.V6.cs" />

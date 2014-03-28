@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FunctionRegression
 {
-    public class RegressionTaskV7 : RegressionTaskV5
+    public class RegressionTaskV7 : RegressionTaskV6
     {
 
         protected override void LearningIteration()
