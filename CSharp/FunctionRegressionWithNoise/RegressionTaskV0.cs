@@ -15,13 +15,13 @@ namespace FunctionRegressionWithNoise
 {
     class RegressionTaskV0
     {
-        Func<double, double> Function = z => z;
+        public Func<double, double> Function = z => z*z*z*Math.Sin(10*z);
 
-        public int IterationsCount = 32000;
+        public int IterationsCount = 30000;
 
-        protected int[] Sizes = new int[] { 1, 30, 30, 1 };
+        protected int[] Sizes = new int[] { 1, 20,20, 1 };
 
-        Range LearningRange = new Range(-1, 1, 0.1);
+        Range LearningRange = new Range(0, 1, 0.1);
         public double[][] LearningInputs;
         public double[][] LearningAnswers;
         public ConcurrentQueue<double> LearningErrors = new ConcurrentQueue<double>();
@@ -33,13 +33,14 @@ namespace FunctionRegressionWithNoise
         public Form Form;
         protected Chart AreaChart;
         protected HistoryChart HistoryChart;
-        Series computedFunction;
+        protected Series computedFunction;
 
         public virtual void Prepare()
         {
             PrepareData();
+            PrepareCharts();
 
-            network = new ActivationNetwork(new Tanh(0.1), 
+            network = new ActivationNetwork(new Tanh(0.3), 
                 Sizes[0],
                 Sizes.Skip(1).ToArray());
 
@@ -48,7 +49,7 @@ namespace FunctionRegressionWithNoise
             teacher = new BackPropagationLearning(network);
             teacher.LearningRate = 1;
 
-            PrepareCharts();
+         
 
             Form = new Form()
             {
@@ -81,12 +82,12 @@ namespace FunctionRegressionWithNoise
             {
                 ChartType = SeriesChartType.Point,
                 Color = Color.Red,
-                MarkerSize = 5
+                MarkerSize = 10
             };
             for (int i = 0; i < LearningInputs.Length; i++)
                 learningPoints.Points.Add(new DataPoint(LearningInputs[i][0], LearningAnswers[i][0]));
 
-            computedFunction = new Series() { MarkerSize = 5, Color = Color.Green, ChartType = SeriesChartType.Point };
+            computedFunction = new Series() { MarkerSize = 10, Color = Color.Green, ChartType = SeriesChartType.Point };
 
             AreaChart = new Chart
             {
@@ -102,8 +103,9 @@ namespace FunctionRegressionWithNoise
             {
                 Lines = 
                 {
-                    new HistoryChartValueLine { DataFunction = { Color = Color.Blue }}
-                }
+                    new HistoryChartValueLine { DataFunction = { Color = Color.Blue }},
+                },
+                Dock = DockStyle.Bottom
             };
         }
 
@@ -127,9 +129,12 @@ namespace FunctionRegressionWithNoise
                 }
                 watch.Stop();
                 Form.BeginInvoke(new Action(UpdateCharts));
+                if (counter > IterationsCount) break;
 
             }
         }
+
+        
 
         protected virtual void UpdateCharts()
         {
