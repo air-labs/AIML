@@ -8,14 +8,74 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Common
 {
- 
+
+
+    public class HistoryChartValueLine
+    {
+        public int DotsCount = 200;
+        public int AverageCount { get; private set; }
+        public int ShrinkCount { get; private set; }
+        List<double> values = new List<double>();
+        Queue<double> temp = new Queue<double>();
+
+        public HistoryChartValueLine()
+        {
+            DotsCount = 200;
+            AverageCount = 1;
+            ShrinkCount = 0;
+            DataFunction = new Series();
+        }
+
+        public void Shrink()
+        {
+            for (int j = 0; j < values.Count - 1; j++)
+            {
+                values[j] = (values[j] + values[j + 1]) / 2;
+                values.RemoveAt(j + 1);
+            }
+
+            AverageCount *= 2;
+            ShrinkCount++;
+        }
+
+        public void Take(IEnumerable<double> data)
+        {
+            foreach (var e in data) temp.Enqueue(e);
+        }
+
+        public int GetTotalShrinksAfterPull()
+        {
+            var totalPoints = (temp.Count / AverageCount) + values.Count;
+            int result = 0;
+            while (totalPoints > DotsCount) { totalPoints /= 2; result++; }
+            return result + ShrinkCount;
+        }
+
+        public void Pull(double maximum)
+        {
+            while (temp.Count > AverageCount)
+            {
+                double sum = 0;
+                for (int i = 0; i < AverageCount; i++) sum += temp.Dequeue();
+                sum /= AverageCount;
+                values.Add(sum);
+            }
+
+            DataFunction.Points.Clear();
+            for (int i = 0; i < values.Count; i++)
+                DataFunction.Points.Add(new DataPoint(AverageCount * i, Math.Min(values[i], maximum * 0.9)));
+
+        }
+
+        public Series DataFunction { get; set; }
+
+    }
 
 
     public class HistoryChart : Chart
     {
         public int DotsCount = 200;
-        public List<double> values = new List<double>();
-        public Queue<double> temp = new Queue<double>();
+        public List<HistoryChartValueLine> Lines { get; private set; }
         double max = 1;
         public double Max
         {
@@ -27,50 +87,41 @@ namespace Common
             }
         }
         ChartArea area;
-        public Series DataFunction;
         int averageCount = 1;
+        bool initialized = false;
 
         public HistoryChart()
         {
+            Lines = new List<HistoryChartValueLine>();
             area = new ChartArea()
             {
                 AxisY = { Minimum = 0 },
                 AxisX = { Minimum = 0 }
             };
             ChartAreas.Add(area);
-            DataFunction = new Series
-            {
-                ChartType = SeriesChartType.FastLine
-            };
-            Series.Add(DataFunction);
         }
 
-        public void AddRange(IEnumerable<double> range)
+        public void AddRange(params IEnumerable<double>[] ranges)
         {
-            foreach (var e in range) temp.Enqueue(e);
-
-            while (temp.Count > averageCount)
+            if (!initialized)
             {
-                double sum = 0;
-                for (int i = 0; i < averageCount; i++) sum += temp.Dequeue();
-                sum /= averageCount;
-                values.Add(sum);
-                if (values.Count >= DotsCount)
+                foreach (var s in Lines)
                 {
-                    for (int j = 0; j < values.Count - 1; j++)
-                    {
-                        values[j] = (values[j] + values[j + 1]) / 2;
-                        values.RemoveAt(j + 1);
-                    }
-
-                    area.AxisX.Maximum = 2*DotsCount * averageCount;
-                    averageCount *= 2;
+                    Series.Add(s.DataFunction);
+                    s.DotsCount = DotsCount;
                 }
+                initialized = true;
             }
 
-            DataFunction.Points.Clear();
-            for (int i = 0; i < values.Count; i++)
-                DataFunction.Points.Add(new DataPoint(averageCount*i, Math.Min(values[i],max*0.9)));
+            if (Lines.Count != ranges.Length) throw new Exception();
+            for (int i = 0; i < ranges.Length; i++)
+                Lines[i].Take(ranges[i]);
+            var maxShrink = Lines.Select(z => z.GetTotalShrinksAfterPull()).Max();
+            for (int i = 0; i < Lines.Count; i++)
+            {
+                while (Lines[i].ShrinkCount < maxShrink) Lines[i].Shrink();
+                Lines[i].Pull(max);
+            }
         }
     }
 }

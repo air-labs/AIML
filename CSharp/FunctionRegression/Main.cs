@@ -54,9 +54,13 @@ namespace FunctionRegression
             history = new HistoryChart
                     {
                         Max = task.MaxError,
-                        DataFunction =
+                        DotsCount=200,
+                        Lines =
                         {
-                            Color = Color.Blue
+                            new HistoryChartValueLine
+                            {
+                                DataFunction = { Color = Color.Blue }
+                            }
                         },
                         Dock = DockStyle.Bottom
                     };
