@@ -23,7 +23,10 @@ namespace Common
             DotsCount = 200;
             AverageCount = 1;
             ShrinkCount = 0;
-            DataFunction = new Series();
+            DataFunction = new Series()
+            {
+                ChartType = SeriesChartType.FastLine
+            };
         }
 
         public void Shrink()
@@ -122,6 +125,7 @@ namespace Common
                 while (Lines[i].ShrinkCount < maxShrink) Lines[i].Shrink();
                 Lines[i].Pull(max);
             }
+            area.AxisX.Maximum = Math.Pow(2,maxShrink)*DotsCount;
         }
     }
 }

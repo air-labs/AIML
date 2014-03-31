@@ -12,7 +12,7 @@ namespace FunctionRegression
 {
     static partial class FunctionRegression
     {
-        static RegressionTaskV0 task = new RegressionTaskV8();
+        static RegressionTaskV0 task = new RegressionTaskV1();
 
         static Form form;
         static Series computedFunction;
