@@ -13,14 +13,17 @@ using Common;
 
 namespace FunctionRegressionWithNoise
 {
-    class RegressionTaskV5 : RegressionTaskV4
+    class RegressionTaskV5 : RegressionTaskV3
     {
-        public RegressionTaskV5()
+
+
+        protected override void LearningIteration()
         {
-            Sizes = new int[] { 1, 10, 10, 1 };
-            IterationsCount = 100000;
+            network.ForEachWeight(z => 0.9995 * z);
+            teacher.RunEpoch(LearningInputs, LearningAnswers);
+           
         }
 
-        
+
     }
 }

@@ -16,12 +16,15 @@ namespace FunctionRegressionWithNoise
     class RegressionTaskV6 : RegressionTaskV5
     {
 
-
-        protected override void LearningIteration()
+        public RegressionTaskV6()
         {
-            network.ForEachWeight(z => 0.9995 * z);
-            teacher.RunEpoch(LearningInputs, LearningAnswers);
-           
+            LearningRange = new Range(-1, 1, 0.01);
+        }
+
+        protected override void PrepareCharts()
+        {
+            base.PrepareCharts();
+            computedFunction.BorderWidth = 5;
         }
 
 

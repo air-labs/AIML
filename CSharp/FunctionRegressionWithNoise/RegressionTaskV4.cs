@@ -17,7 +17,7 @@ namespace FunctionRegressionWithNoise
     {
         public RegressionTaskV4()
         {
-            Sizes = new int[] { 1, 10, 10, 1 };
+            Sizes = new int[] { 1, 3, 1 };
             IterationsCount = 100000;
         }
 

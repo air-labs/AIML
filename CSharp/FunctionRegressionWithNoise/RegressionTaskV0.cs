@@ -22,7 +22,7 @@ namespace FunctionRegressionWithNoise
 
         protected int[] Sizes = new int[] { 1, 5, 5,  1 };
 
-        Range LearningRange = new Range(-1, 1, 0.1);
+        protected Range LearningRange = new Range(-1, 1, 0.1);
         public double[][] LearningInputs;
         public double[][] LearningAnswers;
         public double[] LearningOutputs;

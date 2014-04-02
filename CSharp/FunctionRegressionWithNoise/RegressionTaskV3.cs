@@ -15,7 +15,6 @@ namespace FunctionRegressionWithNoise
 {
     class RegressionTaskV3 : RegressionTaskV2
     {
-        double NoiseLevel=0.3;
 
         double[][] ControlInputs;
         double[][] ControlAnswers;
@@ -62,7 +61,8 @@ namespace FunctionRegressionWithNoise
                 controlPoints.Points.Add(new DataPoint(ControlInputs[i][0], ControlAnswers[i][0]));
             }
             AreaChart.Series.Add(controlPoints);
-            HistoryChart.Lines.Add(new HistoryChartValueLine { DataFunction = { Color = Color.Red } });
+            HistoryChart.Lines[0].DataFunction.Color = Color.Red;
+            HistoryChart.Lines.Add(new HistoryChartValueLine { DataFunction = { Color = Color.Blue} });
         }
 
 
