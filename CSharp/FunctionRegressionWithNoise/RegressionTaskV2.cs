@@ -17,6 +17,22 @@ namespace FunctionRegressionWithNoise
     {
         double NoiseLevel=0.3;
 
+        public RegressionTaskV2()
+        {
+            IterationsCount = 327000;
+        }
+
+
+        protected double[][] CreateRandomizedAnswers(double[][] inputs)
+        {
+            return inputs
+                .Select(z => z[0])
+                .Select(Function)
+                .Select(Randomizator)
+                .Select(z => new double[] { z })
+                .ToArray();
+        }
+
         protected double Randomizator(double x)
         {
             var value = x + (rnd.NextDouble() * NoiseLevel - NoiseLevel / 2);
@@ -30,12 +46,7 @@ namespace FunctionRegressionWithNoise
         {
             base.PrepareData();
 
-            LearningAnswers = LearningInputs
-                .Select(z => z[0])
-                .Select(Function)
-                .Select(Randomizator)
-                .Select(z => new double[] { z })
-                .ToArray();
+            LearningAnswers = CreateRandomizedAnswers(LearningInputs);
         }
 
         

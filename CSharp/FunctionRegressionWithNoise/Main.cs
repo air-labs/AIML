@@ -12,7 +12,7 @@ namespace FunctionRegressionWithNoise
 {
     class Program
     {
-        static RegressionTaskV0 task = new RegressionTaskV3();
+        static RegressionTaskV0 task = new RegressionTaskV6();
 
         [STAThread]
         static void Main()

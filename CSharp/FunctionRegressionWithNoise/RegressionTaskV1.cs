@@ -16,10 +16,10 @@ namespace FunctionRegressionWithNoise
     class RegressionTaskV1 : RegressionTaskV0
     {
        
-        public Range FunctionRange=new Range(0,1,0.01);
+        public Range FunctionRange=new Range(-1,1,0.01);
         public double[][] FunctionInputs;
         public double[] FunctionAnswers;
-        public double[] FunctionOutputs;
+        public double[] FunctionOutput;
 
 
         protected override void PrepareData()
@@ -47,12 +47,17 @@ namespace FunctionRegressionWithNoise
             computedFunction.BorderWidth = 2;
         }
 
+        protected override void LearningEnds()
+        {
+            FunctionOutput = FunctionInputs.Select(z => network.Compute(z)[0]).ToArray();
+        }
+
         protected override void UpdateCharts()
         {
             computedFunction.Points.Clear();
-            foreach (var e in FunctionInputs)
+            for (int i = 0; i < FunctionInputs.Length; i++)
             {
-                computedFunction.Points.Add(new DataPoint(e[0], network.Compute(e)[0]));
+                computedFunction.Points.Add(new DataPoint(FunctionInputs[i][0], FunctionOutput[i]));
             }
 
             HistoryChart.AddRange(LearningErrors);

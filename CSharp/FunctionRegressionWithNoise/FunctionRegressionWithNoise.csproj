@@ -57,7 +57,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RegressionTaskV6.cs" />
+    <Compile Include="RegressionTaskV5.cs" />
     <Compile Include="RegressionTaskV3.cs" />
+    <Compile Include="RegressionTaskV4.cs" />
     <Compile Include="RegressionTaskV2.cs" />
     <Compile Include="RegressionTaskV1.cs" />
     <Compile Include="RegressionTaskV0.cs" />

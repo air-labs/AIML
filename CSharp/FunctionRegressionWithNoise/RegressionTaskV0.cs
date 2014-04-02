@@ -15,20 +15,22 @@ namespace FunctionRegressionWithNoise
 {
     class RegressionTaskV0
     {
-        public Func<double, double> Function = z => z*z*z*Math.Sin(10*z);
+        public Func<double, double> Function = z => 1.8*z*z-0.9;
 
         public int IterationsCount = 30000;
+        public double MaxError = 0.5;
 
-        protected int[] Sizes = new int[] { 1, 20,20, 1 };
+        protected int[] Sizes = new int[] { 1, 5, 5,  1 };
 
-        Range LearningRange = new Range(0, 1, 0.1);
+        Range LearningRange = new Range(-1, 1, 0.1);
         public double[][] LearningInputs;
         public double[][] LearningAnswers;
+        public double[] LearningOutputs;
         public ConcurrentQueue<double> LearningErrors = new ConcurrentQueue<double>();
 
         public BackPropagationLearning teacher;
         public ActivationNetwork network;
-        public Random rnd = new Random(1);
+        public Random rnd = new Random(2);
 
         public Form Form;
         protected Chart AreaChart;
@@ -40,7 +42,7 @@ namespace FunctionRegressionWithNoise
             PrepareData();
             PrepareCharts();
 
-            network = new ActivationNetwork(new Tanh(0.3), 
+            network = new ActivationNetwork(new Tanh(0.2), 
                 Sizes[0],
                 Sizes.Skip(1).ToArray());
 
@@ -53,7 +55,7 @@ namespace FunctionRegressionWithNoise
 
             Form = new Form()
             {
-                Text = "Function regression",
+                Text = GetType().Name,
                 Size = new Size(800, 600),
                 FormBorderStyle = FormBorderStyle.FixedDialog,
                 Controls =
@@ -105,7 +107,9 @@ namespace FunctionRegressionWithNoise
                 {
                     new HistoryChartValueLine { DataFunction = { Color = Color.Blue }},
                 },
-                Dock = DockStyle.Bottom
+                Dock = DockStyle.Bottom,
+                Max=MaxError
+                
             };
         }
 
@@ -122,27 +126,43 @@ namespace FunctionRegressionWithNoise
                 watch.Start();
                 while (watch.ElapsedMilliseconds < 200)
                 {
-                    teacher.RunEpoch(LearningInputs, LearningAnswers);
+                    LearningIteration();
+                    AccountError();
                     counter++;
                     if (counter > IterationsCount) break;
-                    AfterLearning();
+                    
                 }
                 watch.Stop();
+                LearningEnds();
                 Form.BeginInvoke(new Action(UpdateCharts));
                 if (counter > IterationsCount) break;
 
             }
         }
 
-        
+        protected virtual void LearningIteration()
+        {
+            teacher.RunEpoch(LearningInputs, LearningAnswers);
+        }
+
+        protected virtual void AccountError()
+        {
+            LearningErrors.Enqueue(GetError(LearningInputs, LearningAnswers));
+        }
+
+
+        protected virtual void LearningEnds()
+        {
+            LearningOutputs = LearningInputs.Select(z => network.Compute(z)[0]).ToArray();
+        }
 
         protected virtual void UpdateCharts()
         {
 
             computedFunction.Points.Clear();
-            foreach (var e in LearningInputs)
+            for (int i=0;i<LearningInputs.Length;i++)
             {
-                computedFunction.Points.Add(new DataPoint(e[0], network.Compute(e)[0]));
+                computedFunction.Points.Add(new DataPoint(LearningInputs[i][0], LearningOutputs[i]));
             }
 
             HistoryChart.AddRange(LearningErrors);
@@ -150,10 +170,7 @@ namespace FunctionRegressionWithNoise
             while (LearningErrors.TryDequeue(out error)) ;
         }
 
-        protected virtual void AfterLearning()
-        {
-            LearningErrors.Enqueue(GetError(LearningInputs, LearningAnswers));
-        }
+    
 
         protected double GetError(double[][] Inputs, double[][] Answers)
         {
