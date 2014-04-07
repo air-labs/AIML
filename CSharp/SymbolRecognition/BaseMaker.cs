@@ -20,12 +20,14 @@ namespace SymbolRecognition
         Bitmap bitmap;
         Graphics graphics;
         public  Font Font = new Font("Arial", (int)(size * 0.8));
-        Random rnd=new Random();
+        Random rnd=new Random(1);
 
         public string Symbols;
         public float MinAngle;
         public float MaxAngle;
         public float DeltaAngle;
+        public bool ShowWhenCreated;
+        public double NoiseLevel = 0;
 
         public double[] GenerateSymbol(char symbol, float angle)
         {
@@ -36,6 +38,8 @@ namespace SymbolRecognition
             graphics.TranslateTransform(-size / 2, -size / 2);
             graphics.DrawString(symbol.ToString(), Font, Brushes.Black, new Rectangle(0, 0, size, size),
                 new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+            for (int i = 0; i < (int)(NoiseLevel * size * size); i++)
+                bitmap.SetPixel(rnd.Next(size), rnd.Next(size), Color.Black);
             var inputVector = new double[InputSize];
             int ptr = 0;
             for (int x = 0; x < size; x++)
@@ -85,6 +89,9 @@ namespace SymbolRecognition
             }
             Inputs=inputs.ToArray();
             Answers=answers.ToArray();
+
+            if (ShowWhenCreated)
+                ShowBitmap();
           
         }
 

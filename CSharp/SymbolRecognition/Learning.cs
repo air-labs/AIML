@@ -12,10 +12,10 @@ using Common;
 
 namespace SymbolRecognition
 {
-    static class Program
+    static class Learning
     {
 
-
+        static LearningArguments arguments;
         static BaseMaker baseMaker;
         static double[,] percentage;
         static double totalErrors;
@@ -32,14 +32,14 @@ namespace SymbolRecognition
         }
 
 
-        static void Learning()
+        static void Learn()
         {
 
 
             var network = new ActivationNetwork(
                 new SigmoidFunction(),
                 baseMaker.InputSize,
-                40,40,
+                arguments.NeuronsCount,
                 baseMaker.OutputSize
                 );
             network.Randomize();
@@ -49,22 +49,17 @@ namespace SymbolRecognition
                         n.Weights[i] = rnd.NextDouble() * 2 - 1;
 
             var teacher = new BackPropagationLearning(network);
-            teacher.LearningRate = 2;
+            teacher.LearningRate = 1;
             teacher.Momentum = 0;
 
             while (true)
             {
                 var watch = new Stopwatch();
                 watch.Start();
-                while (watch.ElapsedMilliseconds < 200)
+                while (watch.ElapsedMilliseconds < 500)
                 {
-                    var i = rnd.Next(baseMaker.Inputs.Length);
-                        for (int j = 0; j < 10; j++)
-                            teacher.Run(baseMaker.Inputs[i], baseMaker.Answers[i]);
-                    ForEachWeight(network, n => n * 0.995);
                     teacher.RunEpoch(baseMaker.Inputs, baseMaker.Answers);
-                    
-                        
+                                        
                 }
                 watch.Stop();
                 var count = 0;
@@ -132,17 +127,11 @@ namespace SymbolRecognition
 
 
 
-        static void Main()
+        public static void Run(LearningArguments _arguments)
         {
-            baseMaker = new BaseMaker
-            {
-                Symbols = "abcdefgh",
-                MinAngle = 0,
-                MaxAngle = 60,
-                DeltaAngle = 5
-            };
+            arguments = _arguments;
+            baseMaker = _arguments.BaseMaker;
             baseMaker.Generate();
-           // baseMaker.ShowBitmap();
 
             table = new UserControl
             {
@@ -152,7 +141,13 @@ namespace SymbolRecognition
 
             success = new HistoryChart
             {
-                DataFunction = { Color = Color.Blue },
+                Lines = {
+                    new HistoryChartValueLine
+                    {
+
+                    DataFunction = { Color = Color.Blue },
+                    }
+                },
                 Dock = DockStyle.Right,
                 Size = new Size(400, 400)
             };
@@ -167,7 +162,7 @@ namespace SymbolRecognition
                     success
                 }
             };
-            new Action(Learning).BeginInvoke(null, null);
+            new Action(Learn).BeginInvoke(null, null);
             Application.Run(form);
             
         }
