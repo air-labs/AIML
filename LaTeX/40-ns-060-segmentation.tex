@@ -67,7 +67,7 @@ $$
 \begin{frame}\frametitle{Сегментация с РБФ-сетями}
 
 $$
-\mathfrak{R} = \{R_1,R_2,R_3\},\ \ \mathfrak{G} = \{G_1,G_2,G_3\}, \ \  \mathfrak{B} = \{B_1,B_2,B_3\} 
+\mathfrak{A} = \{A_1,A_2,A_3\},\ \ \mathfrak{B} = \{B_1,B_2,B_3\}, \ \  \mathfrak{C} = \{C_1,C_2,C_3\} 
 $$
 
 \begin{center}
@@ -79,11 +79,11 @@ $$
 
 \node (input) at (0,0) {$X$};
 
-\node[draw=blue,ellipse] (res-1) at (4,3) {$\neg r\wedge \neg g\wedge b$};
-\node[draw=blue,ellipse] (res-2) at (4,0) {$\neg r\wedge g\wedge \neg b$};
-\node[draw=blue,ellipse] (res-3)at (4,-3) {$r\wedge \neg g\wedge \neg b$};
+\node[draw=blue,ellipse] (res-1) at (4,3) {$\neg a\wedge \neg b\wedge c$};
+\node[draw=blue,ellipse] (res-2) at (4,0) {$\neg a\wedge b\wedge \neg c$};
+\node[draw=blue,ellipse] (res-3)at (4,-3) {$a\wedge \neg b\wedge \neg c$};
 
-\foreach \c/\yc in {R/-1,G/0,B/1}
+\foreach \c/\yc in {A/-1,B/0,C/1}
 {
   \node[draw=blue,ellipse] (and-\c) at ($(2,\yc*3)$) {$\wedge$};
   \foreach \n in {1,2,3}

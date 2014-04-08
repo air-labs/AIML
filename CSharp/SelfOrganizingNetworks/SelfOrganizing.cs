@@ -17,7 +17,7 @@ namespace SelfOrganizingNetworks
     {
         static double[][] Inputs;
         static Random rnd = new Random(1);
-        static int NetworkSize = 5;
+        static int NetworkSize = 15;
         static DistanceNetwork network;
         static SOMLearning learning;
         static int iterationsBetweenDrawing=100;
@@ -307,7 +307,7 @@ namespace SelfOrganizingNetworks
                     n.Weights[1] = rnd.NextDouble() * 0.2 + 0.4;
                 }
             learning = new SOMLearning(network, NetworkSize, NetworkSize);
-            learning.LearningRadius = 1;
+            learning.LearningRadius = 3;
             learning.LearningRate = 0.2;
 
 
