@@ -48,8 +48,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SelfOrganizingTaskV4.cs" />
+    <Compile Include="SelfOrganizingTaskV3.cs" />
+    <Compile Include="SelfOrganizingTaskV2.cs" />
+    <Compile Include="SelfOrganizingTaskV1.cs" />
     <Compile Include="SelfOrganizing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelfOrganizingTaskV0.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
