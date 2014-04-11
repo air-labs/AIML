@@ -11,7 +11,9 @@ namespace SelfOrganizingNetworks
         public int NetworkWidth=10;
         public int NetworkHeight=10;
         public int LearningRadius=2;
-        public double Radius = 0.1;
+        public double LearningRate = 0.1;
+        public double NoiseLevel = 0.1;
+        
 
         public Random Rnd = new Random(1);
 
@@ -19,7 +21,7 @@ namespace SelfOrganizingNetworks
         {
             for (int i = 0; i < count; i++)
             {
-                var r = Rnd.NextDouble() * Radius;
+                var r = Rnd.NextDouble() * NoiseLevel;
                 var angle = Rnd.NextDouble()*Math.PI * 2;
                 var xx = x + r * Math.Cos(angle);
                 var yy = y + r * Math.Sin(angle);

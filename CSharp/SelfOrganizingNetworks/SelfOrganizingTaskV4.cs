@@ -14,6 +14,7 @@ namespace SelfOrganizingNetworks
             NetworkWidth = 10;
             NetworkHeight = 1;
             LearningRadius = 2;
+            NoiseLevel = 0.1;
         }
 
         public override List<double[]> GenerateInputs()
@@ -23,8 +24,8 @@ namespace SelfOrganizingNetworks
             {
                 var x = Rnd.NextDouble();
                 var y = Math.Pow(x * 2 - 1,2);
-                var xx = x + Rnd.NextDouble() * 2 * Radius - Radius;
-                var yy = y + Rnd.NextDouble() * 2 * Radius - Radius;
+                var xx = x + Rnd.NextDouble() * 2 * NoiseLevel - NoiseLevel;
+                var yy = y + Rnd.NextDouble() * 2 * NoiseLevel - NoiseLevel;
                 list.Add(new[] { xx, yy });
              }
             return list;

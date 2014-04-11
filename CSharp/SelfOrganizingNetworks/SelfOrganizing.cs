@@ -15,14 +15,14 @@ namespace SelfOrganizingNetworks
 {
     static class SelfOrganizing
     {
-        static SelfOrganizingTaskV0 task = new SelfOrganizingTaskV4();
+        static SelfOrganizingTaskV0 task = new SelfOrganizingTaskV5();
 
 
         static double[][] Inputs;
         static Random rnd = new Random(1);
         static DistanceNetwork network;
         static SOMLearning learning;
-        static int iterationsBetweenDrawing=100;
+        static int iterationsBetweenDrawing=10;
 
         #region Обучение сети 
 
@@ -260,7 +260,7 @@ namespace SelfOrganizingNetworks
             public int Id;
             public Point DisplayLocation;
             public bool IsActive;
-            public int MapX { get { return Id / task.NetworkWidth; } }
+            public int MapX { get { return Id / task.NetworkHeight; } }
             public int MapY { get { return Id % task.NetworkHeight; } }
 
         }
@@ -282,7 +282,7 @@ namespace SelfOrganizingNetworks
                 }
             learning = new SOMLearning(network, task.NetworkWidth, task.NetworkHeight);
             learning.LearningRadius = task.LearningRadius;
-            learning.LearningRate = 0.2;
+            learning.LearningRate = task.LearningRate;
 
 
             Inputs = task.GenerateInputs().ToArray();
