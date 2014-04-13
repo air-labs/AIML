@@ -133,7 +133,7 @@ C=F(W\times X_{t-1} + V\times C_{t-1})
 $$
 \end{frame}
 
-\begin{frame}
+\begin{frame}\frametitle{Обучение рекуррентных сетей}
 \begin{center}
 \begin{tikzpicture}[x=2cm,y=-2cm]
 \node[neu] (o) at (3,0) {O};
@@ -158,6 +158,30 @@ $$
 \end{frame}
 
 
+\begin{frame}\frametitle{Сеть Хопфилда}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{center}
+\uncover<+->{
+\includegraphics[width=\textwidth]{Images/Hopfield.png}
+}\end{center}
+
+\column{0.5\textwidth}
+\uncover<+->{$$
+\{X_1,\ldots,X_n\}
+$$}
+
+\uncover<+->{$$
+W=\frac{1}{n}\sum_{i=1}^n X_i\times X_i^t
+$$}
+\end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{Восстановление образа}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Images/HopfieldSample.png}
+\end{center}
+\end{frame}
 
 \begin{frame}
 \doublebio
@@ -184,7 +208,7 @@ Computation Beyond the Turing Limit (1995)
 \end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}\frametitle{Нейронная сеть с действительными коэффициентами}
 
 
 
