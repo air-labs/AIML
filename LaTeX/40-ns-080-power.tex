@@ -183,6 +183,52 @@ $$}
 \end{center}
 \end{frame}
 
+\begin{frame}\frametitle{Бинаправленная ассоциативная память}
+\begin{columns}
+\column{0.6\textwidth}
+\begin{tikzpicture}[x=1.5cm]
+
+	\foreach \num in {1,...,4}
+	 	{
+	 		\node[neu] (n-\num) at (2,4.5-\num) {};
+	 		\node (y-\num) at (3,4.5-\num) {$y_{\num}$};
+	 		\path (n-\num) edge (y-\num);
+	 	}
+	 \foreach \num in {1,...,5}
+	 	{
+	 	\node[neu] (m-\num) at (1,5-\num) {};
+	 	\node (x-\num) at (0,5-\num) {$x_{\num}$};			
+	 	\path (x-\num) edge (m-\num);
+	 	}
+	 	
+\foreach \st in {1,...,4} \foreach \ds in {1,...,5} \path (n-\st) edge (m-\ds);
+\end{tikzpicture}
+
+\column{0.4\textwidth}
+\uncover<+->{}
+\uncover<+->{$$
+X_i\rightarrow Y_i,\ i=1,\ldots,n
+$$}
+\uncover<+->{$$
+W=\frac{1}{n}\sum_{i=1}^n X_i\times Y_i^t
+$$}
+\end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{Восстановление образа}
+\begin{columns}
+
+\column{0.5\textwidth}
+\uncover<+->{
+\includegraphics[width=\textwidth]{Images/BAMInput.png}
+}
+\column{0.5\textwidth}
+\uncover<+->{
+\includegraphics[width=\textwidth]{Images/BAMResult.png}
+}
+\end{columns}
+\end{frame}
+
 \begin{frame}
 \doublebio
 {Siegelmann}{Hava Siegelmann}
