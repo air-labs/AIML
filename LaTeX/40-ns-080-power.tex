@@ -1,4 +1,4 @@
-\documentclass[24pt,pdf,hyperref={unicode}]{beamer}
+\documentclass[24pt,pdf,hyperref={unicode},aspectratio=169]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage{aiml}
 \usetikzlibrary{calc}
@@ -10,8 +10,10 @@
 \uncover<+->{$$
 n(x_1,\ldots,x_n)=f\left(\sum_{i=1}^n x_iw_i\right)
 $$}
+\uncover<+->{$N(X)$ -- функция, вычисляемая нейронной сетью. $N$ является суперпозицией умножения на константу, сложения и нелинейной функции одной переменной.
+}
 \uncover<+->{$$
-n(x_1,x_2)=x_1x_2?
+N(x_1,x_2)=x_1x_2?
 $$}
 \only<+>{$$
 \begin{tikzpicture}[x=3cm]
@@ -68,12 +70,18 @@ $ $\\[0.2cm]
 \end{small}
 \end{frame}
 
+
 \begin{frame}
 
 $$
 f(x_1,\dots,x_n)=\sum_{q=0}^{2 n} \Phi_q \left(\sum_{p=1}^n\psi_{q,p}(x_p)\right)
 $$
 \end{frame}
+
+\begin{frame}
+\bio{Cybenko}{George Cybenko}{Approximations by superpositions of sigmoidal functions, 1989}
+\end{frame}
+
 
 \begin{frame}\frametitle{Сеть Эльмана}
 \begin{center}
@@ -91,6 +99,32 @@ $$
 \end{tikzpicture}
 \end{center}
 \end{frame}
+
+
+\begin{frame}\frametitle{Сеть Эльмана}
+
+\begin{tikzpicture}[x=2cm,y=-2cm]
+\node (x) at (0,0) {X};
+\node (c) at (1,1) {C};
+\node[neu] (h) at (2,0) {H};
+\node[neu] (o) at (3,0) {O};
+\node  (y) at (4,0) {Y};
+\path (x) edge[->] node[above]{W} (h);
+\path (c.east) edge[->] node[above]{V} (h.south west);
+\path (h) edge[->] node[above]{U} (o);
+\path (o) edge[->] (y);
+\draw[->] ($(h.east)+(0.1,0)$) |- ($(c)+(-0.6,0.5)$) |- (c.west);
+\end{tikzpicture}
+
+$$
+Y_t=F(U\times F(W\times X_t + V\times C_t))
+$$
+
+$$
+C_t=F(W\times X_{t-1} + V\times C_{t-1})
+$$
+\end{frame}
+
 
 \begin{frame}\frametitle{Сеть Эльмана}
 \begin{center}
@@ -107,30 +141,6 @@ $$
 \draw[->] ($(h.east)+(0.1,0)$) |- ($(c)+(-0.6,0.5)$) |- (c.west);
 \end{tikzpicture}
 \end{center}
-\end{frame}
-
-\begin{frame}\frametitle{Обучение рекуррентных сетей}
-
-\begin{tikzpicture}[x=2cm,y=-2cm]
-\node (x) at (0,0) {X};
-\node (c) at (1,1) {C};
-\node[neu] (h) at (2,0) {H};
-\node[neu] (o) at (3,0) {O};
-\node  (y) at (4,0) {Y};
-\path (x) edge[->] (h);
-\path (c.east) edge[->] (h.south west);
-\path (h) edge[->] (o);
-\path (o) edge[->] (y);
-\draw[->] ($(h.east)+(0.1,0)$) |- ($(c)+(-0.6,0.5)$) |- (c.west);
-\end{tikzpicture}
-
-$$
-Y_t=F(U\times F(W\times X_t + V\times C_t))
-$$
-
-$$
-C=F(W\times X_{t-1} + V\times C_{t-1})
-$$
 \end{frame}
 
 \begin{frame}\frametitle{Обучение рекуррентных сетей}
@@ -160,7 +170,7 @@ $$
 
 \begin{frame}\frametitle{Сеть Хопфилда}
 \begin{columns}
-\column{0.5\textwidth}
+\column{0.4\textwidth}
 \begin{center}
 \uncover<+->{
 \includegraphics[width=\textwidth]{Images/Hopfield.png}
@@ -170,16 +180,21 @@ $$
 \uncover<+->{$$
 \{X_1,\ldots,X_n\}
 $$}
-
 \uncover<+->{$$
 W=\frac{1}{n}\sum_{i=1}^n X_i\times X_i^t
+$$}
+\uncover<+->{$$
+Y_1=F(W\times X)
+$$}
+\uncover<+->{$$
+Y_t=F(W\times Y_{t-1})
 $$}
 \end{columns}
 \end{frame}
 
 \begin{frame}\frametitle{Восстановление образа}
 \begin{center}
-\includegraphics[width=0.8\textwidth]{Images/HopfieldSample.png}
+\includegraphics[width=0.6\textwidth]{Images/HopfieldSample.png}
 \end{center}
 \end{frame}
 
@@ -212,6 +227,18 @@ $$}
 \uncover<+->{$$
 W=\frac{1}{n}\sum_{i=1}^n X_i\times Y_i^t
 $$}
+\uncover<+->{$$
+Y_1=F(W\times X)
+$$}
+\uncover<+->{$$
+Z_1=F(W^t\times Y_1)
+$$}
+\uncover<+->{$$
+Y_t=F(W\times Z_{t-1})
+$$}
+\uncover<+->{$$
+Z_t=F(W^t\times Y_{t})
+$$}
 \end{columns}
 \end{frame}
 
@@ -220,11 +247,11 @@ $$}
 
 \column{0.5\textwidth}
 \uncover<+->{
-\includegraphics[width=\textwidth]{Images/BAMInput.png}
+\includegraphics[width=0.7\textwidth]{Images/BAMInput.png}
 }
 \column{0.5\textwidth}
 \uncover<+->{
-\includegraphics[width=\textwidth]{Images/BAMResult.png}
+\includegraphics[width=0.7\textwidth]{Images/BAMResult.png}
 }
 \end{columns}
 \end{frame}
@@ -240,7 +267,16 @@ Computation Beyond the Turing Limit (1995)
 
 \begin{frame}\frametitle{Нейронная сеть с рациональными коэффициентами}
 
-Для любой программы (т.е. машины Тьюринга) существует нейронная сеть с рациональными коэффициентами, вычисляющая ту же функцию.
+Для любой программы (т.е. машины Тьюринга) существует нейронная сеть с рациональными коэффициентами и функцией активации $f$, вычисляющая ту же функцию.
+
+$$
+f(x)=\left\{\begin{array}{l l}
+0, & x<0 \\
+x, & 0<x<1 \\
+1, & x>1
+\end{array}
+\right.
+$$
 
 \end{frame}
 
@@ -277,7 +313,7 @@ $$}
 \begin{tikzpicture}[x=2cm,y=-2cm]
 \node (x) at (0,0) {x};
 \node (one) at (0,1) {1};
-\node[neu] (n) at (1,1) {e};
+\node[neu] (n) at (1,1) {f};
 \path (one) edge[->] node[above]{$q$} (n);
 \node[draw=black,rectangle, inner sep=10] (p) at (2,0.5) {P};
 \draw[->] (x) -| (p);
@@ -306,15 +342,69 @@ $$}
 \draw[->] (v3.west) -| node[left]{yes} (v5);
 \draw[->] (v5.east) -| node[right]{yes} (v6);
 \draw[->] (v5.west) |- node[left] {no}(v1);
-\draw[->] (v4.east) -- ($(v4.east)+(0.5,0)$) |- (v1);
+\draw[->] (v4.east) -- ($(v4.east)+(0.5,0)$) |- (v2);
 \end{tikzpicture}
 }
-
 \end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{Матричная запись персептрона}
+
+\begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=\layersep]
+     \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+     \tikzstyle{neuron}=[circle,fill=black!25,minimum size=17pt,inner sep=0pt]
+     \tikzstyle{input neuron}=[neuron, fill=green!50];
+     \tikzstyle{output neuron}=[neuron, fill=red!50];
+     \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
+     \tikzstyle{annot} = [text width=4em, text centered]
+ 
+ 	
+ 	\foreach \num in {1,...,5}
+ 		\node (x-\num) at (0,5-\num) {$x_{\num}$};
+ 		
+ 	\foreach \num in {1,...,4}
+ 	{
+ 		\node[neu] (n-\num) at (2,4.5-\num) {};
+ 		\node (y-\num) at (3,4.5-\num) {$y_{\num}$};
+ 		\path (n-\num) edge (y-\num);
+ 	}
+ 	
+ 	\foreach \num in {1,...,5}
+ 	{
+	 	\node[neu] (m-\num) at (5,5-\num) {};
+ 	 	\node (z-\num) at (6,5-\num) {$z_{\num}$};
+ 	 	\path (m-\num) edge (z-\num);
+ 	}
+ 	
+ 	
+ 	\foreach \num in {1,...,3}
+ 	{
+	 	\node[neu] (p-\num) at (8,4-\num) {};
+ 	 	\node (o-\num) at (9,4-\num) {$o_{\num}$};
+ 	 	\path (p-\num) edge (o-\num);
+ 	} 	
+ 	
+ 	\foreach \st in {1,...,5} \foreach \ds in {1,...,4} \path (x-\st) edge (n-\ds);
+ 	\foreach \st in {1,...,4} \foreach \ds in {1,...,5} \path (y-\st) edge (m-\ds);
+ 	\foreach \st in {1,...,5} \foreach \ds in {1,...,3} \path (z-\st) edge (p-\ds);
+\end{tikzpicture}
+
+$$
+O=F(W_1\times F(W_2\times F(W_3\times X)))
+$$
+\end{frame}
 
 
+\begin{frame}\frametitle{Аналоговая нейронная сеть}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{Images/AnalogNN.jpg}
+\end{center}
+\end{frame}
 
-
+\begin{frame}\frametitle{Аналоговая нейронная сеть}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{Images/cyborg.jpg}
+\end{center}
 \end{frame}
 
 

@@ -4,11 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AForge.Neuro;
+using System.Collections.Concurrent;
 
 namespace Common
 {
     public static class Extensions
     {
+        public static void Clear<T>(this ConcurrentQueue<T> queue)
+        {
+            T value;
+            while (queue.TryDequeue(out value)) ;
+        }
+
         public static void ForEachWeight(this Network network, Func<double, double> modifier)
         {
             foreach (var l in network.Layers)

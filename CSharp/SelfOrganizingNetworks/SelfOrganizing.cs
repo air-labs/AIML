@@ -15,7 +15,7 @@ namespace SelfOrganizingNetworks
 {
     static class SelfOrganizing
     {
-        static SelfOrganizingTaskV0 task = new SelfOrganizingTaskV5();
+        static SelfOrganizingTaskV0 task = new SelfOrganizingTaskV4();
 
 
         static double[][] Inputs;
