@@ -66,7 +66,7 @@ namespace Common
 
             DataFunction.Points.Clear();
             for (int i = 0; i < values.Count; i++)
-                DataFunction.Points.Add(new DataPoint(AverageCount * i, Math.Min(values[i], maximum * 0.9)));
+                DataFunction.Points.Add(new DataPoint(AverageCount * i, Math.Min(values[i], maximum)));
 
         }
 
@@ -85,8 +85,8 @@ namespace Common
             get { return max; }
             set
             {
-                area.AxisY.Maximum = value;
-                max = value;
+                area.AxisY.Maximum = value*1.1;
+                max = value*1.1;
             }
         }
         ChartArea area;

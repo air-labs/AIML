@@ -14,8 +14,8 @@ namespace SetPartition
 {
     static class SetPartition
     {
-        static int Count = 100;
-        static int MaxWeight = 100;
+        static int Count = 5000;
+        static int MaxWeight = 5000;
         static int[] Weights;
         static Random rnd = new Random(1);
         static Form form;
@@ -29,20 +29,27 @@ namespace SetPartition
 
         static void Algorithm()
         {
-            var ga = new GeneticAlgorithm<ArrayChromosome<bool>>(()=>new ArrayChromosome<bool>(Count));
+            var ga = new GeneticAlgorithm<ArrayChromosome<bool>>(
+                ()=>new ArrayChromosome<bool>(Count)
+                ,rnd);
             
-            Solutions.AppearenceCount.MinimalPoolSize(ga, 100);
+            Solutions.AppearenceCount.MinimalPoolSize(ga, 40);
             Solutions.MutationOrigins.Random(ga, 0.5);
             Solutions.CrossFamilies.Random(ga, z => z * 0.5);
-            Solutions.Selections.Threashold(ga, 80);
+            Solutions.Selections.Threashold(ga, 40);
+
+            
 
             ArrayGeneSolutions.Appearences.Bool(ga);
             ArrayGeneSolutions.Mutators.Bool(ga);
             ArrayGeneSolutions.Crossover.Mix(ga);
 
+            
+
             ga.Evaluate = chromosome =>
                 {
-                    chromosome.Value = 1 / (1 + Enumerable.Range(0, Count).Where(z => chromosome.Code[z]).Sum(z => Weights[z]));
+                    chromosome.Value = 
+                        1.0 / (1+Math.Abs(Enumerable.Range(0, Count).Sum(z => Weights[z]*(chromosome.Code[z]?-1:1))));
                 };
 
             while (true)
@@ -58,13 +65,15 @@ namespace SetPartition
 
                 }
                 watch.Stop();
-                form.BeginInvoke(new Action(UpdateCharts));
+                if (!form.IsDisposed)
+                    form.BeginInvoke(new Action(UpdateCharts));
             }
         }
 
         static void UpdateCharts()
         {
             valuationsChart.AddRange(maxValuations, averageValuations);
+          
             maxValuations.Clear();
             averageValuations.Clear();
             agesChart.AddRange(ages);
@@ -78,6 +87,7 @@ namespace SetPartition
         static void Main()
         {
             Weights=Enumerable.Range(0,Count).Select(z=>rnd.Next(MaxWeight)).ToArray();
+            if (Weights.Sum() % 2 != 0) Weights[0]++;
 
             form = new Form();
             var table = new TableLayoutPanel() { Dock = DockStyle.Fill, RowCount = 2, ColumnCount = 1 };
@@ -88,16 +98,17 @@ namespace SetPartition
             {
                 Lines = 
                 {
-                    new HistoryChartValueLine { DataFunction = { Color = Color.Green }},
-                    new HistoryChartValueLine { DataFunction = { Color = Color.Orange }},
+                    new HistoryChartValueLine { DataFunction = { Color = Color.Green, BorderWidth=2 }},
+                    new HistoryChartValueLine { DataFunction = { Color = Color.Orange, BorderWidth=2 }},
                 },
                 Max = 1,
                 Dock = DockStyle.Fill
             };
             agesChart = new HistoryChart
             {
-                Lines = { new HistoryChartValueLine { DataFunction = { Color = Color.Blue } } },
-                Dock = DockStyle.Fill
+                Lines = { new HistoryChartValueLine { DataFunction = { Color = Color.Blue, BorderWidth=2 } } },
+                Dock = DockStyle.Fill,
+                Max=100
             };
 
             table.Controls.Add(valuationsChart,0,0);
@@ -111,7 +122,7 @@ namespace SetPartition
             form.Controls.Add(table);
             form.WindowState = FormWindowState.Maximized;
 
-            new Thread(Algorithm).Start();
+            new Thread(Algorithm) { IsBackground = true }.Start();
             Application.Run(form);
 
         }

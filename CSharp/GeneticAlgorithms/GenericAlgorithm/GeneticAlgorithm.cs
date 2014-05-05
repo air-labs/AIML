@@ -27,9 +27,10 @@ namespace AIRLab.GeneticAlgorithms
             return Pool[Rnd.Next(Pool.Count)];
         }
 
-        public GeneticAlgorithm(Func<T> createEmptyChromosome)
+        public GeneticAlgorithm(Func<T> createEmptyChromosome, Random rnd=null)
         {
-            Rnd = new Random();
+            if (rnd == null) Rnd = new Random();
+            else Rnd = rnd;
             Pool = new List<T>();
             Buffer = new List<T>();
             Bank = new List<T>();
