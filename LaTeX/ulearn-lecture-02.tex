@@ -4,7 +4,104 @@
 \begin{document}
 
 
-\section{Язык логики высказываний}
+\section{Введение в логику}
+
+\section{Индуктивные и дедуктивные рассуждения}
+
+\begin{frame}\frametitle{Дедуктивные рассуждения}
+\begin{tabular}{l l}
+ & Все страны Южной Америки -- республики \\
+ & Бразилия -- страна Южной Америки\\
+ \hline
+$\therefore$ & Бразилия -- республика \\
+\end{tabular}
+\end{frame}
+
+\begin{frame}\frametitle{Дедуктивные рассуждения}
+\begin{tabular}{l l}
+ & Все страны Южной Америки -- республики \\
+ & Китай -- это не страна Южной Америки\\
+ \hline
+$\therefore$ & Китай -- республика \\
+\end{tabular}
+\end{frame}
+
+\begin{frame}\frametitle{Дедуктивные рассуждения}
+\begin{tabular}{l l}
+ & Все страны Азии -- республики \\
+ & Тайланд -- это страна Азии\\
+ \hline
+$\therefore$ & Тайланд -- республика \\
+\end{tabular}
+\end{frame}
+
+\begin{frame}\frametitle{Дедуктивные рассуждения}
+\begin{tabular}{l l}
+ & Все книги содержат буквы \\
+ & <<Война и мир>> -- книга \\
+ \hline
+$\therefore$ & <<Война и мир>> содержит буквы\\
+\end{tabular}
+\end{frame}
+
+\begin{frame}\frametitle{Дедуктивные рассуждения}
+\begin{tabular}{l l}
+ & Все $A$ есть $B$\\
+ & Некоторый $x$ является $A$\\
+ \hline
+$\therefore$ & $x$ является $B$ \\
+\end{tabular}
+\end{frame}
+
+\begin{frame}\frametitle{Дедуктивные рассуждения}
+\begin{tabular}{l l}
+ & У матери Джона есть дочь\\
+ \hline
+$\therefore$ & У Джона есть сестра \\
+\end{tabular}
+\end{frame}
+
+
+
+\begin{frame}\frametitle{Индуктивные рассуждения}
+\begin{tabular}{l l}
+ & Бразилия -- страна Южной Америки и республика \\
+ & Чили -- страна Южной Америки и республика \\
+ & Уругвай -- страна Южной Америки и республика \\
+\hline
+$\therefore$ & Все страны Южной Америки -- республики \\
+\end{tabular}
+\end{frame}
+
+\begin{frame}\frametitle{Индуктивные рассуждения}
+\begin{tabular}{l l}
+ & Франция -- страна Европы и республика \\
+ & Германия -- страна Европы и республика \\
+ & Чехия -- страна Европы и республика \\
+\hline
+$\therefore$ & Все страны Европы -- республики \\
+\end{tabular}
+\begin{flushright}
+ \uncover<2>{\includegraphics[width=4cm]{EnglishQueen.jpg}}
+\end{flushright}
+\end{frame}
+
+
+\begin{frame}\frametitle{Индуктивные рассуждения}
+\begin{tabular}{l l}
+ & Бразилия -- республика и страна Южной Америки \\
+ & Чили -- республика и страна Южной Америки \\
+ & Уругвай -- республика и страна Южной Америки \\
+\hline
+$\therefore$ & Все республики -- страны Южной Америки\\
+\end{tabular}
+\begin{flushright}
+ \uncover<2>{\includegraphics[width=4cm]{Merkel.jpg}}
+\end{flushright}
+\end{frame}
+
+
+\section{Логика высказываний}
 
 \begin{frame}\frametitle{Пропозициональные связки }
 
@@ -74,6 +171,8 @@ $$
 \end{array}
 $$
 \end{frame}
+
+\section{Вывод таблиц истинности}
 
 \begin{frame}\frametitle{Вывод таблиц истинности}
 \begin{itemize}[<+->]
@@ -499,4 +598,174 @@ $ $\\[1cm]
 }
 \end{frame}
 
+
+\newcommand{\ce}{$Ц$}
+\newcommand{\za}{$З$}
+\newcommand{\av}{$A$}
+\newcommand{\na}{$H$}
+\newcommand{\uga}{$У.1$}
+\newcommand{\ugb}{$У.4$}
+\newcommand{\ra}{$Р$}
+\newcommand{\kr}{$K$}
+
+\newcommand{\law}[1]{
+\begin{framed}
+{ 
+
+#1
+}
+\end{framed}
+}
+
+
+
+\section{Устройство экспертных систем}
+
+
+\begin{frame}[t]\frametitle{Составление правил}
+\begin{columns}
+\column[T]{0.6\textwidth}
+\only<1-6>{\law{
+\footnotesize
+{\bf Статья 166. Неправомерное завладение автомобилем или иным транспортным средством без цели хищения}
+
+\begin{enumerate}
+\item Неправомерное \alert<2-4>{завладение автомобилем} или иным транспортным средством \alert<2-4>{без цели хищения} (угон) -- наказывается...
+\item[2-3.] ...
+\item[4.] Деяния, предусмотренные частями первой, второй или третьей настоящей статьи, совершенные \alert<5-6>{с применением насилия}, опасного для жизни или здоровья, либо с угрозой применения такого насилия, --- ...
+\end{enumerate}
+}}
+
+\only<7-8>{\law{
+{\bf Статья 162. Разбой}
+\begin{enumerate}
+\item Разбой, то есть нападение в целях хищения чужого имущества, совершенное с применением насилия, опасного для жизни или здоровья, либо с угрозой применения такого насилия, --- ...
+\end{enumerate}
+}}
+
+\only<9-10>{\law{
+{\bf Статья 158. Кража}
+\begin{enumerate}
+\item Кража, то есть тайное хищение чужого \newline имущества, --- ...
+\end{enumerate}
+}}
+\column[T]{0.4\textwidth}
+
+\vspace{1cm}
+
+\only<3>{$\za\wedge\av\wedge\neg\ce\rightarrow \uga\ $ }
+
+\only<4-> {$\neg\za\vee\neg\av\vee\ce\vee \uga\ $ }
+
+\only<6-> {$\neg\za\vee\neg\av\vee\ce\vee\neg \na \vee \ugb\ $ }
+
+\only<8->{$\neg\na\vee\neg\ce\vee \ra\ $ }
+
+\only<10->{$\neg\za\vee\neg\ce\vee\na\vee\kr\ $}
+\end{columns}
+
+
+\end{frame}
+
+\begin{frame}\frametitle{Логический вывод}
+\begin{tikzpicture}[x=5cm,y=3cm]
+\uncover<1->{
+\node(s) at(0,0) {$\begin{array}{l}
+\neg\za\vee\neg\av\vee\ce\vee \uga \\
+\neg\za\vee\neg\av\vee\ce\vee\neg \na \vee \ugb \\
+\neg\na\vee\neg\ce\vee \ra \\
+\neg\za\vee\neg\ce\vee\na\vee\kr 
+\end{array}$};
+}
+
+
+\uncover<3->{
+\node(z) at (1,0) {$\begin{array}{l}
+\neg\av\vee\ce\vee \uga \\
+\neg\av\vee\ce\vee\neg \na \vee \ugb \\
+\neg\na\vee\neg\ce\vee \ra \\
+\neg\ce\vee\na\vee\kr 
+\end{array}$};
+}
+
+\uncover<2->{
+\path (s) edge[->] node[above]{$\za$} (z);
+}
+
+
+
+
+\uncover<5->{
+\node(z-n) at (0,-1) {$\begin{array}{l}
+\neg\av\vee\ce\vee \uga \\
+\neg\ce\vee\kr 
+\end{array}$};
+}
+
+\uncover<4->{
+\path (z) edge[->] node[above]{$\neg\na\ $} (z-n);
+}
+
+
+
+
+\uncover<7->{
+\node(z-n-c) at (0,-1.5) {$\begin{array}{l}
+\neg\av\vee \uga \\
+\end{array}$};
+}
+
+\uncover<6->{
+\path (z-n) edge[->] node[right]{$\neg\ce\ $} (z-n-c);
+}
+
+\uncover<9->{
+\node(z-n-c-a) at (0,-2) {\large ?};
+}
+
+\uncover<8->{
+\path (z-n-c) edge[->] node[right]{$\neg\av\ $} (z-n-c-a);
+}
+
+\uncover<11->{
+\node(z+n) at (1,-1) {$\begin{array}{l}
+\neg\av\vee\ce\vee\ugb \\
+\neg\ce\vee \ra \\
+\end{array}$};
+}
+
+\uncover<10->{
+\path (z) edge[->] node[right]{$\na$} (z+n);
+}
+
+\uncover<13->{
+\node(z+n+a) at (1,-2) {$\begin{array}{l}
+\ce\vee\ugb \\
+\neg\ce\vee \ra \\
+\end{array}$};
+}
+
+\uncover<12->{
+\path (z+n) edge[->] node[right]{$\av $} (z+n+a);
+}
+
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}\frametitle{Работа экспертной системы}
+\begin{itemize}
+\item<+->[M:] ?
+\item<+->[O:] $\za!$
+\item<+->[М:] $\na?$
+\item<+->[O:] {\it why?}
+\item<+->[М:] ...
+\item<+->[М:] $\na?$
+\item<+->[O:] $\neg\na!$
+\item<+->[М:] $\ce?$
+\item<+->[O:] $\ce!$
+\item<+->[М:] $\kr!$
+\item<+->[O:] {\it how?}
+\item<+->[М:] ...
+\end{itemize}
+\end{frame}
 \end{document}
