@@ -1,0 +1,198 @@
+\documentclass[24pt,pdf,hyperref={unicode},aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{aiml}
+\usetikzlibrary{arrows}
+
+\newcommand{\newbio}[3]{
+\begin{center}
+
+\includegraphics[height=0.5\textheight]{Portraits/#1.jpg}
+
+
+{\bf #2}
+
+#3
+
+\end{center}
+}
+
+\begin{document}
+
+\begin{frame}
+\bio{Kepler}{Johannes Kepler}{Astronomia nova (1609)}
+\end{frame}
+
+\begin{frame}
+\newbio{SchmidtLipson}{Michael Schmidt and Hod Lipson}{Distilling Free-Form Natural Laws from Experimental Data (2009)}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\begin{tikzpicture}[level/.style={sibling distance = 5cm/####1,level distance = 1.5cm}]
+\node{+}
+	child{
+	node{*}
+		child{node{x}}
+		child{node{2}}
+		}
+	child{
+	node{*}
+		child{node{y}}
+		child{node{3}}
+		};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\begin{tikzpicture} 
+\node{$\frac{\partial}{\partial x}$}
+	child{
+	node{*}
+		child{node {2}}
+		child{node {x}}
+	};
+\end{tikzpicture}
+
+\uncover<2->{$$
+(uv)'=u'v+v'u
+$$}
+\end{center}
+
+\end{frame}
+\begin{frame}
+\begin{center}
+\begin{tikzpicture}[level/.style={sibling distance = 5cm/####1,level distance = 1.5cm}]
+\node{+}
+	child{
+	node{*}
+		child{
+		node{$\frac{\partial}{\partial x}$}
+			child{node{2}}
+		}
+		child{node {x}}
+	}
+	child{
+	node{*}
+		child{node {2}}
+		child{
+		node{$\frac{\partial}{\partial x}$}
+			child{node{x}}
+		}
+	};
+\end{tikzpicture}
+
+\uncover<2->{$$
+c'=0
+$$}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\begin{tikzpicture}[level/.style={sibling distance = 5cm/####1,level distance = 1.5cm}]
+\node{+}
+	child{
+	node{*}
+		child{node{0}}
+		child{node {x}}
+	}
+	child{
+	node{*}
+		child{node {2}}
+		child{
+		node{$\frac{\partial}{\partial x}$}
+			child{node{x}}
+		}
+	};
+\end{tikzpicture}
+
+\uncover<2->{$$
+x'=1
+$$}
+\end{center}
+
+
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\begin{tikzpicture}[level/.style={sibling distance = 5cm/####1,level distance = 1.5cm}]
+\node{+}
+	child{
+	node{*}
+		child{node{0}}
+		child{node {x}}
+	}
+	child{
+	node{*}
+		child{node {2}}
+		child{node{1}}
+	};
+\end{tikzpicture}
+\uncover<2->{$$
+0*u=0
+$$}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\begin{tikzpicture}[level/.style={sibling distance = 5cm/####1,level distance = 1.5cm}]
+\node{+}
+	child{node{0}}
+	child{
+	node{*}
+		child{node {2}}
+		child{node{1}}
+	};
+\end{tikzpicture}
+\uncover<2->{$$
+1*u=u
+$$}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\begin{tikzpicture}[level/.style={sibling distance = 5cm/####1,level distance = 1.5cm}]
+\node{+}
+	child{node{0}}
+	child{node{2}};
+\end{tikzpicture}
+\uncover<2->{$$
+0+u=u
+$$}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\begin{tikzpicture}[level/.style={sibling distance = 5cm/####1,level distance = 1.5cm}]
+\node{2};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+{\huge
+{\tt http://github.com/air-labs/CA}
+}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{large}
+\begin{verbatim}
+Rule
+    .Select(AnyA[ChildB, ChildC])
+    .Where<Addition<double>, Constant<double>, INode>
+        (z => z.B.Value.Equals(0d))
+    .Mod(z => z.A.Replace(z.C.Node));
+\end{verbatim}
+\end{large}
+\end{frame}
+
+\end{document}

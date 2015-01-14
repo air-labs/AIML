@@ -1,0 +1,9 @@
+\begin{large}
+\begin{verbatim}
+Rule
+    .Select(AnyA[ChildB, ChildC])
+    .Where<Addition<double>, Constant<double>, INode>
+        (z => z.B.Value.Equals(0d))
+    .Mod(z => z.A.Replace(z.C.Node));
+\end{verbatim}
+\end{large}
