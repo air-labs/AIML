@@ -23,3 +23,6 @@ bin
 *.tex~
 *.toc
 *.snm
+Publishing/LaTeXCompiledSlides/
+Publishing/YoutubeApiCredentials
+Publishing/YoutubeApiCredentials/
