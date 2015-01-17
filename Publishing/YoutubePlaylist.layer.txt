@@ -1,3 +1,3 @@
 Tuto layer for YoutubePlaylist Version 1
 
-{"Records":[{"Data":{"PlaylistId":"PLDCR37g8W9nHizkHDrMxzHsgMKX98siQw","PlaylistTitle":"Логика высказываний"},"Guid":"a9b02923-9266-4a16-96f6-ed93a344cef7"}]}
+{"Records":[{"Data":{"PlaylistId":"PLDCR37g8W9nH4gqd7y1Zhkl5Ch86yMt_y","PlaylistTitle":"AIML-1-1 История искусственного интеллекта"},"Guid":"4c17b7b3-9e55-4083-8cfe-9d1a4d5b2d05"},{"Data":{"PlaylistId":"PLDCR37g8W9nE8ORivFZw9LmkRDrTNgS_c","PlaylistTitle":"AIML-2-1 Логика высказываний"},"Guid":"a9b02923-9266-4a16-96f6-ed93a344cef7"}]}

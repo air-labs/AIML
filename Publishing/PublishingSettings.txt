@@ -1,0 +1,3 @@
+PublishingSettings Tuto file Version 1
+
+{"CourseAbbreviation":"AIML","DescriptionPS":"","Keywords":"artificial intelligence, machine learning, logic, fuzzy logic, neural networks, evolutionary computations, ","LatexCompiledSlidesSubdirectory":"LatexCompiledSlides","LatexSourceSubdirectory":"Latex","TopicLevels":[]}
