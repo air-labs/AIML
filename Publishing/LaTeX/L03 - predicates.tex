@@ -11,6 +11,14 @@
 \end{minipage}
 }
 
+
+\newcommand{\myrect}[5] 
+{
+\draw[thick] (#1,#2) rectangle ($(#1+#3,#2+#4)$); 
+\node at ($(#1,#2)+(#3 /2,#4 /2)$) {#5};
+}
+\usetikzlibrary{calc}
+
 \begin{document}
 
 
@@ -501,12 +509,6 @@ $$
 \section{Логическое программирование}
 
 
-\newcommand{\myrect}[5] 
-{
-\draw[thick] (#1,#2) rectangle ($(#1+#3,#2+#4)$); 
-\node at ($(#1,#2)+(#3 /2,#4 /2)$) {#5};
-}
-\usetikzlibrary{calc}
 
 \begin{frame}
 \begin{columns}
