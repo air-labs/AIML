@@ -58,7 +58,8 @@ $};
 
 \begin{document}
 
-\section{Нечеткая логика}
+
+\section{Нечеткий вывод}
 
 
 \begin{frame}\frametitle{Нечеткая импликация}
@@ -202,6 +203,8 @@ $$}
 \end{columns}
 \end{frame}
 
+\section{Пояснения к нечеткому выводу}
+
 \begin{frame}\frametitle{Множества, отношения и предикаты}
 
 $$
@@ -292,6 +295,52 @@ $$}}
  
 \end{frame}
 
+
+
+\section{Нечеткие числа}
+
+\begin{frame}\frametitle{Нечеткие числа}
+$A\fsubset\mathbb{R}$ -- нечеткое число, если:
+\begin{itemize}[<+->]
+\item $A$ -- нормировано, т.е. 
+$$
+\exists!\ceil{A}\in\mathbb{R}\ \mu_A(\ceil{A})=1;
+$$
+\item $A$ -- выпукло, т.е. 
+$$
+\forall\ x,y\ \mu_A(\lambda x+(1-\lambda)y)\ge\min\left(\mu_A(x),\mu_a(y)\right);
+$$
+\end{itemize}
+\uncover<+->{
+\begin{tikzpicture}[x=2cm,y=2cm]
+\draw[->,thick] (0,0.01) -- (4.5,0.01) node[below] {$x$};
+\draw[->,thick] (0,0) -- (0,1.2) node[left] {$\mu$};
+\node at(2,1.1) {$A\approx 2$};
+\draw[red,thick] plot file {Plots/2.txt};
+\only<+>{
+\draw[dotted] (2,1) -- (0,1) node[left] {$1$};
+\draw[dotted] (2,1) -- (2,0) node[below] {$2$};
+}
+\only<+>{
+\draw[fill=black] (1.5,0.778) circle(2pt);
+\draw[fill=black] (2.5,0.778) circle(2pt);
+\draw (1.5,0.778) -- (2.5,0.778);
+}
+\only<+->{
+\draw[fill=black] (1.5,0.778) circle(2pt);
+\draw[fill=black] (0.5,0.105) circle(2pt);
+\draw (0.5,0.105)--(1.5,0.778);
+}
+\only<+->{
+\draw[dotted] (1.5,0.778) -- (1.5,0.105) -- (0.5,0.105);
+ }
+\end{tikzpicture}
+}
+\end{frame}
+
+
+
+\section{Принцип расширения}
 
 \begin{frame}\frametitle{Принцип расширения}
 \uncover<+->{$$
@@ -412,46 +461,8 @@ $$}
 
 \end{frame}
 
-\subsection{Нечеткие числа}
+\section{Нечеткая арифметика}
 
-\begin{frame}\frametitle{Нечеткие числа}
-$A\fsubset\mathbb{R}$ -- нечеткое число, если:
-\begin{itemize}[<+->]
-\item $A$ -- нормировано, т.е. 
-$$
-\exists!\ceil{A}\in\mathbb{R}\ \mu_A(\ceil{A})=1;
-$$
-\item $A$ -- выпукло, т.е. 
-$$
-\forall\ x,y\ \mu_A(\lambda x+(1-\lambda)y)\ge\min\left(\mu_A(x),\mu_a(y)\right);
-$$
-\end{itemize}
-\uncover<+->{
-\begin{tikzpicture}[x=2cm,y=2cm]
-\draw[->,thick] (0,0.01) -- (4.5,0.01) node[below] {$x$};
-\draw[->,thick] (0,0) -- (0,1.2) node[left] {$\mu$};
-\node at(2,1.1) {$A\approx 2$};
-\draw[red,thick] plot file {Plots/2.txt};
-\only<+>{
-\draw[dotted] (2,1) -- (0,1) node[left] {$1$};
-\draw[dotted] (2,1) -- (2,0) node[below] {$2$};
-}
-\only<+>{
-\draw[fill=black] (1.5,0.778) circle(2pt);
-\draw[fill=black] (2.5,0.778) circle(2pt);
-\draw (1.5,0.778) -- (2.5,0.778);
-}
-\only<+->{
-\draw[fill=black] (1.5,0.778) circle(2pt);
-\draw[fill=black] (0.5,0.105) circle(2pt);
-\draw (0.5,0.105)--(1.5,0.778);
-}
-\only<+->{
-\draw[dotted] (1.5,0.778) -- (1.5,0.105) -- (0.5,0.105);
- }
-\end{tikzpicture}
-}
-\end{frame}
 
 \begin{frame}\frametitle{Теорема Дюбуа-Прайда}
 

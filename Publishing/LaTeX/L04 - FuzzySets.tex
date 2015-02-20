@@ -8,8 +8,66 @@
 \usepackage{xifthen}
 \usepackage{xparse}
 
+\newcommand{\ImageSizeAlone}{0.6cm}
+\newcommand{\ImageSizeFuzzy}{0.4cm}
+
+\newcommand{\fuzzyimage}[2]{
+\ifthenelse{\isempty{#2}}
+{
+\ifmmode{\begin{array}{c}\includegraphics[width=\ImageSizeAlone]{HOMM5/#1.jpg}\end{array}}
+\else{\includegraphics[width=\ImageSizeAlone]{HOMM5/#1.jpg}}
+\fi
+}
+{
+\dfrac{#2}{\includegraphics[width=\ImageSizeFuzzy]{HOMM5/#1.jpg}}
+}
+}
+
+\newcommand{\da}{}
+\DeclareDocumentCommand\da{O{}}{\fuzzyimage{dark}{#1}}
+\newcommand{\de}{}
+\DeclareDocumentCommand\de{O{}}{\fuzzyimage{destructive}{#1}}
+
+\newcommand{\pe}{}
+\DeclareDocumentCommand\pe{O{}}{\fuzzyimage{peasant}{#1}}
+\newcommand{\wt}{}
+\DeclareDocumentCommand\wt{O{}}{\fuzzyimage{wraith}{#1}}
+\newcommand{\ga}{}
+\DeclareDocumentCommand\ga{O{}}{\fuzzyimage{garg}{#1}}
+\newcommand{\un}{}
+\DeclareDocumentCommand\un{O{}}{\fuzzyimage{unicorn}{#1}}
+
+\newcommand{\ar}{}
+\DeclareDocumentCommand\ar{O{}}{\fuzzyimage{archer}{#1}}
+\newcommand{\fo}{}
+\DeclareDocumentCommand\fo{O{}}{\fuzzyimage{footman}{#1}}
+\newcommand{\mo}{}
+\DeclareDocumentCommand\mo{O{}}{\fuzzyimage{monk}{#1}}
+\newcommand{\sk}{}
+\DeclareDocumentCommand\sk{O{}}{\fuzzyimage{skeleton}{#1}}
+\newcommand{\gh}{}
+\DeclareDocumentCommand\gh{O{}}{\fuzzyimage{ghost}{#1}}
+\newcommand{\lc}{}
+\DeclareDocumentCommand\lc{O{}}{\fuzzyimage{lich}{#1}}
+
+\newcommand{\aca}{}
+\DeclareDocumentCommand\aca{O{}}{\fuzzyimage{academy}{#1}}
+\newcommand{\hel}{}
+\DeclareDocumentCommand\hel{O{}}{\fuzzyimage{inferno}{#1}}
+\newcommand{\nec}{}
+\DeclareDocumentCommand\nec{O{}}{\fuzzyimage{necropolis}{#1}}
+
+
+\newcommand{\vc}{\centering\arraybackslash}
+
+
+
+
+
 
 \begin{document}
+
+\section{Развитие логических систем}
 
 \begin{frame}\frametitle{Логика высших порядков}
 
@@ -80,6 +138,7 @@ A3 & Принцип познаваемости мира & $A\rightarrow \diamond
 \end{itemize}
 \end{frame}
 
+\section{Нечеткие логические связки}
 
 \begin{frame}
  \bio
@@ -226,7 +285,7 @@ $$
 \end{enumerate}
 \end{frame}
 
-
+\section{Нечеткие множества}
 
 \begin{frame}\frametitle{Нечеткие множества}
 $$
@@ -335,60 +394,6 @@ $$
 \end{frame}
 
 
-\newcommand{\ImageSizeAlone}{0.6cm}
-\newcommand{\ImageSizeFuzzy}{0.4cm}
-
-\newcommand{\fuzzyimage}[2]{
-\ifthenelse{\isempty{#2}}
-{
-\ifmmode{\begin{array}{c}\includegraphics[width=\ImageSizeAlone]{HOMM5/#1.jpg}\end{array}}
-\else{\includegraphics[width=\ImageSizeAlone]{HOMM5/#1.jpg}}
-\fi
-}
-{
-\dfrac{#2}{\includegraphics[width=\ImageSizeFuzzy]{HOMM5/#1.jpg}}
-}
-}
-
-\newcommand{\da}{}
-\DeclareDocumentCommand\da{O{}}{\fuzzyimage{dark}{#1}}
-\newcommand{\de}{}
-\DeclareDocumentCommand\de{O{}}{\fuzzyimage{destructive}{#1}}
-
-\newcommand{\pe}{}
-\DeclareDocumentCommand\pe{O{}}{\fuzzyimage{peasant}{#1}}
-\newcommand{\wt}{}
-\DeclareDocumentCommand\wt{O{}}{\fuzzyimage{wraith}{#1}}
-\newcommand{\ga}{}
-\DeclareDocumentCommand\ga{O{}}{\fuzzyimage{garg}{#1}}
-\newcommand{\un}{}
-\DeclareDocumentCommand\un{O{}}{\fuzzyimage{unicorn}{#1}}
-
-\newcommand{\ar}{}
-\DeclareDocumentCommand\ar{O{}}{\fuzzyimage{archer}{#1}}
-\newcommand{\fo}{}
-\DeclareDocumentCommand\fo{O{}}{\fuzzyimage{footman}{#1}}
-\newcommand{\mo}{}
-\DeclareDocumentCommand\mo{O{}}{\fuzzyimage{monk}{#1}}
-\newcommand{\sk}{}
-\DeclareDocumentCommand\sk{O{}}{\fuzzyimage{skeleton}{#1}}
-\newcommand{\gh}{}
-\DeclareDocumentCommand\gh{O{}}{\fuzzyimage{ghost}{#1}}
-\newcommand{\lc}{}
-\DeclareDocumentCommand\lc{O{}}{\fuzzyimage{lich}{#1}}
-
-\newcommand{\aca}{}
-\DeclareDocumentCommand\aca{O{}}{\fuzzyimage{academy}{#1}}
-\newcommand{\hel}{}
-\DeclareDocumentCommand\hel{O{}}{\fuzzyimage{inferno}{#1}}
-\newcommand{\nec}{}
-\DeclareDocumentCommand\nec{O{}}{\fuzzyimage{necropolis}{#1}}
-
-
-\newcommand{\vc}{\centering\arraybackslash}
-
-\begin{document}
-
 \section{Отношения и отображения}
 
 \begin{frame}\frametitle{Отношения и отображения}
@@ -489,6 +494,8 @@ $$
 \end{columns}
 \end{frame}
 
+
+
 \begin{frame}[t]\frametitle{Нечеткие отношения}
 
 $$
@@ -524,6 +531,8 @@ $$}
 }
 
 \end{frame}
+
+\section{Пример нечетких отношений}
 
 \begin{frame}\frametitle{Нечеткие отношения}
 \begin{columns}[t]
@@ -650,10 +659,13 @@ $
 \end{columns}
 \end{frame}
 
+\section{Композиция нечетких отношений}
+
+
+\begin{frame}[t]\frametitle{Композиция нечетких отношений}
 
 \renewcommand{\ImageSizeAlone}{0.4cm}
 
-\begin{frame}[t]\frametitle{Композиция нечетких отношений}
 \begin{columns}[t]
 \column{0.5\textwidth}
 $$

@@ -1,0 +1,70 @@
+\usepackage[russian]{babel}
+\usepackage{graphics}
+\usepackage{amssymb}
+\usepackage{xstring}
+\usepackage{multirow}
+\usepackage{tikz}
+\usepackage{cancel}
+\usepackage{framed}
+\usepackage{ragged2e}
+
+\newcommand{\imp}[2]{\overset{#1}{\underset{#2}{\longrightarrow}}}
+
+\newcommand{\fuz}[1]{\frac{\mu(#1)}{#1}}
+
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+
+
+\newcommand{\citate}[3]
+{
+\begin{framed}
+\justifying
+#1
+\end{framed}
+\begin{flushright}
+(#2, {\it #3})
+\end{flushright}
+}
+
+
+
+\newcommand{\foperation}[1]{\widetilde{#1}}
+\newcommand{\fcup}{\foperation{\cup}}
+\newcommand{\fcap}{\foperation{\cap}}
+\newcommand{\fwedge}{\foperation{\wedge}}
+\newcommand{\fvee}{\foperation{\vee}}
+\newcommand{\fsubset}{\foperation{\subset}}
+\newcommand{\fin}{\foperation{\in}}
+\newcommand{\fa}{\foperation{A}}
+\newcommand{\fb}{\foperation{B}}
+
+
+\tikzstyle{neu}=[circle,fill=blue!50,inner sep=8pt]
+\newcommand{\dd}[2]{\frac{\partial #1}{\partial #2}}
+
+\newcommand{\bio}[3]
+{
+\begin{center}
+
+\includegraphics[width=4cm]{Portraits/#1.jpg}
+
+
+{\bf #2}
+
+#3
+\end{center}
+}
+
+
+\newcommand{\doublebio}[5]{
+\begin{center}
+
+\begin{tabular}{c c}
+\includegraphics[width=4cm]{Portraits/#1.jpg} & \includegraphics[width=4cm]{Portraits/#3.jpg} \\
+{\bf #2 } & {\bf #4} \\
+\end{tabular}
+
+
+#5
+\end{center}
+}
