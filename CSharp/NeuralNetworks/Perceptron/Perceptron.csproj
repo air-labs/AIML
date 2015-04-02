@@ -40,6 +40,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\AForge\AForge.Math.dll</HintPath>
     </Reference>
+    <Reference Include="AForge.Neuro">
+      <HintPath>..\AForge\AForge.Neuro.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -78,10 +81,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AForge.Neuro\AForge.Neuro.csproj">
-      <Project>{02b5e453-2085-4e41-86d9-c8e8a03fb1b9}</Project>
-      <Name>AForge.Neuro</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{3270f983-cc3b-4194-a0c9-3c4a644a1fad}</Project>
       <Name>Common</Name>

@@ -1,20 +1,56 @@
 \documentclass[24pt,pdf,hyperref={unicode},aspectratio=169]{beamer}
 \usepackage[utf8]{inputenc}
-\usepackage{aiml}
+\usepackage[russian]{babel}
+\usepackage{graphics}
+\usepackage{amssymb}
+\usepackage{xstring}
+\usepackage{multirow}
+\usepackage{tikz}
+\usepackage[all]{xy}
 
+
+\newcommand{\dd}[2]{\frac{\partial #1}{\partial #2}}
+
+\tikzstyle{neu}=[circle,fill=blue!50,minimum size=0.8cm]
 
 \begin{document}
-\section{Нечеткий вывод}
-\begin{frame}
- \bio{Mamdani}{Ebrahim Mamdani}{Application of fuzzy algorithms for the control of a simple dynamic plant (1974)}
+\section{Методы ускорения обучения}
+\begin{frame}\frametitle{Ускорение обучения}
+
+\begin{itemize}
+\item<+-> Правильный выбор коэффициента
+$$
+W_{i+1}=W_i-\varepsilon \nabla f(W_i)
+$$
+
+(начать с $\varepsilon=1$)
+
+\item<+-> Повторение алгоритма градиентного спуска на каждом примере (3-5 раз)
+
+\item<+-> Правило момента
+
+$$
+\Delta{i} = W_{i}-W_{i-1}
+$$
+$$
+W_{i+1} = W_i-\varepsilon \nabla f(W_i)+\alpha\Delta_i, \ \ \ 
+\alpha\approx 0.1
+$$
+\item<+-> Стимуляция нейронов
+
+$$
+W_{i+1} = (1-\gamma)W_i-\varepsilon \nabla f(W_i)+\alpha\Delta_i,\ \ \ 
+\gamma \approx 10^{-4}
+$$
+
+\item<+-> Адаптивный выбор $\varepsilon$?
+
+\item<+-> Сопряженные градиенты, обучение на гессиане??
+\end{itemize}
+
+
 \end{frame}
 
-\begin{frame}\frametitle{}
-{\huge
-if (y<0) return -PI;
 
-else return PI;
-}
-\end{frame}
-
+\end{document}
 \end{document}
