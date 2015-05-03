@@ -1,0 +1,142 @@
+\documentclass[24pt,pdf,hyperref={unicode},aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{aiml}
+
+\begin{document}
+
+\section{Общая схема генетического алгоритма}
+
+\begin{frame}\frametitle{Генетический алгоритм}
+\begin{columns}
+\column{0.5\textwidth} 
+
+\begin{itemize}
+ \item<2-> Кодирование
+ \item<5-> Генерация
+ \item<6-> Выбор мутирующих особей
+ \item<7-> Мутация
+ \item<11-> Выбор скрещивающихся особей
+ \item<12-> Скрещивание
+ \item<16-> Оценка
+ \item<20-> Отбор
+\end{itemize}
+
+\column{0.5\textwidth} 
+
+\only<1->{$$
+W=\{w_1,\ldots,w_n\}
+$$
+
+$$
+A\subset W
+$$
+
+$$
+\sum_{a\in A} a=\sum_{b\in W\setminus A} b
+$$}
+\only<3-5>{$$
+s=\begin{array}{|c|c|c|c|c||c|c|}
+\hline
+0 & 1 & \alert<8>{1} & 0 & 1 & 1 & 1\\
+\hline 
+\end{array}
+$$}
+\only<4>{$$
+w_i\in A\Leftrightarrow g[i]=1
+$$}
+\only<8-10>{$$
+\begin{array}{r l}
+s= & \begin{array}{|c|c|c|c|c||c|c|}
+\hline
+0 & 1 & \alert<9>{1} & 0 & 1 & 1 & 1\\
+\hline 
+\end{array} \\[0.3cm]
+\uncover<10>{m(s)=} & \uncover<10>{\begin{array}{|c|c|c|c|c||c|c|}
+\hline
+0 & 1 & 0 & 0 & 1 & 1 & 1\\
+\hline 
+\end{array}}
+\end{array}
+$$}
+\only<13-15>{\noindent
+$$
+\begin{array}{r l}
+s_1= & \begin{array}{|c|c|c|c||c|c|}
+\hline
+ 1 & \alert<14-15>{0} & \alert<14-15>{0} & 1 & 1 & \alert<14-15>{1}\\
+\hline 
+\end{array}\\[0.3cm]
+
+s_2=& \begin{array}{|c|c|c|c||c|c|}
+\hline
+\alert<14-15>{1} & 0 & 1 & \alert<14-15>{0} & \alert<14-15>{0} & 1\\
+\hline 
+\end{array}\\[0.3cm]
+
+\uncover<15>{c(s_1,s_2) = }& \uncover<15>{\begin{array}{|c|c|c|c||c|c|}
+\hline
+ 1 & 0 & 0 & 0 & 0 & 1\\
+\hline 
+\end{array}} \\
+\end{array}
+$$}
+\only<17>{$$
+f(A)=\left|\sum_{a\in A} a - \sum_{b\in W\setminus A} b\right|
+$$}
+\only<18>{$$
+f(A)=\left|\sum_{a\in A} a - \sum_{b\in W\setminus A} b\right|^{-1}
+$$}
+\only<19>{$$
+f(A)=\left(1+\left|\sum_{a\in A} a - \sum_{b\in W\setminus A} b\right|\right)^{-1}
+$$}
+\end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{Пропорциональное скрещивание}
+
+\begin{columns}
+\column{0.5\textwidth}
+$$
+\begin{array}{c|c}
+$\textnumero$ & Value \\
+\hline
+1 & 0.5 \\
+2 & 0.25 \\
+3 & 0.125 \\
+4 & 0.125 \\
+\end{array}
+$$
+\column{0.5\textwidth}
+
+\only<2>{
+\begin{tikzpicture}
+\draw (0,0) circle (2); 
+\draw (0,0) -- (2,0);
+\draw (0,0) -- (-2,0);
+\draw (0,0) -- (0,-2);
+\draw (0,0) -- (1.414,-1.414);
+\node at (0,1) {1};
+\node at (-0.707,-0.707) {2};
+\node at (0.92,-0.38) {4};
+\node at (0.38,-0.92) {3};
+
+\end{tikzpicture}
+}
+\end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{Элитарное скрещивание}
+$$
+\begin{array}{l | l l l l l l l l l}
+  & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
+\hline
+1 &   & X & X & X & X & X & X & X & X \\
+2 &   &   & X & X & X & X & X &   &   \\
+3 &   &   &   & X & X &   &   &   &   \\
+4 &   &   &   &   & X &   &   &   &   \\
+\end{array}
+$$
+\end{frame}
+
+
+\end{document}
